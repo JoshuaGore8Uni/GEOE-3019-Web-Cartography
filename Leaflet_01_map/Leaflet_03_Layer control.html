@@ -6,6 +6,7 @@
 	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
     <!-- <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> -->
     <!-- <script src="./Leaflet.MapboxVectorTile.js"></script> -->
+	  <script src="js/leaflet-providers.js"></script>
 </head>
 <body>
     <div id="map" style="width: 700px; height: 500px"></div>
@@ -23,6 +24,10 @@
             zoomOffset: -1,
             attribution: '&copy;'
         });
+	var mapbox_satellite = L.tileLayer.provider('MapBox', {
+	    id: 'ID': 'mapbox.satellite',
+        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+    });
         */
         // road
         // var mapbox_road = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/ovxfckf52tr1pzmfvq6t/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: '&copy;',});

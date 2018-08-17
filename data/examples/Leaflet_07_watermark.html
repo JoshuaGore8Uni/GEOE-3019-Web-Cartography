@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	<style> body{padding:0;margin:0;} html,body,#map{height:100%;width:100%;}</style>
+</head>
+<body>
+	<div id="map"></div>
+	
+    <script>
+        var map = L.map('map').setView([-34.92, 138.6], 9);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+			
+		L.control.scale().addTo(map);	
+		
+		L.Control.Watermark = L.Control.extend({
+			onAdd: function(map) {
+				var img = L.DomUtil.create('img');
+				img.src = 'http://freshscience.org.au/wp-content/uploads/logo_unisa_RGB-blue_h.png';
+				img.style.width = '150px';
+				return img }});
+
+		L.control.watermark = function(opts) {
+			return new L.Control.Watermark(opts) }
+
+		L.control.watermark({ position: 'bottomright' }).addTo(map);
+		
+		var POI = L.marker([-34.92, 138.6],{title: 'Hover Text'}).bindPopup('A pretty CSS3 popup. <br> Easily customizable.'); 
+   		var latlngs = [[-34.82, 138.7],[-34.83, 138.8],[-34.825, 138.9]];
+		var polyline = L.polyline(latlngs, {color: 'green'});	
+		var circle = L.circle([-34.92, 138.8], {color: 'red', fillColor: '#f03', fillOpacity: 0.2, radius: 5000});
+		var polygon = L.polygon([[-34.82, 138.6], [-34.96, 138.5], [-34.93, 138.3]]).bindPopup("I am a polygon.");
+		
+
+		// layer control:
+		var overlays = {
+			"Circle":circle,
+			"Polygon":polygon,
+			"Line":polyline,
+			"Point of interest":POI};
+		L.control.layers( overlays).addTo(map);
+		
+		
+
+		
+    </script>
+</body>
+</html>

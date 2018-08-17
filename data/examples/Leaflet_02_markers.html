@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 700px; height: 500px"></div>
+	
+    <script>
+        var map = L.map('map',{ minZoom: 8,maxZoom: 10}).setView([-34.92, 138.6], 9);
+        
+		<!-- L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+			 //{attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors',}).addTo(map); -->
+		
+		L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+		
+		/* var BirdIcon = L.icon({
+        iconUrl: 'https://d30y9cdsu7xlg0.cloudfront.net/png/1016457-200.png',
+        iconSize: [38, 38], // size of the icon
+        });
+		L.marker([-34.92, 138.6],{icon: BirdIcon}).addTo(map);  */
+		
+		L.marker([-34.92, 138.6],{title: 'Hover Text'}).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.').openPopup(); 
+		
+		
+/* 		var latlngs = [[-34.82, 138.7],[-34.83, 138.8],[-34.825, 138.9]];
+		var polyline = L.polyline(latlngs, {color: 'green'}).addTo(map);	
+		var circle = L.circle([-34.92, 138.8], {color: 'red', fillColor: '#f03', fillOpacity: 0.2, radius: 5000}).addTo(map);
+		var polygon = L.polygon([[-34.82, 138.6], [-34.96, 138.5], [-34.93, 138.3]]).addTo(map);
+		
+		circle.bindPopup("I am a circle.");
+		polygon.bindPopup("I am a polygon."); */
+				
+    </script>
+</body>
+</html>

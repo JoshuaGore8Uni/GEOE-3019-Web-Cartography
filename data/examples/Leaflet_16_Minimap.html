@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MiniMap Demo</title>
+	<meta charset="utf-8" />
+
+	<link rel="stylesheet" href="http://geoe3019.x10host.com/leaflet/leaflet_plugins/fullscreen.css"/>
+
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js" type="text/javascript"></script>
+
+	<!-- Leaflet Plugins -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.5.0/Control.MiniMap.min.js"></script>
+	<style>
+		.leaflet-control-minimap{border:rgba(255,255,255,1) solid;box-shadow:0 1px 5px rgba(0,0,0,.65);
+		border-radius:3px;background:#f8f8f9;transition:all .6s}.leaflet-control-minimap a{background-color:rgba(255,255,255,1);
+		background-repeat:no-repeat;z-index:99999;transition:all .6s}.leaflet-control-minimap a.minimized-bottomright{-webkit-transform:rotate(180deg);transform:rotate(180deg);border-radius:0}.leaflet-control-minimap a.minimized-topleft{-webkit-transform:rotate(0deg);transform:rotate(0deg);border-radius:0}.leaflet-control-minimap a.minimized-bottomleft{-webkit-transform:rotate(270deg);
+		transform:rotate(270deg);border-radius:0}.leaflet-control-minimap a.minimized-topright{-webkit-transform:rotate(90deg);transform:rotate(90deg);border-radius:0}.leaflet-control-minimap-toggle-display{background-image:url(images/toggle.svg);background-size:cover;
+		position:absolute;border-radius:3px 0 0}.leaflet-oldie .leaflet-control-minimap-toggle-display{background-image:url(images/toggle.png)}.leaflet-control-minimap-toggle-display-bottomright{bottom:0;right:0}.leaflet-control-minimap-toggle-display-topleft{top:0;left:0;
+		-webkit-transform:rotate(180deg);transform:rotate(180deg)}.leaflet-control-minimap-toggle-display-bottomleft{bottom:0;left:0;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.leaflet-control-minimap-toggle-display-topright{top:0;right:0;-webkit-transform:rotate(270deg);
+		transform:rotate(270deg)}.leaflet-oldie .leaflet-control-minimap{border:1px solid #999}.leaflet-oldie .leaflet-control-minimap a{background-color:#fff}.leaflet-oldie .leaflet-control-minimap a.minimized{filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2)}
+	</style>
+	
+</head>
+<body>
+		<div id="map" ></div>
+
+	<script type="text/javascript">
+	
+		var map = new L.Map('map');
+		
+		var tileUrl='http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png';
+		var tileAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+		var tile = new L.TileLayer(tileUrl, {minZoom: 5, maxZoom: 18, attribution: tileAttrib});
+
+	/*	var tileUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var tileAttrib='Map data &copy; OpenStreetMap contributors';
+		var tile = new L.TileLayer(tileUrl, {minZoom: 2, maxZoom: 18, attribution: tileAttrib});*/
+		
+		map.addLayer(tile);
+		map.setView(new L.LatLng(-34.92, 138.6), 9);
+		
+		//Plugin magic goes here! Note that you cannot use the same layer object again, as that will confuse the two map controls
+		var tile2 = new L.TileLayer(tileUrl, {minZoom: 2, maxZoom: 13, attribution: tileAttrib });
+		//var miniMap = new L.Control.MiniMap(var tile2, { toggleDisplay: true }).addTo(map);
+		var miniMap = new L.Control.MiniMap(tile2, { 
+			toggleDisplay: true,
+			width: 150,
+			height: 150
+		}).addTo(map);
+	</script>
+</body>
+</html>

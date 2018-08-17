@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	<style> 
+		body{padding:0;margin:0;} html,body,#map{height:100%;width:100%;}
+		
+		.info {
+		padding: 6px 8px;
+		font: 14px/16px Arial, Helvetica, sans-serif;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		border-radius: 5px;
+		}
+		
+		.info h2 {
+			margin: 6px 6px 6px;
+			color: #999;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	
+    <script>
+        var map = L.map('map').setView([-34.92, 138.6], 9);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+
+		var info = L.control({position:'topright'});
+		info.onAdd = function (map) {this._div = L.DomUtil.create('div', 'info');
+			this._div.innerHTML = '<h2>MAP TITLE / Info text</h2>';
+			return this._div};
+		info.addTo(map);		
+	
+	
+		
+    </script>
+</body>
+</html>

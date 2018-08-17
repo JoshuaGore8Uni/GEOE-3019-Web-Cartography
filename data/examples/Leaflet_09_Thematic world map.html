@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet</title>   
+	
+    <!-- Leaflet stylesheets/javascript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" /> 
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+	
+		
+	<!-- GeoJSON -->
+		<script src=".\geodata_files/world.geojson"></script>
+
+	<style> 
+		body{padding:0;margin:0;} html,body,#map{height:99%;width:100%;}
+		.legend {
+			line-height: 18px;
+			color: #555 }
+		.legend i {
+			width: 18px;
+			height: 15px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7 }
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px }
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777 }
+	</style> 
+
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+
+		var map = L.map('map').setView([48, 11], 2);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+
+	 	
+		var tile_OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors',});
+
+		
+		var tile_Mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/stefanpetersmapbox/cj4ktec6h689c2qmq6wxqct38/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3RlZmFucGV0ZXJzbWFwYm94IiwiYSI6ImNqM3RwYXl0ZzAxZ2QzMW82bjVkbzZranEifQ.weR7eq4_0X3ss_FShFEFpA');	
+			
+		L.control.scale().addTo(map);
+		
+		var geojson = L.geoJson(world);
+		
+		function getColor(d) {
+			return d > 100000000 ? '#800026' :
+				   d > 50000000 ? '#BD0026' :
+				   d > 10000000 ? '#E31A1C' :
+				   d > 5000000 ? '#FC4E2A' :
+				   d > 1000000 ? '#FD8D3C' :
+				   d > 100000 ? '#FEB24C' :
+				   d > 10000 ? '#FED976' :
+				              '#FFEDA0';
+		} 
+			
+		function style(feature) {
+			return {
+				fillColor: getColor(feature.properties.POP2005),
+				weight: 2,
+				opacity: 1,
+				color: 'white',
+				dashArray: '3',
+				fillOpacity: 0.7
+			};
+		}
+		L.geoJson(world, {style: style});	
+		
+		// layer control:
+		var baseLayers = {
+			"Carto": tile_Carto,
+			"OSM": tile_OSM,
+			"Mapbox": tile_Mapbox};
+		// world as overlay and hover effect doesn't work at the same time		
+		L.control.layers(baseLayers).addTo(map); 
+				
+		// -------- Adding Interaction --------------
+		
+		function highlightFeature(e) {
+			var layer = e.target;
+			layer.setStyle({
+				weight: 5,
+				color: '#666',
+				dashArray: '',
+				fillOpacity: 0.7});
+			info.update(layer.feature.properties)}	
+			/*if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+				layer.bringToFront();}*/
+			
+		function zoomToFeature(e) {
+			map.fitBounds(e.target.getBounds())}
+	
+		function resetHighlight(e) {
+			geojson.resetStyle(e.target);
+			info.update()}
+
+		function onEachFeature(feature, layer) {
+			layer.on({
+				mouseover: highlightFeature,
+				mouseout: resetHighlight,
+				click: zoomToFeature})}
+
+		geojson = L.geoJson(world, {
+			style: style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+		
+		
+		
+		// ---------- Custom Info Control ------------------
+		var info = L.control();
+
+		info.onAdd = function (map) {
+			this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+			this.update();
+			return this._div };
+
+		// method to update the control based on feature properties passed
+		info.update = function (properties) {
+			this._div.innerHTML = '<h4>Population</h4>' +  (properties ?
+				'<b>' + properties.NAME + '</b><br />' + properties.POP2005 + ' people'
+				: 'Hover over a country') };
+
+		info.addTo(map);
+
+		
+		// ---------- Custom Legend Control -----------------
+		var legend = L.control({position: 'bottomright'});
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = [200000000, 100000000, 50000000, 10000000, 5000000, 1000000, 500000, 100000, 10000],
+				labels = [];
+			// loop through our density intervals and generate a label with a colored square for each interval
+			for (var i = 0; i < grades.length; i++) {
+				div.innerHTML +=
+					'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+					grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '-') }
+			return div };
+
+		legend.addTo(map);
+		
+		
+		
+		
+		var numberTest = 123;
+		
+	</script>
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	GEOE3019 (2017)
+	<!-- <script>document.write(number)</script> -->
+</body>
+</html>

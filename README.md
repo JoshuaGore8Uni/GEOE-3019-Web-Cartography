@@ -1,5 +1,6 @@
 # GEOE-3019-Web-Cartography
 *Software Repo for code written by Joshua Gore*  
+*most plugins etc. provided by Stefan Peters*   
 *Do not plagarise!*
 ## Carto Map of Emotions
 ## Mapbox Custom Overlay Map

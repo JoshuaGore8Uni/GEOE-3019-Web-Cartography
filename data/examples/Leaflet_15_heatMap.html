@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet</title>   
+	
+    <!-- Leaflet stylesheets/javascript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" /> 
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	
+	<script src="./geodata_files/Stormwater_Connectors.json"></script> 
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+	
+    <style>
+        #map { width: 800px; height: 600px; }		
+		html,body,#map{height:100%;width:100%;}
+        body{padding:0;margin:0;font: 16px/1.4 "Helvetica Neue", Arial, sans-serif;} 
+        .ghbtns { position: relative; top: 4px; margin-left: 5px; }
+        a { color: #0077ff; }
+	</style> 
+
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+
+		var map = L.map('map').setView([-34.86, 138.6], 12);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+			
+		L.control.scale().addTo(map);
+
+		geoJson2heat = function(geojson) {
+		   return geojson.features.map(function(feature) {
+		   return [parseFloat(feature.geometry.coordinates[1]), parseFloat(feature.geometry.coordinates[0])] }) }	
+
+		var geoData = geoJson2heat(Stormwater_Connectors, 1);
+		var heatMap = new L.heatLayer(geoData,{radius: 8, blur: 10, maxZoom: 17});
+
+		map.addLayer(heatMap);
+
+</script>
+</body>
+</html>

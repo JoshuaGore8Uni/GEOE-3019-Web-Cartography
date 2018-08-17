@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 700px; height: 500px"></div>
+	
+    <script>
+        var map = L.map('map').setView([-34.92, 138.6], 9);
+        
+		var tile_OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors',});
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+		
+		var tile_Mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/stefanpetersmapbox/cj4ktec6h689c2qmq6wxqct38/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3RlZmFucGV0ZXJzbWFwYm94IiwiYSI6ImNqM3RwYXl0ZzAxZ2QzMW82bjVkbzZranEifQ.weR7eq4_0X3ss_FShFEFpA');
+		
+		var POI = L.marker([-34.92, 138.6],{title: 'Hover Text'}).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.'); 
+   		var latlngs = [[-34.82, 138.7],[-34.83, 138.8],[-34.825, 138.9]];
+		var polyline = L.polyline(latlngs, {color: 'green'});	
+		var circle = L.circle([-34.92, 138.8], {color: 'red', fillColor: '#f03', fillOpacity: 0.2, radius: 5000});
+		var polygon = L.polygon([[-34.82, 138.6], [-34.96, 138.5], [-34.93, 138.3]]).bindPopup("I am a polygon.");
+		
+
+		// layer control:
+		var baseLayers = {
+			"Carto": tile_Carto,
+			"OSM": tile_OSM,
+			"Mapbox": tile_Mapbox};
+		var overlays = {
+			"Circle":circle,
+			"Polygon":polygon,
+			"Line":polyline,
+			"Point of interest":POI};
+		//L.control.layers(baseLayers, overlays).addTo(map);
+		var layerControl = L.control.layers(baseLayers, overlays, {position:'topright'}).addTo(map);
+		L.control.scale().addTo(map);
+					
+    </script>
+</body>
+</html>

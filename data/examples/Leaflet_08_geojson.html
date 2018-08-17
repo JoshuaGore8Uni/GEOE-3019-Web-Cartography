@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet</title>   
+	
+    <!-- Leaflet stylesheets/javascript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css"/> 
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	
+	<!-- GeoJSON -->
+	<script src=".\geodata_files/geojsonSample.json" type="text/javascript"></script>
+	
+	<!-- CSS -->
+	<style> body{padding:0;margin:0;} html,body,#map{height:100%;width:100%;}</style> 
+
+</head>
+<body>
+	<span>Import of geojson point sample</span>
+	<div id="map"></div>
+	<script>
+
+		var map = L.map('map').setView([-34.88, 138.6], 12);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+		
+		var geojson = L.geoJson(geojsonSample).addTo(map);
+					
+	</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Basic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.3/dist/leaflet.css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet-src.js"></script>	
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	<script src="http://geoe3019.x10host.com/leaflet/leaflet_plugins/Leaflet.MapboxVectorTile.js"></script>
+	
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+
+<script>
+var map = L.map('map').setView([-34.92, 138.6], 9);
+
+var tile_mapboxGL = L.tileLayer('http://{s}.tiles.mapbox.com/v3/spatialdev.map-c9z2cyef/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+  id: 'examples.map-i86knfo3'
+});
+
+var tile_mapboxGL2 = L.tileLayer('https://a.tiles.mapbox.com/v3/cugos.jolef8gc/{z}/{x}/{y}.png', {
+  maxZoom: 18
+}).addTo(map);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'});
+		
+		
+		var POI = L.marker([-34.92, 138.6],{title: 'Hover Text'}).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.'); 
+   		/*
+		var POI2 = L.marker([-34.93, 138.7],{title: 'Hover Text'}).bindPopup('another POI.'); 
+		var latlngs = [[-34.82, 138.7],[-34.83, 138.8],[-34.825, 138.9]];
+		var polyline = L.polyline(latlngs, {color: 'green'});	
+		var circle = L.circle([-34.92, 138.8], {color: 'red', fillColor: '#f03', fillOpacity: 0.5, radius: 5000});
+		var polygon = L.polygon([[-34.82, 138.6], [-34.96, 138.5], [-34.93, 138.3]]).bindPopup("I am a polygon.");
+		*/
+
+		// layer control:
+		var baseLayers = {
+			"Carto": tile_Carto,
+			"MapboxGL": tile_mapboxGL,
+			"MapboxGL2": tile_mapboxGL2			
+			};	
+		
+		// ??? lines, polygons, circle don#t work ???????
+
+	/*var overlays = {
+		"Point of interest 1":POI,
+		"Circle":circle,
+		"Polygon":polygon,
+		"Line":polyline};*/
+		
+	L.control.layers(baseLayers).addTo(map);
+	
+	L.control.scale().addTo(map);
+</script>
+</body>
+</html>

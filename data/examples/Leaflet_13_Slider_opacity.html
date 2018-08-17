@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Leaflet ZoomBox Control</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="http://geoe3019.x10host.com/leaflet/leaflet_plugins/L.Control.Range.css" />
+</head>
+<body>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet-src.js"></script>
+    <script src="http://geoe3019.x10host.com/leaflet/leaflet_plugins/L.Control.Range.js"></script>
+    <div id="map" style="position: absolute; top: 0; left:0; bottom:0; right: 0;"></div>
+
+    <script>
+        var map = L.map('map').setView([-34.88, 138.6], 9);
+
+		var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+
+        var control = L.control.range({
+            orient: 'vertical',
+            value: 100
+        });
+		
+		L.marker([-34.92, 138.6],{title: 'Hover Text'}).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.'); 
+		
+        control.on('change input', function(e) {
+            console.log(e.value);
+            layer.setOpacity(e.value / 100);
+        })
+
+        map.addControl(control);
+    </script>
+</body>
+</html>

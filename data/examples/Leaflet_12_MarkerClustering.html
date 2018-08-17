@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet</title>   
+	
+    <!-- Leaflet stylesheets/javascript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0/dist/leaflet.css" /> 
+	<script src="https://unpkg.com/leaflet@1.0.0/dist/leaflet.js"></script>
+	
+	<!--  source markercluster css js:  https://cdnjs.com/libraries/leaflet.markercluster>  -->		
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.6/MarkerCluster.Default.css">
+<!-- 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.6/MarkerCluster.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.6/leaflet.markercluster.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.6/leaflet.markercluster-src.js"></script>
+
+	<!-- GeoJSON -->
+	<script type="text/javascript" src=".\geodata_files/Stormwater_Connectors.json"></script>
+	
+	<style> body{padding:0;margin:0;} html,body,#map{height:100%;width:100%;}</style> 
+
+</head>
+<body>
+	<span>Mouse over a cluster to see the bounds of its children and click a cluster to zoom to those bounds</span>
+	<div id="map"></div>
+	<script>
+
+		var map = L.map('map').setView([-34.88, 138.6], 12);
+
+		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
+
+		
+		var geojson = L.geoJson(Stormwater_Connectors);
+		
+		//geojson.addLayer(new L.Marker(new L.LatLng(-34.92, 138.53)));	
+					
+		var point1 = L.marker([-34.90, 138.59]);
+		var point2 = L.marker([-34.91, 138.57]);
+		var point3 = L.marker([-34.92, 138.58]);
+					
+		var markers = L.markerClusterGroup();
+		//markers.addLayer(point1).addLayers([point2,point3]);
+		markers.addLayer(geojson).addLayers([point1, point2,point3]);
+		map.addLayer(markers);
+
+		
+	</script>
+</body>
+</html>

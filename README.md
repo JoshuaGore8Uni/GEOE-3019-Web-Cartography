@@ -1,5 +1,5 @@
 # GEOE-3019-Web-Cartography
-*Software Repo for code written by Joshua Gore*
+*Software Repo for code written by Joshua Gore*  
 *Do not plagarise!*
 ## Carto Map of Emotions
 ## Mapbox Custom Overlay Map
@@ -16,7 +16,9 @@ The choice for each of them is up to you. The basemap layer control should allow
 between them. The tile-layer source will usually be displayed automatically. The map should
 initially display the extend of South Australia.
 You can use this resource for Leaflet tilemaps providers: http://leaflet-extras.github.io/leaflet-providers/preview/index.html.
-<iframe src="https://htmlpreview.github.io/?https://github.com/JoshuaGore8Uni/GEOE-3019-Web-Cartography/blob/master/Leaflet_01_map/Leaflet_03_Layer%20control.html"></iframe>
+
+https://htmlpreview.github.io/?https://github.com/JoshuaGore8Uni/GEOE-3019-Web-Cartography/blob/master/Leaflet_01_map/Leaflet_03_Layer%20control.html
+
 ### Map 2: Place Of Interest map / add markers
 Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
 destinations. Moreover, you are asked to implement an interactive marker function: Whenever

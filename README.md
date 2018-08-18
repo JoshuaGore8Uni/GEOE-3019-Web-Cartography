@@ -52,15 +52,15 @@ Apply title approach and map window size as above (Map 4).
 Use the LGA_Adelaide.geojson polygon file to create a choropleth map. LGAs are Land government
 areas (council areas). Explore the geojson file. One attribute field contains the number of parks in
 each council area. That’s the one you need to use for your choropleth map.
-Explore the data distribution using a histogram:
-![image of data in arcgis histogram][LGA_Histo]
+Explore the data distribution using a histogram:  
+![image of data in arcgis histogram][LGA_Histo]  
 [LGA_Histo]: ../data/LGA_Histo.png
-
-Which classification method to use: Natural breaks would be one option.
-How many classes: Usually between 3 and 7.
-The colour-scheme should be sequential.
-You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.
-*Helpful to use is this online colour-advise-tool for choropleth maps: http://colorbrewer2.org
-Additional reading about choropleth maps and their cartography: http://axismaps.github.io/thematic-cartography/articles/choropleth.html
+  
+Which classification method to use: Natural breaks would be one option.  
+How many classes: Usually between 3 and 7.  
+The colour-scheme should be sequential.  
+You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.  
+*Helpful to use is this online colour-advise-tool for choropleth maps: http://colorbrewer2.org  
+Additional reading about choropleth maps and their cartography: http://axismaps.github.io/thematic-cartography/articles/choropleth.html  
 Optional: Create and include a legend. Think about an appropriate classification and colour scheme*
 ## Assignment 3 - Presentation of fire scar data

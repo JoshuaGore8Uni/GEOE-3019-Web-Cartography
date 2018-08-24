@@ -4,8 +4,6 @@
     <title>Leaflet Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.2/dist/leaflet.css" />
 	<script src="https://unpkg.com/leaflet@1.3.2/dist/leaflet.js"></script>
-    <!-- <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> -->
-    <!-- <script src="./Leaflet.MapboxVectorTile.js"></script> -->
 	  <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
 </head>
 <body>
@@ -17,71 +15,37 @@
             [-25.89, 128.85], 
             [-38.16, 141.13]
         ]);
-        //var map = L.map('map').fitBounds([128.85, -25.89], [141.13, -38.16]);
        
         // initiate five map layers
+
         // satellite
         var mapbox_satellite = L.tileLayer.provider('MapBox', {
             id: 'mapbox.satellite',
             accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
         });
-        // var mapbox_satellite = L.tileLayer.MVTSource('https://api.mapbox.com/styles/v1/joshg/hfh14itx2rml5q1bwo6b/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: '&copy;',});
-        /*
-        var mapbox_satellite = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/hfh14itx2rml5q1bwo6b/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {
-            tileSize: 512,
-            zoomOffset: -1,
-            attribution: '&copy;'
-        });
-	*/
+
         // road
         var mapbox_streets = L.tileLayer.provider('MapBox', {
             id: 'mapbox.streets',
             accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
         }).addTo(map);
-        // var mapbox_road = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/ovxfckf52tr1pzmfvq6t/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: '&copy;',});
+
         // terrain
         var mapbox_terrain = L.tileLayer.provider('MapBox', {
             id: 'mapbox.outdoors',
             accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
         });
-        // var mapbox_terrain = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/n2tpcoxk2skdfa1r4lso/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: '&copy;',});
+
         // grey without labels
         var mapbox_grey_nolabels = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: ' Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> — Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
-        /*
-        var mapbox_grey_nolabels = L.tileLayer.provider('MapBox', {
-            id: 'joshg.jk7ybb6a6vh42tqpg1nfwcpb',
-            accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
-        });
-        */
+
         // dark map
         var mapbox_dark = L.tileLayer.provider('MapBox', {
             id: 'mapbox.dark',
             accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
         });
-        // var mapbox_dark = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/qmw27stj2rnvwjnn8zki/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: '&copy;',});
-/*
-		var tile_OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors',});
 
-		var tile_Carto = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'}).addTo(map);
-		
-		var tile_Mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/stefanpetersmapbox/cj4ktec6h689c2qmq6wxqct38/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3RlZmFucGV0ZXJzbWFwYm94IiwiYSI6ImNqM3RwYXl0ZzAxZ2QzMW82bjVkbzZranEifQ.weR7eq4_0X3ss_FShFEFpA');
-		
-		var POI = L.marker([-34.92, 138.6],{title: 'Hover Text'}).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.'); 
-   		var latlngs = [[-34.82, 138.7],[-34.83, 138.8],[-34.825, 138.9]];
-		var polyline = L.polyline(latlngs, {color: 'green'});	
-		var circle = L.circle([-34.92, 138.8], {color: 'red', fillColor: '#f03', fillOpacity: 0.2, radius: 5000});
-		var polygon = L.polygon([[-34.82, 138.6], [-34.96, 138.5], [-34.93, 138.3]]).bindPopup("I am a polygon."); 
-*/
-
-		// layer control:
-        /*
-		var baseLayers = {
-			"Carto": tile_Carto,
-			"OSM": tile_OSM,
-			"Mapbox": tile_Mapbox
-        };
-        */
+		// layer control
 		var baseLayers = {
 			"Satellite": mapbox_satellite,
 			"Road": mapbox_streets,
@@ -99,7 +63,6 @@
             */
         };
 		L.control.layers(baseLayers, overlays).addTo(map);
-		//var layerControl = L.control.layers(baseLayers, overlays, {position:'topright'}).addTo(map);
 		L.control.scale().addTo(map);
 					
     </script>

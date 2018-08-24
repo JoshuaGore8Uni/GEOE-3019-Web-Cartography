@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leaflet Map</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+        <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
+    </head>
+    <body>
+        <!--
+            Map 2: Place Of Interest map / add markers
+
+            Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
+            destinations. Moreover, you are asked to implement an interactive marker function: Whenever
+            the user hovers or/and clicks on a marker, an Info-Window should popup showing an embedded
+            image together with further descriptive information (text, URL, etc.). Choose customized marker
+            symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
+            bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
+            2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).
+        -->
+        <div id="map" style="width: 700px; height: 500px"></div>
+        <script>
+            // var map = L.map('map').setView([51.505, -0.09], 13);
+            var map = L.map('map').fitWorld();
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox.streets',
+                accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+            }).addTo(map);
+        // L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A').addTo(map);
+            // Kosciuszko -36.455927, 148.264550
+            L.marker([-36.455927, 148.264550]).addTo(map);
+            // Alpine National Park: Lake Tali Karng -37.541972, 146.790241
+            L.marker([-37.541972, 146.790241]).addTo(map);
+            // Kata Tjuta -25.296021, 130.720571
+            L.marker([-25.296021, 130.720571]).addTo(map);
+            // Mt Remarkable National Park -32.787953, 138.068583
+            L.marker([-32.787953, 138.068583]).addTo(map);
+            // Wilpena Pound, Flinders Ranges -31.559838, 138.572020
+            L.marker([-31.559838, 138.572020]).addTo(map);
+            // Wellington -41.315579, 174.781097
+            L.marker([-41.315579, 174.781097]).addTo(map);
+            // Rotarua -38.136663, 176.246466
+            L.marker([-38.136663, 176.246466]).addTo(map);
+            // Milford Track -44.683690, 167.902212
+            L.marker([-44.683690, 167.902212]).addTo(map);
+            // Kepler Track -45.492070, 167.663162
+            L.marker([-45.492070, 167.663162]).addTo(map);
+            // Queenstown
+            // Appalatian Mountains 36.903539, -81.081878
+            L.marker([36.903539, -81.081878]).addTo(map);
+            // Rocky Mountains 44.254401, -109.808834
+            L.marker([44.254401, -109.808834]).addTo(map);
+            // Everest Base Camp 28.002553, 86.852718
+            L.marker([28.002553, 86.852718]).addTo(map);
+            // Bougainville
+        </script>
+    </body>
+</html>

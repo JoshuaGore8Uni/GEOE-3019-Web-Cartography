@@ -28,6 +28,62 @@ image together with further descriptive information (text, URL, etc.). Choose cu
 symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
 bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
 2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).
+#### Favorite Travel Destinations
+* Australia
+    * Koziosco Great Range Walk (3)
+    * Alpine National Park (2)
+    * Kata Juta (2)
+    * Mt Remarkable National Park(1)
+    * Flinders Ranges (1)
+* New Zealand
+    * Wellington (2)
+    * Rotarua (3)
+    * Fiordland (Te Anau)
+        * Milford Track (4)
+        * Kepler Track (4)
+    * Queenstown (3)
+* America
+    * Appalatian Mountain Track (5)
+* Canada
+    * Rockies (5)
+* Himalayisas - Everest Base Camp (5)
+* Bougainville (4)
+
+```
+// Kosciuszko -36.455927, 148.264550
+L.marker([-36.455927, 148.264550]).addTo(map);
+// Alpine National Park: Lake Tali Karng -37.541972, 146.790241
+L.marker([-37.541972, 146.790241]).addTo(map);
+// Kata Tjuta -25.296021, 130.720571
+L.marker([-25.296021, 130.720571]).addTo(map);
+// Mt Remarkable National Park -32.787953, 138.068583
+L.marker([-32.787953, 138.068583]).addTo(map);
+// Wilpena Pound, Flinders Ranges -31.559838, 138.572020
+L.marker([-31.559838, 138.572020]).addTo(map);
+// Wellington -41.315579, 174.781097
+L.marker([-41.315579, 174.781097]).addTo(map);
+// Rotarua -38.136663, 176.246466
+L.marker([-38.136663, 176.246466]).addTo(map);
+// Milford Track -44.683690, 167.902212
+L.marker([-44.683690, 167.902212]).addTo(map);
+// Kepler Track -45.492070, 167.663162
+L.marker([-45.492070, 167.663162]).addTo(map);
+// Queenstown
+// Appalatian Mountains 36.903539, -81.081878
+L.marker([36.903539, -81.081878]).addTo(map);
+// Rocky Mountains 44.254401, -109.808834
+L.marker([44.254401, -109.808834]).addTo(map);
+// Everest Base Camp 28.002553, 86.852718
+L.marker([28.002553, 86.852718]).addTo(map);
+// Bougainville
+```
+#### Adding marker points
+```
+L.marker(<latlng>, options?).addTo(map);
+```
+#### Defining Zoom Levels
+#### Inset Map
+
 
 ### Map 3: Image overlay with transparency slider tool
 Within the provided geodata you find an .png image file named

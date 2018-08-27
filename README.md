@@ -18,7 +18,7 @@ between them. The tile-layer source will usually be displayed automatically. The
 initially display the extend of South Australia.
 You can use this resource for Leaflet tilemaps providers: http://leaflet-extras.github.io/leaflet-providers/preview/index.html.
 
-https://htmlpreview.github.io/?https://github.com/JoshuaGore8Uni/GEOE-3019-Web-Cartography/blob/master/Leaflet_01_map/Leaflet_03_Layer%20control.html
+https://htmlpreview.github.io/?https://github.com/JoshuaGore8Uni/GEOE-3019-Web-Cartography/blob/master/Leaflet_01_map/Leaflet_01_map.html
 
 ### Map 2: Place Of Interest map / add markers
 Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
@@ -28,6 +28,10 @@ image together with further descriptive information (text, URL, etc.). Choose cu
 symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
 bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
 2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).
+
+https://htmlpreview.github.io/?https://github.com/JoshuaGore8Uni/GEOE-3019-Web-Cartography/blob/master/Leaflet_02_map/leaflet_02_map.html
+
+
 #### Favorite Travel Destinations
 * Australia
     * Koziosco Great Range Walk (3)

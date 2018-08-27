@@ -18,7 +18,7 @@ between them. The tile-layer source will usually be displayed automatically. The
 initially display the extend of South Australia.
 You can use this resource for Leaflet tilemaps providers: http://leaflet-extras.github.io/leaflet-providers/preview/index.html.
 
-https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html
+https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/Leaflet_01_map.html
 
 ### Map 2: Place Of Interest map / add markers
 Your second map shall include at least 3 marker points  indicating your favourite worldwide travel

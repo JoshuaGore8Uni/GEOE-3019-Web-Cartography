@@ -8,14 +8,14 @@
 </head>
 <body>
     <div id="map" style="width: 700px; height: 500px"></div>
-	
+
     <script>
         // set initial map extent to South Australia
         var map = L.map('map').fitBounds([
-            [-25.89, 128.85], 
+            [-25.89, 128.85],
             [-38.16, 141.13]
         ]);
-       
+
         // initiate five map layers
 
         // satellite
@@ -64,7 +64,7 @@
         };
 		L.control.layers(baseLayers, overlays).addTo(map);
 		L.control.scale().addTo(map);
-					
+
     </script>
 </body>
 </html>

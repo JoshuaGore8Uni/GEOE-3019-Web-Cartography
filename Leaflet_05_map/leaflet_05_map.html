@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leaflet Map</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+        <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
+        <script src="../data/leaflet_plugins/leaflet.ajax.min.js"></script>
+        <!-- GeoJSON -->
+        <!--
+        <script type="text/javascript" src="../data/geodata_files/burnsidetreeswgs84.geojson"></script>
+        -->
+    </head>
+    <body>
+        <!--
+        Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
+        Add an appropriate map title using an info window on the upper right corner.
+        Limit the map window size to 600 x 400 px.
+        ../data/geodata_files/burnsidetreeswgs84.geojson
+        -->
+        <div id="map" style="width: 600px; height: 400px"></div>
+        <script>
+            var map = L.map('map').setView([-34.94, 138.66], 13);
+            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+            L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
+            var geojson = new L.GeoJSON.AJAX("../data/geodata_files/burnsidetreeswgs84.geojson");
+            // geojson.addTo(map);
+            geojson.on('data:loaded', function () {
+                console.log(geojson);
+                console.log(geojson.features);
+                console.log(geojson._layers);
+                geoJson2heat = function(geojson) {
+                    return geojson._features.map(function(feature) {
+                        return [parseFloat(feature.geometry.coordinates[1]), parseFloat(feature.geometry.coordinates[0])]
+                    })
+                };
+                var geoData = geoJson2heat(geojson);
+                console.log(geoData);
+                console.log('test')
+                var heatlayer = new L.heatLayer(geoData);
+                map.addLayer(heatlayer);
+            });
+        </script>
+    </body>
+</html>

@@ -4,7 +4,7 @@
 *Do not plagarise!*
 ## Carto Map of Emotions
 ## Mapbox Custom Overlay Map
-## Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation 
+## Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation
 ### Map 1: Basemap - selector
 Your first Leaflet web map should contain different basemaps and a basemap layer control. You
 have to incorporate altogether five different tiled maps:
@@ -18,7 +18,7 @@ between them. The tile-layer source will usually be displayed automatically. The
 initially display the extend of South Australia.
 You can use this resource for Leaflet tilemaps providers: http://leaflet-extras.github.io/leaflet-providers/preview/index.html.
 
-https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/Leaflet_01_map.html
+https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html
 
 ### Map 2: Place Of Interest map / add markers
 Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
@@ -98,10 +98,12 @@ Lat Lng of the image extend (top left and bottom right):
 -34.857826 138.450236 Decimal Degrees
 -34.985246 138.749692 Decimal Degrees
 ```
+https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html
 ### Map 4: Marker Clustering
 Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
 Add an appropriate map title using an info window on the upper right corner.
 Limit the map window size to 600 x 400 px.
+https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_04_map/leaflet_04_map.html
 
 ### Map 5: Heat map
 Use the same data set (burnsidetreeswgs84.geojson) and create an heat map. When designing the
@@ -115,7 +117,7 @@ each council area. That’s the one you need to use for your choropleth map.
 Explore the data distribution using a histogram:  
 ![image of data in arcgis histogram][LGA_Histo]  
 [LGA_Histo]: ../data/LGA_Histo.png
-  
+
 Which classification method to use: Natural breaks would be one option.  
 How many classes: Usually between 3 and 7.  
 The colour-scheme should be sequential.  

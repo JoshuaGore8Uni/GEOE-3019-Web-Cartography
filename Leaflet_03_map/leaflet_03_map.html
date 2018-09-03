@@ -26,7 +26,7 @@
             // var map = L.map('map').fitWorld();
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-			L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}).addTo(map);
+			      L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}).addTo(map);
             var imageUrl = '../data/geodata_files/historical_TopoMap_Adelaide_1898.png',
                 imageBounds = [[-34.857826, 138.450236], [-34.985246, 138.749692]];
             var layer = L.imageOverlay(imageUrl, imageBounds).addTo(map);
@@ -35,7 +35,7 @@
                 orient: 'vertical',
                 value: 100
             });
-            
+
             control.on('change input', function(e) {
                 console.log(e.value);
                 layer.setOpacity(e.value / 100);

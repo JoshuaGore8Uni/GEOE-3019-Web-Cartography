@@ -7,8 +7,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
         <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
         <script src="../data/leaflet_plugins/leaflet.ajax.min.js"></script>
+        <script src="https://requirejs.org/docs/release/2.3.3/minified/require.js"></script>
         <!-- GeoJSON -->
         <!--
+        <script>var burnsidetreeswgs84 = require('../data/geodata_files/burnsidetreeswgs84.geojson');</script>
         <script type="text/javascript" src="../data/geodata_files/burnsidetreeswgs84.geojson"></script>
         -->
     </head>
@@ -25,22 +27,28 @@
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
             L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
-            var geojson = new L.GeoJSON.AJAX("../data/geodata_files/burnsidetreeswgs84.geojson");
-            // geojson.addTo(map);
-            geojson.on('data:loaded', function () {
-                console.log(geojson);
-                console.log(geojson.features);
-                console.log(geojson._layers);
-                geoJson2heat = function(geojson) {
-                    return geojson._features.map(function(feature) {
-                        return [parseFloat(feature.geometry.coordinates[1]), parseFloat(feature.geometry.coordinates[0])]
-                    })
-                };
-                var geoData = geoJson2heat(geojson);
-                console.log(geoData);
-                console.log('test')
-                var heatlayer = new L.heatLayer(geoData);
-                map.addLayer(heatlayer);
+            /*
+            function geoJson2heat(geojson, intensity) {
+                return geojson.features.map(function(feature) {
+                    return [
+                        feature.geometry.coordinates[0][1],
+                        feature.geometry.coordinates[0][0],
+                        feature.properties[intensity]
+                    ];
+                });
+            }; 
+            */
+            function geoJson2heat(geojson) {
+                return geojson.features.map(function(feature) {
+                    return [
+                        feature.geometry.coordinates[0][1],
+                        feature.geometry.coordinates[0][0],
+                    ];
+                });
+            }; 
+            require(['../data/geodata_files/burnsidetreeswgs84'], function(data) {
+                latlng = geoJson2heat(data);
+                console.log(latlng);
             });
         </script>
     </body>

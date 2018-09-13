@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.2/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.3.2/dist/leaflet.js"></script>
+	  <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
+</head>
+<body>
+    <div id="map" style="width: 700px; height: 500px"></div>
+
+    <script>
+        // set initial map extent to South Australia
+        var map = L.map('map').fitBounds([
+            [-25.89, 128.85],
+            [-38.16, 141.13]
+        ]);
+
+        // initiate five map layers
+
+        // satellite
+        var mapbox_satellite = L.tileLayer.provider('MapBox', {
+            id: 'mapbox.satellite',
+            accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+        });
+
+        // road
+        var mapbox_streets = L.tileLayer.provider('MapBox', {
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+        }).addTo(map);
+
+        // terrain
+        var mapbox_terrain = L.tileLayer.provider('MapBox', {
+            id: 'mapbox.outdoors',
+            accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+        });
+
+        // grey without labels
+        var mapbox_grey_nolabels = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: ' Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> — Map data © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+
+        // dark map
+        var mapbox_dark = L.tileLayer.provider('MapBox', {
+            id: 'mapbox.dark',
+            accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+        });
+
+		// layer control
+		var baseLayers = {
+			"Satellite": mapbox_satellite,
+			"Road": mapbox_streets,
+			"Terrain": mapbox_terrain,
+			"Dark": mapbox_dark,
+                        "No Labels": mapbox_grey_nolabels,
+        };
+
+		var overlays = {
+            /*
+			"Circle":circle,
+			"Polygon":polygon,
+			"Line":polyline,
+			"Point of interest":POI
+            */
+        };
+		L.control.layers(baseLayers, overlays).addTo(map);
+		L.control.scale().addTo(map);
+
+    </script>
+</body>
+</html>

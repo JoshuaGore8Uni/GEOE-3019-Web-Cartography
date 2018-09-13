@@ -6,49 +6,52 @@
         <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
         <script src="../data/leaflet_plugins/leaflet-providers.js"></script>
-        <script src="../data/leaflet_plugins/leaflet.ajax.min.js"></script>
-        <script src="https://requirejs.org/docs/release/2.3.3/minified/require.js"></script>
+        <script>
+            // https://stackoverflow.com/questions/14388452/how-do-i-load-a-json-object-from-a-file-with-ajax
+            function fetchJSONFile(path, callback) {
+                var httpRequest = new XMLHttpRequest();
+                httpRequest.onreadystatechange = function() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200 || httpRequest.status === 0) {
+                            var data = JSON.parse(httpRequest.responseText);
+                            if (callback) callback(data);
+                        }
+                    }
+                };
+                httpRequest.open('GET', path);
+                httpRequest.send(); 
+            }
+        </script>
         <!-- GeoJSON -->
-        <!--
-        <script>var burnsidetreeswgs84 = require('../data/geodata_files/burnsidetreeswgs84.geojson');</script>
-        <script type="text/javascript" src="../data/geodata_files/burnsidetreeswgs84.geojson"></script>
-        -->
     </head>
     <body>
+
         <!--
-        Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
+        Use the burnsidetreeswgs84.geojson point file and create an heat map. When designing the
+        heat map carefully choose radius and blur parameters.
         Add an appropriate map title using an info window on the upper right corner.
         Limit the map window size to 600 x 400 px.
         ../data/geodata_files/burnsidetreeswgs84.geojson
         -->
+        k
         <div id="map" style="width: 600px; height: 400px"></div>
         <script>
+
+            // add OpenStreetMap basemap
             var map = L.map('map').setView([-34.94, 138.66], 13);
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
             L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map);
-            /*
-            function geoJson2heat(geojson, intensity) {
-                return geojson.features.map(function(feature) {
-                    return [
-                        feature.geometry.coordinates[0][1],
-                        feature.geometry.coordinates[0][0],
-                        feature.properties[intensity]
-                    ];
+
+            // fetch tree file and display as heatmap
+            fetchJSONFile('../data/geodata_files/burnsidetreeswgs84.geojson', data => {
+                var coords = data.features.map(feature => {
+                        return [
+                            feature.geometry.coordinates[1],
+                            feature.geometry.coordinates[0]
+                        ];
                 });
-            }; 
-            */
-            function geoJson2heat(geojson) {
-                return geojson.features.map(function(feature) {
-                    return [
-                        feature.geometry.coordinates[0][1],
-                        feature.geometry.coordinates[0][0],
-                    ];
-                });
-            }; 
-            require(['../data/geodata_files/burnsidetreeswgs84'], function(data) {
-                latlng = geoJson2heat(data);
-                console.log(latlng);
+                var heat = L.heatLayer(coords, {radius: 13, blur: 30, gradient: {0.1: '#d8b365', 0.65: '#d0e0a6', 1: '#31a354'}}).addTo(map);
             });
         </script>
     </body>

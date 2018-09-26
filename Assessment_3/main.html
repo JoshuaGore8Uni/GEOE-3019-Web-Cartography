@@ -2,19 +2,46 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Most Recent Fires SA</title>
-        <!-- leaflet css and js -->
+        <!-- leaflet css -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
             integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
             crossorigin=""/>
+        <!-- boostrap css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+            crossorigin="anonymous">
+        <!-- leaflet js -->
         <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
             integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
             crossorigin=""></script> 
+        
+        <!-- link to unzip script from gildas-lormeau.github.io/zip.js/ -->
+        <!--
+        <script src="../data/zip/zip.js"></script>
+        <script>
+            zip.workerScriptsPath = "../data/zip/"
+        </script>
+        -->
     </head>
     <body style="padding: 0; margin: 0">
+        <!-- html -->
         <div id="main_fire_map" style="padding: 0; margin: 0; width: 100vw; height: 100vh"></div>
+
+        <!-- javascript for bootstrap -->
+        <!-- default slim
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        --> 
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <!-- javascript for map -->
         <script>
+
             // create 4 to 5 base map layers as required
+
             // road map
             var leafletStreets = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -22,11 +49,13 @@
                 id: 'mapbox.streets',
                 accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
             });
+
             // terrain map
             var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                 maxZoom: 17,
                 attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
             });
+
             // satellite image map
             var leafletSatellite = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -34,18 +63,25 @@
                 id: 'mapbox.satellite',
                 accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
             });
+
             // light gray map with labels
             var cartoPositron = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
                 subdomains: 'abcd',
                 maxZoom: 19
             });
+
             // dark gray map without labels
             var cartoDarkMatterNoLabels = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
                 subdomains: 'abcd',
                 maxZoom: 19
             });
+            
+            // geojson layer to contain all simplified data
+            var lastFireAreaSimplified = L.geoJSON();
+            var lastFireAreaFull = L.geoJSON();
+
             // initialise map and set extent to mid south of SA, zoom level 9
             var mainFireMap = L.map('main_fire_map', {
                 center: [-34.3514, 138.9606],
@@ -55,16 +91,81 @@
                 // layers: [leafletStreets, openTopoMap, leafletSatellite, cartoPositron, cartoDarkMatterNoLabels]
                 layers: [leafletStreets]
             });
+
             // initialise object to store basemaps
             var baseMaps = {
                 "Roads": leafletStreets,
                 "Topography": openTopoMap,
                 "Satellite": leafletSatellite,
-                "LightLabels": cartoPositron,
-                "DarkNoLabels": cartoDarkMatterNoLabels
+                "Light Map": cartoPositron,
+                "Dark Background Map": cartoDarkMatterNoLabels
             };
+
             // add layer control
-            L.control.layers(baseMaps).addTo(mainFireMap);
+            layerControl = L.control.layers(baseMaps).addTo(mainFireMap);
+            L.control.scale().addTo(mainFireMap);
+
+            // fire data is located at ./data/[provided|own]
+            // load all simple fire data
+            jQuery.getJSON("./data/provided/LastFire_areas_simplified.json", function(data) {
+                lastFireAreaSimplified.addData(data);
+                // lastFireAreaSimplified.addTo(mainFireMap);
+                layerControl.addOverlay(lastFireAreaSimplified, "fire areas simplified");
+            });
+            jQuery.getJSON("./data/own/LastFire_FullFile.geojson", function(data) {
+                lastFireAreaFull.addData(data);
+                // lastFireAreaFull.addTo(mainFireMap);
+                layerControl.addOverlay(lastFireAreaFull, "fire areas Full");
+            });
+
+            // add watermark control class
+            L.Control.Watermark = L.Control.extend({
+                onAdd: function(map) {
+                    var img = L.DomUtil.create('img');
+
+                    img.src = '../data/images/logo_unisa_rgb-blue_h.png';
+                    img.style.width = '200px';
+
+                    return img;
+                },
+
+            });
+
+            L.control.watermark = function(opts) {
+                return new L.Control.Watermark(opts);
+            }
+
+            // add watermark to map
+            L.control.watermark({ position: 'bottomright' }).addTo(mainFireMap);
+
+
+            // var firedata = $.ajax({
+            /*
+            $.ajax({
+                type: 'GET',
+                url: "https://www.waterconnect.sa.gov.au/Content/Downloads/DEW/FIREMGT_LastFire_geojson.zip",
+                // stops pre flight checking causing cors errors
+                "dataType": 'jsonp',
+                xhrFields: {
+                    withCredentials: false
+                },
+                success: (res) => {
+                    console.log(res);
+                }
+            });
+            firedata.done(function(data) {
+                console.log(data);
+            })
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // do something with the file
+                    zip.BlobReader(xhttp.response);
+                }
+            }
+            xhttp.open("GET", "https://www.waterconnect.sa.gov.au/Content/Downloads/DEW/FIREMGT_LastFire_geojson.zip", true);
+            xhttp.send();
+            */
         </script>
     </body>
 </html>

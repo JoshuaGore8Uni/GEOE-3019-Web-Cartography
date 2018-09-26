@@ -126,3 +126,4 @@ You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the fi
 Additional reading about choropleth maps and their cartography: http://axismaps.github.io/thematic-cartography/articles/choropleth.html  
 Optional: Create and include a legend. Think about an appropriate classification and colour scheme*
 ## Assignment 3 - Presentation of fire scar data
+https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Assessment_3/vue.html

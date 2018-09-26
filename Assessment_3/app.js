@@ -16,12 +16,13 @@ new Vue({
         workingUI: true,
 
         // filters
+        showFire: true,
         showSummer: true,
         showAutumn: true,
         showWinter: true,
         showSpring: true,
-        showControlled: true,
-        showFire: true,
+        showPrescribedBurns: true,
+        showBushfires: true,
         show1950s: true,
         show1960s: true,
         show1970s: true,
@@ -169,6 +170,16 @@ new Vue({
             let fireAreas = Object.assign({}, this.lastFireAreaSimplified);
 
             // remove all items which are not to be included
+            if (this.showPrescribedBurns != true) {
+                fireAreas.features = fireAreas.features.filter(area => {
+                    return area.properties.INCIDENTTY != 'Prescribed Burn';
+                });
+            }
+            if (this.showBushfires != true) {
+                fireAreas.features = fireAreas.features.filter(area => {
+                    return area.properties.INCIDENTTY != 'Bushfire';
+                });
+            }
             if (this.showSummer != true) {
                 fireAreas.features = fireAreas.features.filter(area => {
                     return area.properties.SEASON != 'SUMMER';

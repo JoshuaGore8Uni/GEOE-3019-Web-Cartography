@@ -31,6 +31,15 @@
                         <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
                         <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
                     </div>
+                    <h1>Type</h1>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="prescribed-burn-filter" v-model="showPrescribedBurns">
+                        <label class="custom-control-label" for="prescribed-burn-filter">Prescribed Burns</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="bushfire-filter" v-model="showBushfires">
+                        <label class="custom-control-label" for="bushfire-filter">Bushfires</label>
+                    </div>
                     <h1>Season</h1>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="summer-filter" v-model="showSummer">

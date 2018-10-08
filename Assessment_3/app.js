@@ -165,6 +165,7 @@ new Vue({
     computed: {
 
         filteredAreas: function() {
+            t01 = performance.now();
 
             // clone fire data
             let fireAreas = Object.assign({}, this.lastFireAreaSimplified);
@@ -235,6 +236,8 @@ new Vue({
                     return (area.properties.FIREYEAR > 2019 || area.properties.FIREYEAR < 2010);
                 });
             }
+            t02 = performance.now();
+            console.log("filter time taken: " + (t02 - t01) + " milliseconds");
 
             // return filtered data
             return fireAreas;
@@ -242,8 +245,27 @@ new Vue({
     },
     watch: {
         filteredAreas() {
+            /*
+            parent = this;
+            this.map.removeLayer(this.fireAreaLayer);
+            parent.fireAreaLayer = L.geoJSON(false, {
+                onEachFeature: function(feature, layer) {
+                    var popupContent = '';
+                    Object.entries(feature.properties).forEach(
+                        ([key, value]) => popupContent = popupContent + '<div>' + key + ': ' + value + '</div>'
+                    );
+                    layer.bindPopup(popupContent);
+                }
+            });
+            parent.fireAreaLayer.addData(parent.filteredAreas);
+            parent.layerControl.addOverlay(parent.fireAreaLayer, "fire areas simplified");
+            parent.fireAreaLayer.addTo(parent.map);
+            */
+            t01 = performance.now();
             this.fireAreaLayer.clearLayers();
             this.fireAreaLayer.addData(this.filteredAreas);
+            t02 = performance.now();
+            console.log("re-add data time taken: " + (t02 - t01) + " milliseconds");
         }
     }
 });

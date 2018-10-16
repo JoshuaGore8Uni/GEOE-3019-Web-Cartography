@@ -39,8 +39,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addDataFrom('./data/provided/LastFire_areas_simplified.json')">Load Adelaide Area (20mb)</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="addDataFrom('./data/downloaded/FIREMGT_LastFire_WebMercator.geojson')">Load Entire State (200mb)</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="addDataFrom('./data/downloaded/FIREMGT_LastFire_WebMercator.geojson')">Load Entire State (200mb) from cloud</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="addDataFrom('./data/untracked/FIREMGT_LastFire_WebMercator.geojson')">Load Entire State (200mb)</button>
                         </div>
                     </div>
                 </div>
@@ -85,7 +84,8 @@
         <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.js"></script>
 
         <!-- Application JavaScript -->
-        <script src="./vector.js"></script>
+        <script src="./map.js"></script>
+        <script src="./interface.js"></script>
     </body>
 </html>
 

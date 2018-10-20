@@ -138,7 +138,6 @@ mapState = {
             }
             else {
                 console.log("just adding ");
-                console.log(options);
                 runAdd(this, name, options);
                 resolve("Stuff Worked");
             }
@@ -204,8 +203,6 @@ mapState = {
                 });
             }
             else {
-                console.log("just adding ");
-                console.log(options);
                 runAdd(this, name, options);
                 resolve("Stuff Worked");
             }
@@ -366,8 +363,6 @@ mapState = {
             // console.log(indexSet);
             var layersToShow = [];
             var layersToHide = [];
-            console.log(this.overlays[overlay.name]);
-            console.log(this.overlays[overlay.name].original);
             // this.overlays[overlay.name].original.eachLayer(featureLayer => {
             this.overlays[overlay.name].original.forEach(featureLayer => {
                 var properties = featureLayer.feature.properties;

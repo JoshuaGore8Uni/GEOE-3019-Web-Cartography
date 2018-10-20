@@ -102,7 +102,7 @@
                                 :formatter="function (value){return Number(value/10000).toFixed(0) + ' ha'}"
                                 :piecewise="true"
                                 :piecewise-label="true"
-                                :data="[0, 1000000, 5000000, 100000000, maxFireSize]"
+                                :data="[0, 1000000, 5000000, 100000000, fireSizeRange[1]]"
                                 v-model="fireSizeRange">
                             </vue-slider>
                         </div>

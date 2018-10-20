@@ -33,7 +33,7 @@ var vm = new Vue({
         // fire sizes
         maxFireSize: 10000000,
         minFireSize: 0,
-        fireSizeRange: [0, 100000],
+        fireSizeRange: [0, 100000000],
         animation: false,
     },
     mounted: function () {
@@ -252,7 +252,6 @@ var vm = new Vue({
                 this.$set(this.fireYearRange, 1, 1930);
                 console.log("running animation: " + this.animation);
                 var loop = setInterval(() => {
-                    console.log(this.animation);
                     if (this.animation != true || this.yearsDisplay != 'slider') {
                         // years display changed then animation stopped
                         this.animation = false;

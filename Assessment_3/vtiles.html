@@ -6,13 +6,24 @@
         <!-- -->
 
         <!-- Font Awesome - Free SVG Icons -->
+        <!--
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 
         <!-- Boostrap CSS - Styling and Component Framework  with Flatly Theme from Bootswatch-->
         <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-gJWVjz180MvwCrGGkC4xE5FjhWkTxHIR/+GgT8j2B3KKMgh6waEjPgzzh7lL7JZT" crossorigin="anonymous">
 
+        <!-- "polyfill" for HTML5 multi-handle sliders -->
+        <!--
+        <link href="./assets/multirange.css" rel="stylesheet"/>
+        -->
+
         <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+        <!-- Marker Plugin CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
 
         <!-- Application CSS -->
         <link rel="stylesheet" href="./vector.css" />
@@ -22,12 +33,86 @@
         <div id="app">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col p-0">
+                    <div class="col col-lg-8 col-xl-9 p-0">
                         <div id="map"></div>
+                    </div>
+                    <div class="col col-lg-4 col-xl-3">
+                        <h5>Fire Type</h5>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="showBushfires" v-model="showBushfires">
+                                <label class="custom-control-label" for="showBushfires">Bushfires</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="showPrescribedBurns" v-model="showPrescribedBurns">
+                                <label class="custom-control-label" for="showPrescribedBurns">Prescribed Burns</label>
+                            </div>
+                        <h5>Fire Season</h5>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="showSummer" v-model="showSummer">
+                            <label class="custom-control-label" for="showSummer">Summer</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="showAutumn" v-model="showAutumn">
+                            <label class="custom-control-label" for="showAutumn">Autumn</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="showWinter" v-model="showWinter">
+                            <label class="custom-control-label" for="showWinter">Winter</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="showSpring" v-model="showSpring">
+                            <label class="custom-control-label" for="showSpring">Spring</label>
+                        </div>
+                        <h5>Fire Year</h5>
+                        <div class="btn-group btn-group-toggle">
+                            <label class="btn btn-secondary" :class="yearsDisplay == 'slider' ? 'active' : '' ">
+                                <input type="radio" name="yearsDisplay" id="yearsDisplaySlider" v-model="yearsDisplay" value="slider" autocomplete="off" checked>Time Slider
+                            </label>
+                            <label class="btn btn-secondary" :class="yearsDisplay == 'decade' ? 'active' : '' ">
+                                <input type="radio" name="yearsDisplay" id="yearsDisplayDecade" v-model="yearsDisplay" @click="fireYearRange = [1930, 1940]" value="decade" autocomplete="off">Decade Summary
+                            </label>
+                        </div>
+                        <div class="d-flex" style="padding-top: 40px; padding-left: 15px; padding-right: 20px;">
+                            <div class="d-flex" v-if="yearsDisplay == 'slider'" style="padding-right: 16px">
+                                <a href="#"><i class="py-1 fas" :class="animation ? 'fa-pause' : 'fa-play'" @click="animation = !animation"></i></a>
+                            </div>
+                            <div class="flex-grow-1">
+                                <vue-slider 
+                                    ref="fireYearRange" 
+                                    :min="1930" 
+                                    :max="2020" 
+                                    :fixed="(yearsDisplay == 'decade' ? true : false)" 
+                                    :process-dragable="true"
+                                    :interval="(yearsDisplay == 'decade' ? 10 : 1)" 
+                                    :enable-cross="false" 
+                                    :piecewise="yearsDisplay == 'decade' ? true : false"
+                                    :piecewise-label="yearsDisplay == 'decade' ? true : false"
+                                    v-model="fireYearRange">
+                                </vue-slider>
+                            </div>
+                        </div>
+                        <h5>Fire Size</h5>
+                        <div style="padding-top: 40px; padding-left: 15px; padding-right: 20px;">
+                            <vue-slider 
+                                ref="size" 
+                                :min="0" 
+                                :max="maxFireSize" 
+                                :process-dragable="true"
+                                :enable-cross="false" 
+                                :formatter="function (value){return Number(value/10000).toFixed(0) + ' ha'}"
+                                :piecewise="true"
+                                :piecewise-label="true"
+                                :data="[0, 1000000, 5000000, 100000000, maxFireSize]"
+                                v-model="fireSizeRange">
+                            </vue-slider>
+                        </div>
+                        <h5>History of Bushfires in South Australia</h5>
+                        <p><i><a href="https://www.cfs.sa.gov.au/site/about_cfs/history_of_the_cfs/bushfire_history.jsp">Sourced from the CFS</a></i></p>
+                        <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="the-welcome-modal">
+            <div v-if="showTheWelcomeModal" class="modal" id="the-welcome-modal" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -38,22 +123,23 @@
                             <p class="text-warning"><b>Warning:</b> The full dataset is a download of over 200mb , and requires the power of a mid range modern computer to display well. Load the data subset if you have limited download or are on a phone, laptop or old PC</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addDataFrom('./data/provided/LastFire_areas_simplified.json')">Load Adelaide Area (20mb)</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" @click="addDataFrom('./data/untracked/FIREMGT_LastFire_WebMercator.geojson')">Load Entire State (200mb)</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="the-loading-modal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Working...</h5>
-                        </div>
-                        <div class="modal-body">
-                        </div>
-                        <div class="modal-footer">
-                            <p>{{ loadingStateMessage }}</b>
+                            <template v-if="initiation"> 
+                                <!--
+                                <button type="button" class="btn btn-primary" @click="addDataFrom('./data/provided/LastFire_areas.json')">Load Adelaide Area (20mb)</button>
+                                -->
+                                <!--
+                                <button type="button" class="btn btn-primary" @click="addFireData('Fire Areas', './data/untracked/mount_lofty_ranges.geojson')">Load Mount Lofty Ranges (12mb)</button>
+                                -->
+                                <!--
+                                <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', './data/untracked/FIREMGT_LastFire_WebMercator_lower_precison.geojson')">Load Entire State (200mb)</button>
+                                -->
+                                <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', './data/traacked/fire_history.geojson')">Load Entire State (200mb)</button>
+                                <!-- load it from uni -->
+                                <!--
+                                <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', 'https://cors-anywhere.herokuapp.com/https://mymailunisaedu-my.sharepoint.com/personal/gorja007_mymail_unisa_edu_au/Documents/Web%20Cartgraphy%20File%20Hosting/FIREMGT_LastFire_WebMercator_lower_precison.geojson')">Load Entire State (200mb)</button>
+                                -->
+                            </template>
+                            <p v-if="loading">{{ loadingStateMessage }}</p>
                         </div>
                     </div>
                 </div>
@@ -66,6 +152,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+        <!-- "polyfill" for HTML5 multi-handle sliders -->
+        <!--
+        <script src="./assets/multirange.js"></script>
+        -->
+        <script src="./assets/vue-slider-component.js"></script>
+
         <!-- VueJS - Reactive JavaScript Framework -->
         <!-- development version, includes helpful console warnings -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -73,6 +165,8 @@
         <!--
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         -->
+        <!-- loadash - provides debounce function -->
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
         <!-- Leaflet JavaScript -->
         <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
@@ -83,10 +177,15 @@
         <!-- Leaflet VectorGrid Plugin - displays vector grid result of GeoJSON-VT Plugin -->
         <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.js"></script>
 
+        <!-- Leaflet Marker Clustering Plugin -->
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+        <!-- SVG Icons (because leaflet can't just link to them :()   -->
+        <script src="./assets/flame.js"></script>
+        <script src="./assets/match.js"></script>
+
         <!-- Application JavaScript -->
         <script src="./map.js"></script>
         <script src="./interface.js"></script>
     </body>
 </html>
-
-

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Welcome to Hiltaba</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+        <div class="col-sm">
+            <h1>Stuff</h1>
+            <div ng-bind-html="trustedHtml" class="ng-binding"><h3 id="geoe-3019-web-cartography">GEOE-3019-Web-Cartography</h3>
+                        <p><em>Software Repo for code written by Joshua Gore</em><br>
+                        <em>most plugins etc. provided by Stefan Peters</em><br>
+                        <em>Do not plagarise!</em></p>
+                        <h4 id="carto-map-of-emotions">Carto Map of Emotions</h4>
+                        <h4 id="mapbox-custom-overlay-map">Mapbox Custom Overlay Map</h4>
+                        <h4 id="leaflet-practical---final-6-published-leaflet-web-maps-from-practical-together-wtih-a-short-text-explanation">Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation</h4>
+                        <h5 id="map-1-basemap---selector">Map 1: Basemap - selector</h5>
+                        <p>Your first Leaflet web map should contain different basemaps and a basemap layer control. You
+                        have to incorporate altogether five different tiled maps:</p>
+                        <ul>
+                        <li>satellite image</li>
+                        <li>road map</li>
+                        <li>terrain map</li>
+                        <li>grey map without labels</li>
+                        <li>dark map.
+                        The choice for each of them is up to you. The basemap layer control should allow the user to switch
+                        between them. The tile-layer source will usually be displayed automatically. The map should
+                        initially display the extend of South Australia.
+                        You can use this resource for Leaflet tilemaps providers: <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html.">http://leaflet-extras.github.io/leaflet-providers/preview/index.html.</a></li>
+                        </ul>
+                        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html</a></p>
+                        <h5 id="map-2-place-of-interest-map--add-markers">Map 2: Place Of Interest map / add markers</h5>
+                        <p>Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
+                        destinations. Moreover, you are asked to implement an interactive marker function: Whenever
+                        the user hovers or/and clicks on a marker, an Info-Window should popup showing an embedded
+                        image together with further descriptive information (text, URL, etc.). Choose customized marker
+                        symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
+                        bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
+                        2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).</p>
+                        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html</a></p>
+                        <h6 id="favorite-travel-destinations">Favorite Travel Destinations</h6>
+                        <ul>
+                        <li>Australia<ul>
+                        <li>Koziosco Great Range Walk (3)</li>
+                        <li>Alpine National Park (2)</li>
+                        <li>Kata Juta (2)</li>
+                        <li>Mt Remarkable National Park(1)</li>
+                        <li>Flinders Ranges (1)</li></ul></li>
+                        <li>New Zealand<ul>
+                        <li>Wellington (2)</li>
+                        <li>Rotarua (3)</li>
+                        <li>Fiordland (Te Anau)<ul>
+                        <li>Milford Track (4)</li>
+                        <li>Kepler Track (4)</li></ul></li>
+                        <li>Queenstown (3)</li></ul></li>
+                        <li>America<ul>
+                        <li>Appalatian Mountain Track (5)</li></ul></li>
+                        <li>Canada<ul>
+                        <li>Rockies (5)</li></ul></li>
+                        <li>Himalayisas - Everest Base Camp (5)</li>
+                        <li>Bougainville (4)</li>
+                        </ul>
+                        <pre><code>// Kosciuszko -36.455927, 148.264550
+                        L.marker([-36.455927, 148.264550]).addTo(map);
+                        // Alpine National Park: Lake Tali Karng -37.541972, 146.790241
+                        L.marker([-37.541972, 146.790241]).addTo(map);
+                        // Kata Tjuta -25.296021, 130.720571
+                        L.marker([-25.296021, 130.720571]).addTo(map);
+                        // Mt Remarkable National Park -32.787953, 138.068583
+                        L.marker([-32.787953, 138.068583]).addTo(map);
+                        // Wilpena Pound, Flinders Ranges -31.559838, 138.572020
+                        L.marker([-31.559838, 138.572020]).addTo(map);
+                        // Wellington -41.315579, 174.781097
+                        L.marker([-41.315579, 174.781097]).addTo(map);
+                        // Rotarua -38.136663, 176.246466
+                        L.marker([-38.136663, 176.246466]).addTo(map);
+                        // Milford Track -44.683690, 167.902212
+                        L.marker([-44.683690, 167.902212]).addTo(map);
+                        // Kepler Track -45.492070, 167.663162
+                        L.marker([-45.492070, 167.663162]).addTo(map);
+                        // Queenstown
+                        // Appalatian Mountains 36.903539, -81.081878
+                        L.marker([36.903539, -81.081878]).addTo(map);
+                        // Rocky Mountains 44.254401, -109.808834
+                        L.marker([44.254401, -109.808834]).addTo(map);
+                        // Everest Base Camp 28.002553, 86.852718
+                        L.marker([28.002553, 86.852718]).addTo(map);
+                        // Bougainville</code></pre>
+                        <h6 id="adding-marker-points">Adding marker points</h6>
+                        <pre><code>L.marker(&lt;latlng&gt;, options?).addTo(map);</code></pre>
+                        <h6 id="defining-zoom-levels">Defining Zoom Levels</h6>
+                        <h6 id="inset-map">Inset Map</h6>
+                        <h5 id="map-3-image-overlay-with-transparency-slider-tool">Map 3: Image overlay with transparency slider tool</h5>
+                        <p>Within the provided geodata you find an .png image file named
+                        “historical_TopoMap_Adelaide_1898.png”. Please embed this historical raster map in your web
+                        map. Apply a slider tool to change image opacity from 100% to 0%. The image extend is:</p>
+                        <pre><code>Lat Lng of the image extend (top left and bottom right):
+                        -34.857826 138.450236 Decimal Degrees
+                        -34.985246 138.749692 Decimal Degrees</code></pre>
+                        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html</a></p>
+                        <h5 id="map-4-marker-clustering">Map 4: Marker Clustering</h5>
+                        <p>Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
+                        Add an appropriate map title using an info window on the upper right corner.
+                        Limit the map window size to 600 x 400 px.</p>
+                        <h5 id="map-5-heat-map">Map 5: Heat map</h5>
+                        <p>Use the same data set (burnsidetreeswgs84.geojson) and create an heat map. When designing the
+                        heat map carefully choose radius and blur parameters.
+                        Apply title approach and map window size as above (Map 4).</p>
+                        <h5 id="map-6-choropleth-map-with-geojson-data">Map 6: Choropleth map with geojson data</h5>
+                        <p>Use the LGA_Adelaide.geojson polygon file to create a choropleth map. LGAs are Land government
+                        areas (council areas). Explore the geojson file. One attribute field contains the number of parks in
+                        each council area. That’s the one you need to use for your choropleth map.
+                        Explore the data distribution using a histogram:<br>
+                        <img src="../data/LGA_Histo.png" alt="image of data in arcgis histogram"><br>
+                        Which classification method to use: Natural breaks would be one option.<br>
+                        How many classes: Usually between 3 and 7.<br>
+                        The colour-scheme should be sequential.<br>
+                        You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.<br>
+                        <em>Helpful to use is this online colour-advise-tool for choropleth maps: <a href="http://colorbrewer2.org">http://colorbrewer2.org</a>
+                        Additional reading about choropleth maps and their cartography: <a href="http://axismaps.github.io/thematic-cartography/articles/choropleth.html">http://axismaps.github.io/thematic-cartography/articles/choropleth.html</a>
+                        Optional: Create and include a legend. Think about an appropriate classification and colour scheme</em></p>
+                        <h4 id="assignment-3---presentation-of-fire-scar-data">Assignment 3 - Presentation of fire scar data</h4></div>
+                            </div>
+        <!-- Content here -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>

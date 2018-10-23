@@ -5,9 +5,40 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <!-- all js placed in head to simplify inline scripting -->
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+        <!-- Boostrap Javascript -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <!-- page by page scroll onepage-scroll -->
+        <!--
+        <link rel="stylesheet" href="../assets/onepage-scroll.css"/>
+        <script src="../assets/jquery.onepage-scroll.min.js"></script>
+        <script>$(".main").onepage_scroll({keyboard: true});</script>
+        -->
+
+        <!-- Leaflet CSS and JS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+            integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+            crossorigin=""/>    
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
+        <!-- Leaflet Plugins -->
+        <script src="./data/leaflet_plugins/leaflet-providers.js"></script>
+        <link rel="stylesheet" href="./data/leaflet_plugins/Control.MiniMap.css" />
+        <script src="./data/leaflet_plugins/Control.MiniMap.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.Default.css" />
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.0/dist/leaflet.markercluster.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+        <script src="./data/leaflet_plugins/leaflet.ajax.min.js"></script>
+        <link rel="stylesheet" href="./data/leaflet_plugins/L.Control.Range.css" />
+        <script src="./data/leaflet_plugins/L.Control.Range.js"></script>
         <title>Leaflet Pracs</title>
     </head>
     <body>
@@ -36,116 +67,460 @@
                 </ul>
             </div>
         </nav>
-        <h4 id="leaflet-practical---final-6-published-leaflet-web-maps-from-practical-together-wtih-a-short-text-explanation">Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation</h4>
-        <h5 id="map-1-basemap---selector">Map 1: Basemap - selector</h5>
-        <p>Your first Leaflet web map should contain different basemaps and a basemap layer control. You
-        have to incorporate altogether five different tiled maps:</p>
-        <ul>
-            <li>satellite image</li>
-            <li>road map</li>
-            <li>terrain map</li>
-            <li>grey map without labels</li>
-            <li>dark map.
-                The choice for each of them is up to you. The basemap layer control should allow the user to switch
-                between them. The tile-layer source will usually be displayed automatically. The map should
-                initially display the extend of South Australia.
-                You can use this resource for Leaflet tilemaps providers: <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html.">http://leaflet-extras.github.io/leaflet-providers/preview/index.html.</a></li>
-        </ul>
-        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html</a></p>
-        <h5 id="map-2-place-of-interest-map--add-markers">Map 2: Place Of Interest map / add markers</h5>
-        <p>Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
-        destinations. Moreover, you are asked to implement an interactive marker function: Whenever
-        the user hovers or/and clicks on a marker, an Info-Window should popup showing an embedded
-        image together with further descriptive information (text, URL, etc.). Choose customized marker
-        symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
-        bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
-        2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).</p>
-        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html</a></p>
-        <h6 id="favorite-travel-destinations">Favorite Travel Destinations</h6>
-        <ul>
-            <li>Australia<ul>
-                    <li>Koziosco Great Range Walk (3)</li>
-                    <li>Alpine National Park (2)</li>
-                    <li>Kata Juta (2)</li>
-                    <li>Mt Remarkable National Park(1)</li>
-                    <li>Flinders Ranges (1)</li></ul></li>
-            <li>New Zealand<ul>
-                    <li>Wellington (2)</li>
-                    <li>Rotarua (3)</li>
-                    <li>Fiordland (Te Anau)<ul>
-                            <li>Milford Track (4)</li>
-                            <li>Kepler Track (4)</li></ul></li>
-                    <li>Queenstown (3)</li></ul></li>
-            <li>America<ul>
-                    <li>Appalatian Mountain Track (5)</li></ul></li>
-            <li>Canada<ul>
-                    <li>Rockies (5)</li></ul></li>
-            <li>Himalayisas - Everest Base Camp (5)</li>
-            <li>Bougainville (4)</li>
-        </ul>
-        <pre><code>// Kosciuszko -36.455927, 148.264550
-L.marker([-36.455927, 148.264550]).addTo(map);
-// Alpine National Park: Lake Tali Karng -37.541972, 146.790241
-L.marker([-37.541972, 146.790241]).addTo(map);
-// Kata Tjuta -25.296021, 130.720571
-L.marker([-25.296021, 130.720571]).addTo(map);
-// Mt Remarkable National Park -32.787953, 138.068583
-L.marker([-32.787953, 138.068583]).addTo(map);
-// Wilpena Pound, Flinders Ranges -31.559838, 138.572020
-L.marker([-31.559838, 138.572020]).addTo(map);
-// Wellington -41.315579, 174.781097
-L.marker([-41.315579, 174.781097]).addTo(map);
-// Rotarua -38.136663, 176.246466
-L.marker([-38.136663, 176.246466]).addTo(map);
-// Milford Track -44.683690, 167.902212
-L.marker([-44.683690, 167.902212]).addTo(map);
-// Kepler Track -45.492070, 167.663162
-L.marker([-45.492070, 167.663162]).addTo(map);
-// Queenstown
-// Appalatian Mountains 36.903539, -81.081878
-L.marker([36.903539, -81.081878]).addTo(map);
-// Rocky Mountains 44.254401, -109.808834
-L.marker([44.254401, -109.808834]).addTo(map);
-// Everest Base Camp 28.002553, 86.852718
-L.marker([28.002553, 86.852718]).addTo(map);
-// Bougainville</code></pre>
-        <h6 id="adding-marker-points">Adding marker points</h6>
-        <pre><code>L.marker(&lt;latlng&gt;, options?).addTo(map);</code></pre>
-        <h6 id="defining-zoom-levels">Defining Zoom Levels</h6>
-        <h6 id="inset-map">Inset Map</h6>
-        <h5 id="map-3-image-overlay-with-transparency-slider-tool">Map 3: Image overlay with transparency slider tool</h5>
-        <p>Within the provided geodata you find an .png image file named
-        “historical_TopoMap_Adelaide_1898.png”. Please embed this historical raster map in your web
-        map. Apply a slider tool to change image opacity from 100% to 0%. The image extend is:</p>
-        <pre><code>Lat Lng of the image extend (top left and bottom right):
--34.857826 138.450236 Decimal Degrees
--34.985246 138.749692 Decimal Degrees</code></pre>
-        <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html</a></p>
-        <h5 id="map-4-marker-clustering">Map 4: Marker Clustering</h5>
-        <p>Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
-        Add an appropriate map title using an info window on the upper right corner.
-        Limit the map window size to 600 x 400 px.</p>
-        <h5 id="map-5-heat-map">Map 5: Heat map</h5>
-        <p>Use the same data set (burnsidetreeswgs84.geojson) and create an heat map. When designing the
-        heat map carefully choose radius and blur parameters.
-        Apply title approach and map window size as above (Map 4).</p>
-        <h5 id="map-6-choropleth-map-with-geojson-data">Map 6: Choropleth map with geojson data</h5>
-        <p>Use the LGA_Adelaide.geojson polygon file to create a choropleth map. LGAs are Land government
-        areas (council areas). Explore the geojson file. One attribute field contains the number of parks in
-        each council area. That’s the one you need to use for your choropleth map.
-        Explore the data distribution using a histogram:<br>
-        <img src="../data/LGA_Histo.png" alt="image of data in arcgis histogram"><br>
-        Which classification method to use: Natural breaks would be one option.<br>
-        How many classes: Usually between 3 and 7.<br>
-        The colour-scheme should be sequential.<br>
-        You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.<br>
-        <em>Helpful to use is this online colour-advise-tool for choropleth maps: <a href="http://colorbrewer2.org">http://colorbrewer2.org</a>
-            Additional reading about choropleth maps and their cartography: <a href="http://axismaps.github.io/thematic-cartography/articles/choropleth.html">http://axismaps.github.io/thematic-cartography/articles/choropleth.html</a>
-            Optional: Create and include a legend. Think about an appropriate classification and colour scheme</em></p>
+        <div class="main">
+            <section>
+                <h1>Map 1: Basemap with Selector</h1>
+                <p>This map demonstrates a leaflet layer selector. Map is initially set to the extent of South Australia.</p>
+                <!-- create element to mount map one, make fullscreen as no size specified -->
+                <div id="map1" style="height: 100vh; width: 100%"></div>
 
-        <!-- Boostrap Javascript -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+                <script>
+                    // set initial map extent to South Australia
+                    var map1 = L.map('map1').fitBounds([
+                        [-25.89, 128.85],
+                        [-38.16, 141.13]
+                    ]);
+
+                    // initiate five map layers - leaflet providor plugin used for mapbox as simplified
+                    // satellite
+                    var mapbox_satellite = L.tileLayer.provider('MapBox', {
+                        id: 'mapbox.satellite',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                    });
+
+                    // road - added to map so default layer
+                    var mapbox_streets = L.tileLayer.provider('MapBox', {
+                        id: 'mapbox.streets',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                    }).addTo(map1);
+
+                    // terrain
+                    var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 16,
+                        attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                    });
+                    /*
+                    var mapbox_terrain = L.tileLayer.provider('MapBox', {
+                        id: 'mapbox.outdoors',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                    });
+                    */
+
+                    // grey without labels
+                    var mapbox_grey_nolabels = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: ' Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+
+                    // dark map
+                    var mapbox_dark = L.tileLayer.provider('MapBox', {
+                        id: 'mapbox.dark',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                    });
+
+                    // variable to hold layer control layers
+                    var baseLayers = {
+                        "Satellite": mapbox_satellite,
+                        "Road": mapbox_streets,
+                        "Terrain": openTopoMap,
+                        "Dark": mapbox_dark,
+                        "No Labels": mapbox_grey_nolabels,
+                    };
+
+                    // add layers to map
+                    L.control.layers(baseLayers).addTo(map1);
+                    L.control.scale().addTo(map1);
+
+                    // add UniSA watermark control class
+                    L.Control.Watermark = L.Control.extend({
+                        onAdd: function(map1) {
+                            var img = L.DomUtil.create('img');
+
+                            img.src = './data/images/logo_unisa_rgb-blue_h.png';
+                            img.style.width = '200px';
+
+                            return img;
+                        },
+
+                    });
+
+                    L.control.watermark = function(opts) {
+                        return new L.Control.Watermark(opts);
+                    }
+
+                    // add watermark to map
+                    L.control.watermark({ position: 'bottomleft' }).addTo(this.map1);
+
+                </script>
+            </section>
+            <section>
+                <h2>Map 2: Markers, Popups and Inset Map</h2>
+                <p>This map demonstrates markers with popups and an inset map.</p>
+                <div id="map2" style="height: 100vh; width: 100%"></div>
+                <!-- Map also made using custom markers, however marker used not visiually appealing.
+                <p>This map demonstrates markers with popups and custom markers. An inset map has also been added.</p>
+                <div id="map2" style="height: 100vh; width: 100%"></div>
+                <script>
+                    // var map = L.map('map').setView([51.505, -0.09], 13);
+                    var map = L.map('map2').fitWorld();
+                    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>',
+                        maxZoom: 18,
+                        id: 'mapbox.streets',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                    }).addTo(map);
+                    var marker_1 = L.icon({
+                        iconUrl: './data/icons/marker_1.png',
+                        iconSize:     [31, 39], // size of the icon
+                        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+                    var marker_2 = L.icon({
+                        iconUrl: './data/icons/marker_2.png',
+                        iconSize:     [31, 39], // size of the icon
+                        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+                    var marker_3 = L.icon({
+                        iconUrl: './data/icons/marker_3.png',
+                        iconSize:     [31, 39], // size of the icon
+                        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+                    var marker_4 = L.icon({
+                        iconUrl: './data/icons/marker_4.png',
+                        iconSize:     [31, 39], // size of the icon
+                        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+                    var marker_5 = L.icon({
+                        iconUrl: './data/icons/marker_5.png',
+                        iconSize:     [31, 39], // size of the icon
+                        //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                        //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                    });
+                // L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A').addTo(map);
+                    // Kosciuszko -36.455927, 148.264550
+                    L.marker([-36.455927, 148.264550], {icon: marker_3}).addTo(map);
+                    // Alpine National Park: Lake Tali Karng -37.541972, 146.790241
+                    L.marker([-37.541972, 146.790241], {icon: marker_2}).addTo(map);
+                    // Kata Tjuta -25.296021, 130.720571
+                    L.marker([-25.296021, 130.720571], {icon: marker_2}).addTo(map);
+                    // Mt Remarkable National Park -32.787953, 138.068583
+                    L.marker([-32.787953, 138.068583], {icon: marker_1}).addTo(map);
+                    // Wilpena Pound, Flinders Ranges -31.559838, 138.572020
+                    L.marker([-31.559838, 138.572020], {icon: marker_1}).addTo(map);
+                    // Wellington -41.315579, 174.781097
+                    L.marker([-41.315579, 174.781097], {icon: marker_2}).addTo(map);
+                    // Rotarua -38.136663, 176.246466
+                    L.marker([-38.136663, 176.246466], {icon: marker_3}).addTo(map);
+                    // Milford Track -44.683690, 167.902212
+                    L.marker([-44.683690, 167.902212], {icon: marker_4}).addTo(map);
+                    // Kepler Track -45.492070, 167.663162
+                    L.marker([-45.492070, 167.663162], {icon: marker_4}).addTo(map);
+                    // Queenstown
+                    // Appalatian Mountains 36.903539, -81.081878
+                    L.marker([36.903539, -81.081878], {icon: marker_5}).addTo(map);
+                    // Rocky Mountains 44.254401, -109.808834
+                    L.marker([44.254401, -109.808834], {icon: marker_5}).addTo(map);
+                    // Everest Base Camp 28.002553, 86.852718
+                    L.marker([28.002553, 86.852718], {icon: marker_5}).addTo(map);
+                    // Bougainville
+                </script>
+                -->
+                <script>
+                    // var map = L.map('map').setView([51.505, -0.09], 13);
+                    var map2 = L.map('map2').fitWorld();
+                    var baseMapURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A';
+                    var accessToken = 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'; 
+                    var attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>';
+                    var mainBaseMap = L.tileLayer(baseMapURL, {id: 'mapbox.streets', attribution: attribution, accessToken: accessToken, maxZoom: 18}).addTo(map2);
+
+                    // L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A').addTo(map);
+
+                    // add minimap
+                    var miniBaseMap = L.tileLayer(baseMapURL, {id: 'mapbox.streets', attribution: attribution, accessToken: accessToken, maxZoom: 18});
+                    var miniMap = new L.Control.MiniMap(miniBaseMap, { toggleDisplay: true }).addTo(map2);
+
+                    // define symbols as objects
+                    circleLevel1 = {
+                        color: '#ffff93',
+                        weight: 1,
+                        fillColor: '#ffff93',
+                        fillOpacity: 0.8,
+                        radius: 5,
+                    };
+                    circleLevel2 = {
+                        color: '#b0d882',
+                        weight: 1,
+                        fillColor: '#b0d882',
+                        fillOpacity: 0.8,
+                        radius: 8,
+                    };
+                    circleLevel3 = {
+                        color: '#78c679',
+                        weight: 1,
+                        fillColor: '#78c679',
+                        fillOpacity: 0.8,
+                        radius: 11,
+                    };
+                    circleLevel4 = {
+                        color: '#31a354',
+                        weight: 1,
+                        fillColor: '#31a354',
+                        fillOpacity: 0.8,
+                        radius: 14,
+                    };
+                    circleLevel5 = {
+                        color: '#006837',
+                        weight: 1,
+                        fillColor: '#006837',
+                        fillOpacity: 0.8,
+                        radius: 17,
+                    };
+
+                    // add places to map using defined circle symbols
+                
+                    // Kosciuszko -36.455927, 148.264550 ranking 3
+                    L.circleMarker([-36.455927, 148.264550], circleLevel3).addTo(map2);
+                    // Alpine National Park: Lake Tali Karng -37.541972, 146.790241 ranking 2
+                    L.circleMarker([-37.541972, 146.790241], circleLevel2).addTo(map2);
+                    // Kata Tjuta -25.296021, 130.720571 ranking 2
+                    L.circleMarker([-25.296021, 130.720571], circleLevel2).addTo(map2);
+                    // Mt Remarkable National Park -32.787953, 138.068583 ranking 1
+                    L.circleMarker([-32.787953, 138.068583], circleLevel1).addTo(map2);
+                    // Wilpena Pound, Flinders Ranges -31.559838, 138.572020 ranking 1
+                    L.circleMarker([-31.559838, 138.572020], circleLevel1).addTo(map2);
+                    // Wellington -41.315579, 174.781097 ranking 2
+                    L.circleMarker([-41.315579, 174.781097], circleLevel2).addTo(map2);
+                    // Rotarua -38.136663, 176.246466 ranking 3
+                    L.circleMarker([-38.136663, 176.246466], circleLevel3).addTo(map2);
+                    // Milford Track -44.683690, 167.902212 ranking 4
+                    L.circleMarker([-44.683690, 167.902212], circleLevel5).addTo(map2);
+                    // Kepler Track -45.492070, 167.663162 ranking 4
+                    L.circleMarker([-45.492070, 167.663162], circleLevel4).addTo(map2);
+                    // Appalatian Mountains 36.903539, -81.081878 ranking 5
+                    L.circleMarker([36.903539, -81.081878], circleLevel5).addTo(map2);
+                    // Rocky Mountains 44.254401, -109.808834 ranking 5
+                    L.circleMarker([44.254401, -109.808834], circleLevel5).addTo(map2);
+                    // Everest Base Camp 28.002553, 86.852718 ranking 5
+                    L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2);
+                </script>
+            </section>
+            <section>
+                <h1>Map 3: Image Overlay with Transparency Slider</h1>
+                <div id="map3" style="width: 100%; height: 100vh"></div>
+                <script>
+                    var map3 = L.map('map3').setView([-34.92, 138.59], 13);
+                    // var map = L.map('map').fitWorld();
+                    var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                    osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                          L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}).addTo(map3);
+                    var imageUrl = './data/geodata_files/historical_TopoMap_Adelaide_1898.png',
+                        imageBounds = [[-34.857826, 138.450236], [-34.985246, 138.749692]];
+                    var layer = L.imageOverlay(imageUrl, imageBounds).addTo(map3);
+
+                    var control = L.control.range({
+                        orient: 'vertical',
+                        value: 100
+                    });
+
+                    control.on('change input', function(e) {
+                        layer.setOpacity(e.value / 100);
+                    })
+                    map3.addControl(control);
+                </script>
+            </section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <section>
+                            <h1>Map 4: Marker Clustering</h1>
+                            <div id="map4" style="height: 400px; width: 600px"></div>
+                            <style> 
+                                .info {
+                                    padding: 6px 8px;
+                                        /*
+                                    font: 14px/16px Arial, Helvetica, sans-serif;
+                                    background: white;
+                                        */
+                                    background: rgba(255,255,255,0.8);
+                                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                                    border-radius: 5px;
+                                }
+                                .info h5 {
+                                    margin-bottom: 0px;
+                                }
+                            </style>
+                            <script>
+                                // map container
+                                var map4 = L.map('map4').setView([-34.94, 138.66], 13);
+
+                                // add tilelayer
+                                var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                                var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                                L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map4);
+
+                                // create title in leaflet control
+                                var info = L.control({position:'topright'});
+                                info.onAdd = function (map4) {this._div = L.DomUtil.create('div', 'info');
+                                    this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
+                                    return this._div};
+                                info.addTo(map4);
+
+                                // load geojson data using ajax
+                                var geojson = new L.GeoJSON.AJAX("./data/geodata_files/burnsidetreeswgs84.geojson");
+                                var markers = L.markerClusterGroup();
+
+                                // once data loaded add to marker cluster layer
+                                geojson.on('data:loaded', function () {
+                                    markers.addLayer(geojson);
+                                    map4.addLayer(markers);
+                                });
+                            </script>
+                        </section>
+                    </div>
+                    <div class="col-6">
+                        <section>
+                            <h1>Map 5: Heatmap</h1>
+                            <div id="map5" style="width: 600px; height: 400px"></div>
+                            <script>
+                                // map container
+                                var map5 = L.map('map5').setView([-34.94, 138.66], 13);
+
+                                // add tilelayer
+                                var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                                var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                                L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map5);
+
+                                // create title in leaflet control
+                                var info = L.control({position:'topright'});
+                                info.onAdd = function (map5) {this._div = L.DomUtil.create('div', 'info');
+                                    this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
+                                    return this._div};
+                                info.addTo(map5);
+
+                                // load geojson data using fetch api
+                                fetch("./data/geodata_files/burnsidetreeswgs84.geojson")
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        var coords = data.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
+                                        var heat = L.heatLayer(coords, {radius: 13, blur: 30, gradient: {0.1: '#d8b365', 0.65: '#d0e0a6', 1: '#31a354'}}).addTo(map5);
+                                    });
+                            </script>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <h4>Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation</h4>
+            <h5>Map 1: Basemap - selector</h5>
+            <p>Your first Leaflet web map should contain different basemaps and a basemap layer control. You
+            have to incorporate altogether five different tiled maps:</p>
+            <ul>
+                <li>satellite image</li>
+                <li>road map</li>
+                <li>terrain map</li>
+                <li>grey map without labels</li>
+                <li>dark map.
+                    The choice for each of them is up to you. The basemap layer control should allow the user to switch
+                    between them. The tile-layer source will usually be displayed automatically. The map should
+                    initially display the extend of South Australia.
+                    You can use this resource for Leaflet tilemaps providers: <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html.">http://leaflet-extras.github.io/leaflet-providers/preview/index.html.</a></li>
+            </ul>
+            <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html</a></p>
+            -->
+
+            <!-- 
+            <h5>Map 2: Place Of Interest map / add markers</h5>
+            <p>Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
+            destinations. Moreover, you are asked to implement an interactive marker function: Whenever
+            the user hovers or/and clicks on a marker, an Info-Window should popup showing an embedded
+            image together with further descriptive information (text, URL, etc.). Choose customized marker
+            symbol(s) and adapt symbol size and colour based on your personal ranking (e.g. big symbol with
+            bright colour = favourite destination, slightly smaller and a less intensive colour = destination no.
+            2, …). Allow only 3 appropriate zoom levels and include an Inset map (mini map).</p>
+            <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_02_map/leaflet_02_map.html</a></p>
+            <h6 id="favorite-travel-destinations">Favorite Travel Destinations</h6>
+            <ul>
+                <li>Australia<ul>
+                        <li>Koziosco Great Range Walk (3)</li>
+                        <li>Alpine National Park (2)</li>
+                        <li>Kata Juta (2)</li>
+                        <li>Mt Remarkable National Park(1)</li>
+                        <li>Flinders Ranges (1)</li></ul></li>
+                <li>New Zealand<ul>
+                        <li>Wellington (2)</li>
+                        <li>Rotarua (3)</li>
+                        <li>Fiordland (Te Anau)<ul>
+                                <li>Milford Track (4)</li>
+                                <li>Kepler Track (4)</li></ul></li>
+                        <li>Queenstown (3)</li></ul></li>
+                <li>America<ul>
+                        <li>Appalatian Mountain Track (5)</li></ul></li>
+                <li>Canada<ul>
+                        <li>Rockies (5)</li></ul></li>
+                <li>Himalayisas - Everest Base Camp (5)</li>
+                <li>Bougainville (4)</li>
+            </ul>
+            <pre><code>// Kosciuszko -36.455927, 148.264550
+    L.marker([-36.455927, 148.264550]).addTo(map);
+    // Alpine National Park: Lake Tali Karng -37.541972, 146.790241
+    L.marker([-37.541972, 146.790241]).addTo(map);
+    // Kata Tjuta -25.296021, 130.720571
+    L.marker([-25.296021, 130.720571]).addTo(map);
+    // Mt Remarkable National Park -32.787953, 138.068583
+    L.marker([-32.787953, 138.068583]).addTo(map);
+    // Wilpena Pound, Flinders Ranges -31.559838, 138.572020
+    L.marker([-31.559838, 138.572020]).addTo(map);
+    // Wellington -41.315579, 174.781097
+    L.marker([-41.315579, 174.781097]).addTo(map);
+    // Rotarua -38.136663, 176.246466
+    L.marker([-38.136663, 176.246466]).addTo(map);
+    // Milford Track -44.683690, 167.902212
+    L.marker([-44.683690, 167.902212]).addTo(map);
+    // Kepler Track -45.492070, 167.663162
+    L.marker([-45.492070, 167.663162]).addTo(map);
+    // Queenstown
+    // Appalatian Mountains 36.903539, -81.081878
+    L.marker([36.903539, -81.081878]).addTo(map);
+    // Rocky Mountains 44.254401, -109.808834
+    L.marker([44.254401, -109.808834]).addTo(map);
+    // Everest Base Camp 28.002553, 86.852718
+    L.marker([28.002553, 86.852718]).addTo(map);
+    // Bougainville</code></pre>
+            <h6 id="adding-marker-points">Adding marker points</h6>
+            <pre><code>L.marker(&lt;latlng&gt;, options?).addTo(map);</code></pre>
+            <h6 id="defining-zoom-levels">Defining Zoom Levels</h6>
+            <h6 id="inset-map">Inset Map</h6>
+            <h5 id="map-3-image-overlay-with-transparency-slider-tool">Map 3: Image overlay with transparency slider tool</h5>
+            <p>Within the provided geodata you find an .png image file named
+            “historical_TopoMap_Adelaide_1898.png”. Please embed this historical raster map in your web
+            map. Apply a slider tool to change image opacity from 100% to 0%. The image extend is:</p>
+            <pre><code>Lat Lng of the image extend (top left and bottom right):
+    -34.857826 138.450236 Decimal Degrees
+    -34.985246 138.749692 Decimal Degrees</code></pre>
+            <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html</a></p>
+            <h5 id="map-4-marker-clustering">Map 4: Marker Clustering</h5>
+            <p>Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
+            Add an appropriate map title using an info window on the upper right corner.
+            Limit the map window size to 600 x 400 px.</p>
+            <h5 id="map-5-heat-map">Map 5: Heat map</h5>
+            <p>Use the same data set (burnsidetreeswgs84.geojson) and create an heat map. When designing the
+            heat map carefully choose radius and blur parameters.
+            Apply title approach and map window size as above (Map 4).</p>
+            <h5 id="map-6-choropleth-map-with-geojson-data">Map 6: Choropleth map with geojson data</h5>
+            <p>Use the LGA_Adelaide.geojson polygon file to create a choropleth map. LGAs are Land government
+            areas (council areas). Explore the geojson file. One attribute field contains the number of parks in
+            each council area. That’s the one you need to use for your choropleth map.
+            Explore the data distribution using a histogram:<br>
+            <img src="../data/LGA_Histo.png" alt="image of data in arcgis histogram"><br>
+            Which classification method to use: Natural breaks would be one option.<br>
+            How many classes: Usually between 3 and 7.<br>
+            The colour-scheme should be sequential.<br>
+            You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.<br>
+            <em>Helpful to use is this online colour-advise-tool for choropleth maps: <a href="http://colorbrewer2.org">http://colorbrewer2.org</a>
+                Additional reading about choropleth maps and their cartography: <a href="http://axismaps.github.io/thematic-cartography/articles/choropleth.html">http://axismaps.github.io/thematic-cartography/articles/choropleth.html</a>
+                Optional: Create and include a legend. Think about an appropriate classification and colour scheme</em></p>
+            -->
+        </div>
     </body>
 </html>

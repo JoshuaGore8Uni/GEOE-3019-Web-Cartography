@@ -28,9 +28,9 @@ var vm = new Vue({
         minFireYear: 0,
         // decade filters (set timeline slider)
         // fire sizes
-        maxFireSize: 10000000,
+        maxFireSize: 1000000000,
         minFireSize: 0,
-        fireSizeRange: [0, 100000000],
+        fireSizeRange: [0, 1000000000],
         // run animation?
         animation: false,
     },
@@ -58,7 +58,8 @@ var vm = new Vue({
                                         '#E7FE6F';
                 return color;
         }
-        var values = [100, 50, 20, 10, 5, 3, 0];
+        // var values = [100, 50, 20, 10, 5, 3, 0];
+        var values = [0, 3, 5, 10, 20, 50, 100];
         mapState.addLegend(getColor, values);
         function style(properties, zoom) {
             var style = {
@@ -273,6 +274,7 @@ var vm = new Vue({
         animation: function () {
             // this.fireYearRange[1] = minFireYear;
             if (this.yearsDisplay == 'slider' && this.animation) {
+                this.$set(this.fireYearRange, 0, 1930);
                 this.$set(this.fireYearRange, 1, 1930);
                 console.log("running animation: " + this.animation);
                 var loop = setInterval(() => {

@@ -56,13 +56,20 @@ mapState = {
         var legend = L.control({position: 'bottomleft'});
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend');
-            div.innerHTML = "<h4>District Burnt %</h4>";
+            div.innerHTML = "<h4><b>Fire Ban Districts</b><br>Area Burnt</h4>";
             var labels = [];
             // loop through our density intervals and generate a label with a colored square for each interval
+            /* loop for descending
             for (var i = 0; i < values.length; i++) {
                 div.innerHTML += 
                     (values[i + 1] !== undefined ? ('<i style="background:' + getColor(values[i]) + '"></i> ' +
                     values[i] + '&ndash;' + values[i + 1] + '<br>') : '');
+            }
+            */
+            for (var i = 0; i < values.length; i++) {
+                div.innerHTML += 
+                    (values[i + 1] !== undefined ? ('<i style="background:' + getColor(values[i + 1]) + '"></i> ' +
+                    values[i] + '&ndash;' + values[i + 1] + '%<br>') : '');
             }
             return div 
         };

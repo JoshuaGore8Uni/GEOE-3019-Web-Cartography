@@ -29,8 +29,20 @@
                     <div class="col col-lg-8 col-xl-9 p-0">
                         <div id="map"></div>
                     </div>
-                    <div class="col col-lg-4 col-xl-3">
-                        <h5>Fire Type</h5>
+                    <div class="col col-lg-4 col-xl-3 pt-3">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Other Site Pages 
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="../">Home</span></a>
+                                <a class="dropdown-item" href="../pracs/outofbox.html">Out of Box Mapping</a>
+                                <a class="dropdown-item" href="../pracs/leaflet.html">Leaflet Maps</a>
+                                <a class="dropdown-item" href="../pracs/advanced.html">Advanced API's</a>
+                            </div>
+                        </div>
+                        <h5 class="pt-3">Fire Type</h5>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="showBushfires" v-model="showBushfires">
                                 <label class="custom-control-label" for="showBushfires">Bushfires</label>

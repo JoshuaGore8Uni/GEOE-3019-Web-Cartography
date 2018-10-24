@@ -1,16 +1,14 @@
 // global variable to set level of simplification
 simplificationLevel = 20;
-// console.log(flame);
 
-// global map variables - prevents unnecessary reactivity with associated potential overhead
+// global map variables - prevents unnecessary reactivity with potential associated overhead
+// object aids standardising functions
 mapState = {
-    // layers: {},
     layerControl: {},
     map: null,
     baseMaps: {},
     overlays: {},
     data: {},
-    // indices: {},
     areaLayer: {},
     addBaseLayer: function(layerName, url, options) {
         this.baseMaps[layerName] = L.tileLayer(url, options);
@@ -53,12 +51,28 @@ mapState = {
         // add watermark to map
         L.control.watermark({ position: 'bottomright' }).addTo(this.map);
     },
+    addLegend: function(getColor, values) {
+        // var values = [100, 50, 20, 10, 5, 3, 0];
+        var legend = L.control({position: 'bottomleft'});
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            div.innerHTML = "<h4>District Burnt %</h4>";
+            var labels = [];
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < values.length; i++) {
+                div.innerHTML += 
+                    (values[i + 1] !== undefined ? ('<i style="background:' + getColor(values[i]) + '"></i> ' +
+                    values[i] + '&ndash;' + values[i + 1] + '<br>') : '');
+            }
+            return div 
+        };
+        legend.addTo(this.map);
+    },
 
     // load url linking map data - linked in addVectorOverlay
     loadURL: function(url, name) {
         return fetch(url, { mode: "no-cors", headers:{'X-Requested-With': 'XMLHttpRequest'} })
             .then (response => response.json())
-            // may need to be in function format?
             .then((json) => {this.data[name] = json});
     },
     addClusterOverlay: function (name, options={}) {
@@ -70,8 +84,7 @@ mapState = {
             if (!options.hasOwnProperty("id")) {
                 options.id = "id";
             }
-            // dodgy icon stuff
-            // var flameIcon = L.icon({iconUrl: flame});
+            // icon code could be added to a seperate function if code used with more datasets but left here for readibility
             var flameIcon = L.icon({
                 iconUrl: flame,
                 iconSize:     [31, 39], // size of the icon
@@ -84,27 +97,14 @@ mapState = {
                 //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
-            // L.marker([-36.455927, 148.264550], {icon: flameIcon}).addTo(parentThis.map);
-            // L.marker([-36.455000, 148.264550], {icon: matchIcon}).addTo(parentThis.map);
             parentThis.overlays[name] = L.markerClusterGroup();
-            // parentThis.overlays[name] = L.geoJson(parentThis.data[name]);
             var geoJsonLayer = L.geoJson(parentThis.data[name], {
                 pointToLayer: function (feature, latlng) {
                     if (feature.properties.INCIDENTTYPE == 'Bushfire') {
-                        icon = L.icon({
-                            iconUrl: flame,
-                            iconSize:     [31, 39], // size of the icon
-                            //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                            //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                        });
+                        icon = flameIcon;
                     }
                     else {
-                        icon = L.icon({
-                            iconUrl: match,
-                            iconSize:     [31, 39], // size of the icon
-                            //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                            //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                        });
+                        icon = matchIcon;
                     }
                     return L.marker(latlng, {icon: icon});
                 }
@@ -112,9 +112,12 @@ mapState = {
             parentThis.overlays[name].addLayer(geoJsonLayer);
             parentThis.map.addLayer(parentThis.overlays[name]);
 
+            // track highlighted feature
+            parentThis.overlays[name].highlighted = false;
             // create index of all features in layer
             parentThis.data[name].indices = {};
             parentThis.data[name].indices.all = parentThis.data[name].features.map(feature => feature.properties.OBJECTID);
+
             // initiate state of visible features
             parentThis.overlays[name].visible = parentThis.data[name].indices.all;
 
@@ -142,6 +145,7 @@ mapState = {
                 resolve("Stuff Worked");
             }
         });
+        return promise;
     },
     addVectorOverlay: function(name, options={}) {
         function runAdd(parentThis, name, options) {
@@ -300,6 +304,45 @@ mapState = {
         console.log("Set Style took " + (performance.now() - t0) + " milliseconds");
     },
     */ 
+    toggleHighlight: function(overlay, ID) {
+        if (!this.overlays[overlay].highlighted) {
+            this.overlays[overlay].highlighted = ID;
+            function style(properties, zoom) {
+                var style = {
+                    stroke: true,
+                    dashArray: "4",
+                    weight: 2,
+                    color: '#808080',
+                    fillOpacity: 1,
+                    fill: true,
+                }
+                if (properties.INCIDENTTYPE == "Bushfire") {
+                    // style.color = '#98533A',
+                    // style.fillColor = '#D93F4C';
+                    style.fillColor = '#F73127';
+                }
+                else {
+                    // style.color = '#294A28',
+                    // style.fillColor = '#3D8DE4';
+                    style.fillColor = '#05971D';
+                }
+                // function to prevent display of small polygons at large scales, shows some performance improvement
+                if (!((zoom >= 12) || (properties.SHAPE_Area > 100000 && zoom < 12) || (properties.SHAPE_Area > 1000000 && zoom < 8))) {
+                    style = {
+                        stroke: false,
+                        fill: false,
+                    };
+                }
+                return style;
+            };
+            this.overlays[overlay].setFeatureStyle(ID, style);
+        }
+        else {
+            this.overlays[overlay].highlighted = false;
+            this.overlays[overlay].resetFeatureStyle(ID);
+        }
+        // console.log(this.overlays[overlay]);
+    },
     setNotVisible: function(overlay, index) {
         // overlay.name, overlay.type (tile, geoJson), overlay.indices
         t0 = performance.now();
@@ -364,20 +407,19 @@ mapState = {
             var layersToShow = [];
             var layersToHide = [];
             // this.overlays[overlay.name].original.eachLayer(featureLayer => {
+            
             this.overlays[overlay.name].original.forEach(featureLayer => {
-                var properties = featureLayer.feature.properties;
-                if (hideFeaturesSet.has(properties.OBJECTID)) {
+                if (hideFeaturesSet.has(featureLayer.feature.properties.OBJECTID)) {
                     layersToHide.push(featureLayer);
                 }
             });
             this.overlays[overlay.name].original.forEach(featureLayer => {
-                var properties = featureLayer.feature.properties;
-                if (showFeaturesSet.has(properties.OBJECTID)) {
+                if (showFeaturesSet.has(featureLayer.feature.properties.OBJECTID)) {
                     layersToShow.push(featureLayer);
                 }
             });
+            // alternative method - may be faster if removing more than half?
             // this.overlays[overlay.name].clearLayers();
-            // this.overlays[overlay.name].removeLayers(layersToRemove);
             // this.overlays[overlay.name].addLayers(layersToShow);
             this.overlays[overlay.name].removeLayers(layersToHide);
             this.overlays[overlay.name].addLayers(layersToShow);
@@ -388,11 +430,28 @@ mapState = {
 }
 
 // creates 4 to 5 base map layers as requested and adds to object for control/map
+
+// light gray map with labels
+mapState.addBaseLayer("Light Map", 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    subdomains: 'abcd',
+    maxZoom: 18,
+    minZoom: 7,
+});
+
+// dark gray map without labels
+mapState.addBaseLayer("Dark Background Map", 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    subdomains: 'abcd',
+    maxZoom: 18,
+    minZoom: 7,
+});
+
 // road map
 mapState.addBaseLayer("Roads", 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    // minZoom: 7,
+    minZoom: 7,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
 });
@@ -407,26 +466,15 @@ mapState.addBaseLayer("Topographic", 'https://{s}.tile.opentopomap.org/{z}/{x}/{
 
 mapState.addBaseLayer("Topographic", 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+    maxZoom: 18,
+    minZoom: 7,
 });
 
 // satellite image map
 mapState.addBaseLayer("Satellite", 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 17,
+    minZoom: 7,
     id: 'mapbox.satellite',
     accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
-});
-
-// light gray map with labels
-mapState.addBaseLayer("Light Map", 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-});
-
-// dark gray map without labels
-mapState.addBaseLayer("Dark Background Map", 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
 });

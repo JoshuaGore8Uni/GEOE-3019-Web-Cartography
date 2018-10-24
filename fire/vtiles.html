@@ -104,10 +104,10 @@
                                 :max="maxFireSize" 
                                 :process-dragable="true"
                                 :enable-cross="false" 
-                                :formatter="function (value){return Number(value/10000).toFixed(0) + ' ha'}"
+                                :formatter="value => {return ((value == 1000000000 ? '100000+' : Number(value/10000).toFixed(0)) + ' ha')}"
                                 :piecewise="true"
                                 :piecewise-label="true"
-                                :data="[0, 1000000, 5000000, 100000000, fireSizeRange[1]]"
+                                :data="[0, 1000000, 5000000, 100000000, 1000000000]"
                                 v-model="fireSizeRange">
                             </vue-slider>
                         </div>

@@ -8,9 +8,6 @@ var vm = new Vue({
         'vueSlider': window[ 'vue-slider-component'  ],    
     },
     data: {
-        // vue manages loading state and messages
-        // and also manages filters
-
         // if waiting for user initiation
         initiation: true,
         // if downloading and processing data
@@ -34,33 +31,63 @@ var vm = new Vue({
         maxFireSize: 10000000,
         minFireSize: 0,
         fireSizeRange: [0, 100000000],
+        // run animation?
         animation: false,
     },
     mounted: function () {
         $("#the-welcome-modal").modal('show');
         this.initMap();
         // function style()
+        function getColor(percentage_burnt) {
+            color = 
+                /*
+                properties.percentage_burnt > 50 ? '#ED795A' :
+                properties.percentage_burnt > 20 ? '#C07A34' :
+                properties.percentage_burnt > 10 ? '#8F7822' :
+                properties.percentage_burnt > 5 ? '#5F7127' :
+                properties.percentage_burnt > 3 ? '#336634' :
+                                                     '#055741' 
+                */
+                // percentage_burnt > 50 ? '#41202B' :
+                // percentage_burnt > 50 ? '#6d0d2d' :
+                percentage_burnt > 50 ? '#a50036' :
+                percentage_burnt > 20 ? '#574763' :
+                percentage_burnt > 10 ? '#467994' :
+                percentage_burnt > 5 ? '#25ADA5' :
+                percentage_burnt > 3 ? '#71DC90' :
+                                        '#E7FE6F';
+                return color;
+        }
+        var values = [100, 50, 20, 10, 5, 3, 0];
+        mapState.addLegend(getColor, values);
         function style(properties, zoom) {
-            // 6 classes jenks natural breaks calculated by qgis
-            fillColor = (
-                properties.percentage_burnt > 28 ? '#993404' :
-                properties.percentage_burnt > 17 ? '#d95f0e' :
-                properties.percentage_burnt > 13 ? '#fe9929' :
-                properties.percentage_burnt > 5.83 ? '#fec44f' :
-                properties.percentage_burnt > 3.33 ? '#fee391' :
-                                                     '#ffffd4' 
-            );
             var style = {
                 stroke: true,
                 weight: 1,
-                color: 'rgba(244, 95, 66, 1)',
-                fillColor: fillColor,
+                color: 'grey',
+                fillColor: getColor(properties.percentage_burnt),
                 fillOpacity: 0.3,
                 fill: true,
             }
             return style;
         };
-        mapState.addClusterOverlay("Fire Centres", {url: "./data/tracked/fire_history_centroids.geojson"});
+        mapState.addClusterOverlay("Fire Centres", {url: "./data/tracked/fire_history_centroids.geojson"}).then(() => {
+            mapState.overlays["Fire Centres"].on('click', (featureLayer) => {
+                var properties = featureLayer.layer.feature.properties;
+                var content = 
+                    "<h5>" + (properties.INCIDENTNAME ? properties.INCIDENTNAME : "No Name") + "</h5>"
+                    + (properties.INCIDENTNUMBER ? "<p><i>Incident Number: " + properties.INCIDENTNUMBER + "</i></p>" : "")
+                    + "<p>" + properties.INCIDENTTYPE + " on "
+                    + properties.FIREDATE.slice(6,8) + "/" + properties.FIREDATE.slice(4,6) + "/" + properties.FIREDATE.slice(0,4)
+                    + " (" + properties.SEASON.toLowerCase() + ")</p>"
+                    + "<p>Burnt " + (Number(properties.SHAPE_Area/10000).toFixed(2)) + " ha</p>"
+                ;
+                var popup = L.popup().setLatLng(featureLayer.latlng).setContent(content);
+                mapState.toggleHighlight("Fire Areas", properties.OBJECTID);
+                popup.openOn(mapState.map);
+                popup.on('remove', () => mapState.toggleHighlight("Fire Areas", properties.OBJECTID));
+            })
+        });
         mapState.addVectorOverlay("Fire Ban Districts", {url: "./data/tracked/fire_ban_districts_counts_percentages.geojson", style: style, interactive: true}).then(() => {
             // no popup implementation function in mapState due to details required (content calculation)
             mapState.overlays["Fire Ban Districts"].on('click', (feature) => {
@@ -105,22 +132,23 @@ var vm = new Vue({
                 var style = {
                     stroke: true,
                     weight: 1,
-                    color: 'rgba(244, 95, 66, 1)',
-                    fillColor: 'rgba(244, 95, 66, 0.5)',
-                    fillOpacity: 1,
+                    fillOpacity: 0.2,
                     fill: true,
                 }
-                if ((zoom >= 12) || (properties.SHAPE_Area > 100000 && zoom < 12) || (properties.SHAPE_Area > 1000000 && zoom < 8)) {
-                    if (properties.INCIDENTTYPE == "Bushfire") {
-                        style.fillColor = 'rgba(230, 46, 0, 0.5)';
-                        style.color = 'rgba(230, 46, 0, 1)';
-                    }
-                    else {
-                        style.fillColor = 'rgba(204, 102, 0, 0.5)';
-                        style.color = 'rgba(204, 102, 0, 1)';
-                    }
+                if (properties.INCIDENTTYPE == "Bushfire") {
+                    // style.color = '#98533A';
+                    // style.fillColor = '#98533A';
+                    style.color = '#F73127';
+                    style.fillColor = '#F73127';
                 }
                 else {
+                    // style.color = '#294A28';
+                    // style.fillColor = '#294A28';
+                    style.color = '#0a6819';
+                    style.fillColor = '#05971D';
+                }
+                // function to prevent display of small polygons at large scales, shows some performance improvement
+                if (!((zoom >= 12) || (properties.SHAPE_Area > 100000 && zoom < 12) || (properties.SHAPE_Area > 1000000 && zoom < 8))) {
                     style = {
                         stroke: false,
                         fill: false,
@@ -130,7 +158,7 @@ var vm = new Vue({
             };
             mapState.addVectorOverlay(name, {url: url, style: style, interactive: true, id: "OBJECTID"}).then(() => {
                 // no popup implementation function in mapState due to details required (content calculation)
-                mapState.overlays[name].on('mouseover', (feature) => {
+                mapState.overlays[name].on('click', (feature) => {
                     var properties = feature.layer.properties;
                     var content = 
                         "<h5>" + (properties.INCIDENTNAME ? properties.INCIDENTNAME : "No Name") + "</h5>"
@@ -171,16 +199,6 @@ var vm = new Vue({
                 var maxFireSize = mapState.max('Fire Areas', 'SHAPE_Area');
                 this.maxFireSize = maxFireSize;
                 this.fireSizeRange[1] = maxFireSize;
-                /*
-                style = {
-                    stroke: true,
-                    weight: 1,
-                    color: 'rgba(244, 95, 66, 1)',
-                    fillColor: 'rgba(244, 241, 66, 0.5)',
-                    fillOpacity: 1,
-                    fill: true,
-                };
-                */
             });
         },
     },
@@ -221,7 +239,9 @@ var vm = new Vue({
                 indices.push(years);
 
                 // calculate difference between sizes that should be visible and sizes that are not 
-                var sizes = mapState.difference([mapState.data["Fire Areas"].indices.all, mapState.newIndex({ property: "SHAPE_Area", source: "Fire Areas", value: this.fireSizeRange[0], endValue: this.fireSizeRange[1]})]);
+                var filterMaxSize = 0;
+                this.fireSizeRange[1] == 1000000000 ? filterMaxSize = this.maxFireSize : filterMaxSize = this.fireSizeRange[1];
+                var sizes = mapState.difference([mapState.data["Fire Areas"].indices.all, mapState.newIndex({ property: "SHAPE_Area", source: "Fire Areas", value: this.fireSizeRange[0], endValue: filterMaxSize})]);
                 indices.push(sizes);
                 // indices.push(mapState.newIndex({ property: "FIREYEAR", source: "Fire Area", value: this.fireYearRange[0], endValue: this.fireYearRange[1], }));
                 style = {
@@ -241,9 +261,13 @@ var vm = new Vue({
     watch: {
         featuresToHide: function () {
             if (!this.initiation && !this.loading) {
-                mapState.setNotVisible({name: "Fire Areas", type: 'tile'}, this.featuresToHide);
+                if (mapState.map.hasLayer(mapState.overlays["Fire Areas"])) {
+                    mapState.setNotVisible({name: "Fire Areas", type: 'tile'}, this.featuresToHide);
+                }
+                if (mapState.map.hasLayer(mapState.overlays["Fire Centres"])) {
+                    mapState.setNotVisible({name: "Fire Centres", type: 'geoJson'}, this.featuresToHide);
+                }
                 // mapState.setNotVisible({name: "Fire Centres", type: 'geoJson', indices: "Fire Areas"}, this.featuresToHide);
-                mapState.setNotVisible({name: "Fire Centres", type: 'geoJson'}, this.featuresToHide);
             };
         },
         animation: function () {

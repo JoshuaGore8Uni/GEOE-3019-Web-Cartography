@@ -232,6 +232,7 @@
                     var accessToken = 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'; 
                     var attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>';
                     var mainBaseMap = L.tileLayer(baseMapURL, {id: 'mapbox.streets', attribution: attribution, accessToken: accessToken, maxZoom: 18}).addTo(map2);
+                    L.control.scale().addTo(map2);
 
                     // L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A').addTo(map);
 
@@ -326,6 +327,7 @@
                         layer.setOpacity(e.value / 100);
                     })
                     map3.addControl(control);
+                    L.control.scale().addTo(map3);
                 </script>
             </section>
             <div class="container-fluid">
@@ -364,6 +366,7 @@
                                     this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
                                     return this._div};
                                 info.addTo(map4);
+                                L.control.scale().addTo(map4);
 
                                 // load geojson data using ajax
                                 var geojson = new L.GeoJSON.AJAX("./data/geodata_files/burnsidetreeswgs84.geojson");
@@ -396,6 +399,7 @@
                                     this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
                                     return this._div};
                                 info.addTo(map5);
+                                L.control.scale().addTo(map5);
 
                                 // load geojson data using fetch api
                                 fetch("./data/geodata_files/burnsidetreeswgs84.geojson")
@@ -409,6 +413,75 @@
                     </div>
                 </div>
             </div>
+            <section>
+                <h1>Map 6: Choropleth Map</h1>
+                <div id="map6" style="height: 100vh; width: 100%"></div>
+                <style>
+                    .legend i {
+                        width: 18px;
+                        height: 15px;
+                        float: left;
+                        margin-right: 8px;
+                        opacity: 0.7 
+                    }
+                    .info {
+                        /* repeated here for readability */
+                        padding: 6px 8px;
+                        background: rgba(255,255,255,0.8);
+                        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                        border-radius: 5px;
+                    }
+                </style>
+                <script>
+                    var map6 = L.map('map6').fitBounds([[-36.18, 136.39], [-33.44, 139.18]]);
+                    // add tilelayer
+                    var osmUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+                    var osmAttrib = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                    L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map6);
+                    L.control.scale().addTo(map6);
+                    // create natural breaks symbology function
+                    function getColour(value) {
+                        return value > 164 ? '#133F32' : 
+                               value > 91  ? '#346B48' :
+                               value > 44  ? '#649856' :
+                               value > 10  ? '#A2C45F' :
+                                             '#EFEE69';
+                        
+                    }
+
+                    function style(feature) {
+                        return {
+                            fillColor: getColour(feature.properties.Park),
+                            weight: 1,
+                            opacity: 1,
+                            color: 'grey',
+                            fillOpacity: 0.5,
+                        };
+                    }
+
+                    fetch("./data/geodata_files/LGA_Adelaide.geojson")
+                        .then(response => response.json())
+                        .then(data => {
+                            L.geoJson(data, {style: style}).addTo(map6);
+                    });
+
+                    var legend = L.control({position: 'bottomright'});
+                    legend.onAdd = function(map) {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [209, 164, 91, 44, 10],
+                            labels = [];
+                            for (var i = 0; i < grades.length; i++) {
+                                console.log(getColour(grades[i] + 1));
+                                div.innerHTML +=
+                                '<i style="background:' + getColour(grades[i]) + '"></i> ' +
+                                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '-');
+                                console.log(div.innerHTML);
+                            }
+                        return div;
+                    }
+                    legend.addTo(map6);
+                </script>
+            </section>
 
             <!--
             <h4>Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation</h4>

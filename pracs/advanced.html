@@ -7,6 +7,11 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         <title>Advanced Web Mapping API's</title>
     </head>
@@ -36,12 +41,123 @@
                 </ul>
             </div>
         </nav>
-        <h1>Mapbox</h1>
+        <h1>Mapbox: Animate Marker along Line using Mapbox GL JS and Turf.js</h1>
+        <style>
+            .overlay {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+
+            }
+
+            .overlay button {
+                font:600 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                background-color: #3386c0;
+                color: #fff;
+                display: inline-block;
+                margin: 0;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                border-radius: 3px;
+
+            }
+
+            .overlay button:hover {
+                background-color:#4ea0da;
+
+            }
+        </style>
+        <div id="map1" style="width: 100%; height: 100vh"></div>
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+        <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+        <script>
+            // initiate map
+            mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A';
+            var map1 = new mapboxgl.Map({
+                container: 'map1',
+                style: 'mapbox://styles/mapbox/streets-v9',
+                center: [138.679047, -34.734841],
+                zoom: 11 
+            });
+            var travelled = 0;
+            var distance = 0;
+            var route = null;
+            // 0 = to uni, 1 = back home
+            var direction = 0;
+            var increment = 0.1
+            // create animation function
+            function animate() {
+                // find point position
+                // if at uni (travelled = 0) go home, else go to uni
+                travelled <= 0 ? (direction = 1) : (travelled > distance && (direction = 0));
+                // if going home increase travelled else decrease travelled
+                direction == 1 ? (travelled += increment) : (travelled -= increment);
+                travelled < 0 && (travelled = 0);
+                corolla.features[0] = turf.along(route, travelled);
+                map1.getSource('corolla').setData(corolla);
+                requestAnimationFrame(animate);
+            }
+
+            // set up my home and car
+            var home = [-34.62499, 138.83985];
+            var corolla = {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": home
+                    }
+                }]
+            };
+
+            // load my route and drive it!
+            fetch("./data/uni_route_merged.geojson")
+                .then(response => response.json())
+                .then(data => {
+                    var routeString = data.features[0].geometry.coordinates;
+                    route = turf.lineString(routeString);
+                    distance = data.features[0].properties.length;
+                    travelled = data.features[0].properties.length;
+                    map1.on('load', function() {
+                        map1.addSource('route', {
+                            "type": "geojson",
+                            "data": data
+                        });
+                        map1.addLayer({
+                            "id": "route",
+                            "source": "route",
+                            "type": "line",
+                            "paint": {
+                                "line-width": 2,
+                                "line-color": "#007cbf"
+                            }
+                        });
+                        map1.addSource('corolla', {
+                            "type": "geojson",
+                            "data": corolla
+                        });
+                        map1.loadImage('./data/icons/letter_j.png', (error, image) => {
+                            map1.addImage('J', image);
+                            map1.addLayer({
+                                "id": 'corolla',
+                                "source": "corolla",
+                                "type": "symbol",
+                                "layout": {
+                                    "icon-image": "J",
+                                    "icon-size": 1,
+                                    "icon-allow-overlap": true,
+                                    "icon-anchor": "bottom",
+                                }
+                            });
+                            animate();
+                        });
+                    });
+                });
+        </script>
         <h1>Cesium 3D</h1>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>

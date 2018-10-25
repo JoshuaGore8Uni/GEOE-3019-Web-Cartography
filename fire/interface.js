@@ -215,7 +215,7 @@ var vm = new Vue({
         featuresToHide: function () {
             var featuresToHide = [];
             if (!this.initiation && !this.loading) {
-                console.log("Building Index");
+                // console.log("Building Index");
                 var indices = [];
                 if (!this.showBushfires) {
                     indices.push(mapState.data["Fire Areas"].indices.Bushfires);
@@ -276,7 +276,7 @@ var vm = new Vue({
             if (this.yearsDisplay == 'slider' && this.animation) {
                 this.$set(this.fireYearRange, 0, 1930);
                 this.$set(this.fireYearRange, 1, 1930);
-                console.log("running animation: " + this.animation);
+                // console.log("running animation: " + this.animation);
                 var loop = setInterval(() => {
                     if (this.animation != true || this.yearsDisplay != 'slider') {
                         // years display changed then animation stopped

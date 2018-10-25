@@ -140,14 +140,14 @@ mapState = {
         // all contained in promise as url loads async
         var promise = new Promise((resolve, reject) => {
             if (options.hasOwnProperty("url")) {
-                console.log("loading from " + options.url);
+                // console.log("loading from " + options.url);
                 this.loadURL(options.url, name).then(() => { 
                     runAdd(this, name, options);
                     resolve("Stuff Worked");
                 });
             }
             else {
-                console.log("just adding ");
+                // console.log("just adding ");
                 runAdd(this, name, options);
                 resolve("Stuff Worked");
             }
@@ -187,10 +187,10 @@ mapState = {
             parentThis.overlays[name].visible = parentThis.data[name].indices.all;
 
             // some status messaging stuff
-            var t1 = performance.now();
-            console.log("tiling took " + (t1 - t0) + " milliseconds.");
-            var t0 = performance.now();
-            console.log("adding to map");
+            // var t1 = performance.now();
+            // console.log("tiling took " + (t1 - t0) + " milliseconds.");
+            // var t0 = performance.now();
+            // console.log("adding to map");
 
             // add the layer to the map
             parentThis.overlays[name].addTo(parentThis.map);
@@ -198,8 +198,8 @@ mapState = {
             parentThis.layerControl.addOverlay(parentThis.overlays[name], name);
             // that = parentThis;
             function logMapAdd () {
-                var t1 = performance.now();
-                console.log("adding took " + (t1 - t0) + " milliseconds.");
+                // var t1 = performance.now();
+                // console.log("adding took " + (t1 - t0) + " milliseconds.");
                 parentThis.overlays[name].off('load', logMapAdd);
             }
             parentThis.overlays[name].on('load', logMapAdd);
@@ -207,7 +207,7 @@ mapState = {
         // all contained in promise as url loads async
         var promise = new Promise((resolve, reject) => {
             if (options.hasOwnProperty("url")) {
-                console.log("loading from " + options.url);
+                // console.log("loading from " + options.url);
                 this.loadURL(options.url, name).then(() => { 
                     runAdd(this, name, options);
                     resolve("Stuff Worked");
@@ -223,24 +223,24 @@ mapState = {
         return promise;
     },
     max: function(dataName, propertyName) {
-        t0 = performance.now()
-        console.log ("finding max of " + propertyName + " in " + dataName);
+        // t0 = performance.now()
+        // console.log ("finding max of " + propertyName + " in " + dataName);
         max = Math.max(...this.data[dataName].features.map(feature => feature.properties[propertyName]));
-        console.log("finding max took " + (performance.now() - t0) + " milliseconds");
+        // console.log("finding max took " + (performance.now() - t0) + " milliseconds");
         return max;
     },
     newIndex: function(options) {
         // { property: , name: , value: , endValue: , source:  }
         //dataSource, optionspropertyName, indexValue, indexName = false
-        t0 = performance.now();
-        console.log("creating index: " + options.name + " from " + options.source);
+        // t0 = performance.now();
+        // console.log("creating index: " + options.name + " from " + options.source);
         var indexFeatures = this.data[options.source].features.filter(feature => 
             (options.hasOwnProperty("endValue") ? options.value <= feature.properties[options.property] : options.value == feature.properties[options.property]) 
             && 
             (options.hasOwnProperty("endValue") ? feature.properties[options.property] <= options.endValue : true)
         );
         index = indexFeatures.map(feature => feature.properties.OBJECTID);
-        console.log("Index " + options.name + " took " + (performance.now() - t0) + " milliseconds, with " + index.length + " elements.");
+        // console.log("Index " + options.name + " took " + (performance.now() - t0) + " milliseconds, with " + index.length + " elements.");
         if (options.hasOwnProperty("name")) {
             this.data[options.source].indices[options.name] = index;
         }
@@ -249,8 +249,8 @@ mapState = {
         }
     },
     intersect: function(indices, intersectName = false) {
-        t0 = performance.now();
-        console.log("Performing Intersect");
+        // t0 = performance.now();
+        // console.log("Performing Intersect");
         // indices = indices.map(index => typeof(index) === 'string' ? this.indices[index] : index);
         // indices.map(index => new Set(index));
         // intersect = indices.shift();
@@ -260,7 +260,7 @@ mapState = {
         indices.forEach((index) => {
             intersect = intersect.filter(id => index.has(id));
         });
-        console.log("Intersect took " + (performance.now() - t0) + " milliseconds, array is: " + intersect.length + " elements long");
+        // console.log("Intersect took " + (performance.now() - t0) + " milliseconds, array is: " + intersect.length + " elements long");
         if (intersectName) {
             this.indices[intersectName] = intersect;
         }
@@ -270,11 +270,11 @@ mapState = {
     },
     union: function(indices, unionName = false) {
         // check if string (existing index) otherwise assume created index
-        t0 = performance.now();
-        console.log("Performing Union");
+        // t0 = performance.now();
+        // console.log("Performing Union");
         // indices = indices.map(index => typeof(index) === 'string' ? this.indices[index] : index);
         union = [...new Set([].concat(...indices))];
-        console.log("Union took " + (performance.now() - t0) + " milliseconds, array is: " + union.length + " elements long");
+        // console.log("Union took " + (performance.now() - t0) + " milliseconds, array is: " + union.length + " elements long");
         if (unionName) {
             this.indices[unionName] = union;
         }
@@ -283,8 +283,8 @@ mapState = {
         }
     },
     difference: function(indices, differenceName = false) {
-        t0 = performance.now();
-        console.log("Running Difference");
+        // t0 = performance.now();
+        // console.log("Running Difference");
         // indices = indices.map(index => typeof(index) === 'string' ? this.indices[index] : index);
         // let difference = indices.shift();
         // console.log(indices.length);
@@ -295,7 +295,7 @@ mapState = {
         // using a set improves this function by an order of magnitude (200 milliseconds to 10 milliseconds)
         var b = new Set(indices[1]);
         var difference = indices[0].filter(id => !b.has(id));
-        console.log("Difference Took " + (performance.now() - t0) + " milliseconds");
+        // console.log("Difference Took " + (performance.now() - t0) + " milliseconds");
         if (differenceName) {
             this.indices[differenceName] = difference;
         }
@@ -305,10 +305,10 @@ mapState = {
     },
     /* removed as overlay properties need standardisation
     setStyle: function(overlay, index, style) {
-        t0 = performance.now();
-        console.log("Running Set Style");
+        // t0 = performance.now();
+        // console.log("Running Set Style");
         index.forEach(id => mapState.overlays[overlay].setFeatureStyle(id, style));
-        console.log("Set Style took " + (performance.now() - t0) + " milliseconds");
+        // console.log("Set Style took " + (performance.now() - t0) + " milliseconds");
     },
     */ 
     toggleHighlight: function(overlay, ID) {
@@ -352,8 +352,8 @@ mapState = {
     },
     setNotVisible: function(overlay, index) {
         // overlay.name, overlay.type (tile, geoJson), overlay.indices
-        t0 = performance.now();
-        console.log("Hiding " + index.length + "elements");
+        // t0 = performance.now();
+        // console.log("Hiding " + index.length + "elements");
 
         // parse options
         if (!overlay.hasOwnProperty("type")) {
@@ -399,8 +399,8 @@ mapState = {
             /*
             mapState.overlays[overlay.name].eachLayer(featureLayer => {
                 var properties = featureLayer.feature.properties;
-                console.log("featureLayer is");
-                console.log(featureLayer);
+                // console.log("featureLayer is");
+                // console.log(featureLayer);
                 if (indexSet.has(properties.OBJECTID)) {
                     featureLayer.resetStyle();
                 }
@@ -432,7 +432,7 @@ mapState = {
             this.overlays[overlay.name].addLayers(layersToShow);
             this.overlays[overlay.name].refreshClusters();
         }
-        console.log(hideFeatures.length + " elements hidden, " + showFeatures.length + " elements re-shown, took " + (performance.now() - t0) + " milliseconds");
+        // console.log(hideFeatures.length + " elements hidden, " + showFeatures.length + " elements re-shown, took " + (performance.now() - t0) + " milliseconds");
     },
 }
 

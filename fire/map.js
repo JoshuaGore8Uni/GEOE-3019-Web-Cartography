@@ -430,7 +430,7 @@ mapState = {
             // this.overlays[overlay.name].addLayers(layersToShow);
             this.overlays[overlay.name].removeLayers(layersToHide);
             this.overlays[overlay.name].addLayers(layersToShow);
-            this.overlays[overlay.name].refreshClusters();
+            // this.overlays[overlay.name].refreshClusters();
         }
         // console.log(hideFeatures.length + " elements hidden, " + showFeatures.length + " elements re-shown, took " + (performance.now() - t0) + " milliseconds");
     },

@@ -72,16 +72,19 @@ var vm = new Vue({
             }
             return style;
         };
+        // simple function to simplify date formating when building popup
+        function formatDate(date) {
+            return (date.slice(6,8) + "/" + date.slice(4,6) + "/" + date.slice(0,4))
+        }
         mapState.addClusterOverlay("Fire Centres", {url: "./data/tracked/fire_history_centroids.geojson"}).then(() => {
             mapState.overlays["Fire Centres"].on('click', (featureLayer) => {
                 var properties = featureLayer.layer.feature.properties;
                 var content = 
-                    "<h5>" + (properties.INCIDENTNAME ? properties.INCIDENTNAME : "No Name") + "</h5>"
+                    "<h5>" + (properties.INCIDENTNAME ? properties.INCIDENTNAME : properties.INCIDENTTYPE + " on " + formatDate(properties.FIREDATE)) + "</h5>"
                     + (properties.INCIDENTNUMBER ? "<p><i>Incident Number: " + properties.INCIDENTNUMBER + "</i></p>" : "")
-                    + "<p>" + properties.INCIDENTTYPE + " on "
-                    + properties.FIREDATE.slice(6,8) + "/" + properties.FIREDATE.slice(4,6) + "/" + properties.FIREDATE.slice(0,4)
-                    + " (" + properties.SEASON.toLowerCase() + ")</p>"
-                    + "<p>Burnt " + (Number(properties.SHAPE_Area/10000).toFixed(2)) + " ha</p>"
+                    + "<p>This " + properties.INCIDENTTYPE + " ignited in " + properties.SEASON.toLowerCase()
+                    + " on the " + formatDate(properties.FIREDATE) + " and burnt " 
+                    + (Number(properties.SHAPE_Area/10000).toFixed(2)) + " ha</p>"
                 ;
                 var popup = L.popup().setLatLng(featureLayer.latlng).setContent(content);
                 mapState.toggleHighlight("Fire Areas", properties.OBJECTID);

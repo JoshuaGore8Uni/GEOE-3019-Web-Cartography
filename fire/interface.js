@@ -124,7 +124,7 @@ var vm = new Vue({
         addFireData (name, url=false) {
             this.loading = true;
             this.initiation = false;
-            this.loadingStateMessage = "downloading and processing data...";
+            this.loadingStateMessage = "downloading and processing data, might take a while...";
             // name = "Fire Areas";
             // mapState.addVectorOverlay(name, mapState.data);
             var state = this;

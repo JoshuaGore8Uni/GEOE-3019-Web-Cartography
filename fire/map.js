@@ -11,6 +11,7 @@ mapState = {
     data: {},
     areaLayer: {},
     addBaseLayer: function(layerName, url, options) {
+        options.attribution = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | Icons &copy <a href="https://www.flaticon.com/">Flaticion</a> | Fire Data &copy <a href="http://location.sa.gov.au/LMS/Reports/ReportMetadata.aspx?p_no=1159&pu=y&pa=dewnr">DEWNR</a> | Visible Base Map ' + options.attribution;
         this.baseMaps[layerName] = L.tileLayer(url, options);
     },
 
@@ -472,7 +473,7 @@ mapState.addBaseLayer("Topographic", 'https://{s}.tile.opentopomap.org/{z}/{x}/{
 */
 
 mapState.addBaseLayer("Topographic", 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+        attribution: 'Tiles &copy; <a href="https://www.arcgis.com/home/item.html?id=6e850093c837475e8c23d905ac43b7d0">Esri</a>',
     maxZoom: 18,
     minZoom: 7,
 });

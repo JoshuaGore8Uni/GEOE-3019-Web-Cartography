@@ -29,7 +29,8 @@
                     <div class="col col-lg-8 col-xl-9 p-0">
                         <div id="map"></div>
                     </div>
-                    <div class="col col-lg-4 col-xl-3 pt-3">
+                    <div class="col col-lg-4 col-xl-3 pt-3 d-flex flex-column" style="height: 100vh">
+                        <div>
                         <div class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Other Site Pages 
@@ -51,7 +52,7 @@
                                 <input type="checkbox" class="custom-control-input" id="showPrescribedBurns" v-model="showPrescribedBurns">
                                 <label class="custom-control-label" for="showPrescribedBurns">Prescribed Burns</label>
                             </div>
-                        <h5>Fire Season</h5>
+                        <h5 class="pt-3">Fire Season</h5>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="showSummer" v-model="showSummer">
                             <label class="custom-control-label" for="showSummer">Summer</label>
@@ -68,7 +69,22 @@
                             <input type="checkbox" class="custom-control-input" id="showSpring" v-model="showSpring">
                             <label class="custom-control-label" for="showSpring">Spring</label>
                         </div>
-                        <h5>Fire Year</h5>
+                        <h5 class="pt-3">Fire Size</h5>
+                        <div style="padding-top: 40px; padding-left: 15px; padding-right: 25px; overflow: hidden;">
+                            <vue-slider 
+                                ref="size" 
+                                :min="0" 
+                                :max="maxFireSize" 
+                                :process-dragable="true"
+                                :enable-cross="false" 
+                                :formatter="value => {return ((value == 1000000000 ? '100000+' : Number(value/10000).toFixed(0)) + ' ha')}"
+                                :piecewise="true"
+                                :piecewise-label="true"
+                                :data="[0, 1000000, 5000000, 100000000, 1000000000]"
+                                v-model="fireSizeRange">
+                            </vue-slider>
+                        </div>
+                        <h5 class="pt-3">Fire Year</h5>
                         <div class="btn-group btn-group-toggle">
                             <label class="btn btn-secondary" :class="yearsDisplay == 'slider' ? 'active' : '' ">
                                 <input type="radio" name="yearsDisplay" id="yearsDisplaySlider" v-model="yearsDisplay" value="slider" autocomplete="off" checked>Time Slider
@@ -96,36 +112,182 @@
                                 </vue-slider>
                             </div>
                         </div>
-                        <h5>Fire Size</h5>
-                        <div style="padding-top: 40px; padding-left: 15px; padding-right: 25px; overflow: hidden;">
-                            <vue-slider 
-                                ref="size" 
-                                :min="0" 
-                                :max="maxFireSize" 
-                                :process-dragable="true"
-                                :enable-cross="false" 
-                                :formatter="value => {return ((value == 1000000000 ? '100000+' : Number(value/10000).toFixed(0)) + ' ha')}"
-                                :piecewise="true"
-                                :piecewise-label="true"
-                                :data="[0, 1000000, 5000000, 100000000, 1000000000]"
-                                v-model="fireSizeRange">
-                            </vue-slider>
                         </div>
-                        <h5>History of Bushfires in South Australia</h5>
-                        <p><i><a href="https://www.cfs.sa.gov.au/site/about_cfs/history_of_the_cfs/bushfire_history.jsp">Sourced from the CFS</a></i></p>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && (fireYearRange[0] == 1930 | fireYearRange[0] == 1940)">
+                            <h5>1917 - 1945</h5>
+                            <p>Data on fire occurrence before World War 2 in South Australia is not comprehensive. Summarised newspaper reports from that time indicate that for the period between 1917 and 1945 there were 44 fires recorded.</p>
+                            <p>The most widespread fires occurred in 1933-34, 1938-39 and I943-44. In each of these seasons, significant damage was experienced in south-east districts, in or near the Adelaide Hills, and on Eyre Peninsula.</p>
+                            <p>43 of these fires occurred between December and March:</p>
+                            
+                            <ul>
+                                <li>4 in December</li>
+                                <li>11 in January</li>
+                                <li>12 in February</li>
+                                <li>16 in March.</li>
+                            </ul>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1950">
+                            <h5>1950s</h5>
+                            <p>During December 1951 fires caused by lightning burnt about 450,000 hectares in the eastern and north-eastern pastoral districts. A contributing factor to the extent of these fires was high fuel loads resulting from above average rainfall earlier in the year. Losses of stock, feed and fencing were heavy.</p>
+                            <p>The next widespread fire, known as ‘Black Sunday’, occurred in the Adelaide Hills on 2 January 1955. Adelaide recorded extreme fire weather conditions during the morning and afternoon, followed by a strong south-westerly change. Two fire fighters lost their lives and damage, spread over a total area of at least 40,000 hectares, was estimated at $4,000,000.</p>
+                            <p>The relatively mild 1957-58 fire season was followed by a dry autumn during which, in April 1958, eight fire fighters lost their lives in a pine plantation fire in the south-east.</p>
+                            <p>Towards the end of the 1950s, rainfall was above average in many districts. Consequently, a number of large fires occurred from 1959 to 1961. In 1959, there were two major fires; one near Kongorong, in the South East, covered 28,000 hectares. It caused damage estimated at about $1,500,000, and cost the life of a grazier. The second fire burnt about 76,000 hectares of grassland and scrub near Wudinna, on the Eyre Peninsula.</p>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1960">
+                            <h5>1960s</h5>
+                            <p>During 1960, damage estimated at $388,000 occurred when a fire burnt an estimated 6,000 hectares in northern Yorke Peninsula. Two other major fires occurred that year. One near Wirrabara in the Flinders Ranges, with damage estimated at $20,000 in an area of 8,000 hectare. The other near Tintinara where 100,000 hectares of pasture and scrub were burnt.</p>
+                            <p>In 1961, a fire in pastoral country burnt a large area near the Wilpena Pound in the northern Flinders Ranges.</p>
+                            <p>The next major fires occurred in 1968-69. A fire in the pastoral area in the Far North West of the State burnt an area of about 900,000 hectares. This was followed by a fire of about 8,000 hectares near Murdinga, on the Eyre Peninsula, where damage amounted to $140,000.</p>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1970">
+                            <h5>1970s</h5>
+                            <p>Luke and McArthur (1978) report that from July 1966 to June 1972 the average number of fires attended annually in South Australia was about 900. The total area burnt each year averaged 190,000 hectares, ranging from 15,000 hectares to 900,000 hectares depending on the fire season. The estimates of financial loss ranged from $38,000 to $245,000 with an average of $210,000.</p>
+                            <p>Huge areas of arid and semi-arid pastoral country were burnt in 1974-75.  The area burnt has been estimated at 16 million hectares: 3 million hectares of pastoral country and 13 million hectares of unoccupied land. A large proportion of the north-west of the State was burnt during the period from early November until early in February.</p>
+                            <p>Fire report summaries included in the SACFS annual reports from 1978 and 1979 refer to four major fires during the 1978-79 fire season:</p>
+                            <ul> 
+                                <li>1,000 hectares at Yadlanue Station</li>
+                                <li>1,200 hectares at Wilmington in December 1978</li>
+                                <li>1,100 hectares at Pinnaroo in January 1979</li>
+                                <li>7,400 hectares at Caveton in February 1979.</li>
+                                <li>A 480-hectare fire at Meningie was reported in December 1979.</li>
+                            <ul>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1980">
+                            <h5>1980s</h5>
+                            <p>Fire report summaries included in the SACFS annual reports from the 1980s refer to 40 major fires during the decade. The most significant of which were the Ash Wednesday I and II fires which occurred in February 1980 and February 1983.  The focus on the devastation of these fires however tends to draw attention away from the fact that during the 1980s there were over 830,000 hectares burnt.  10 fires, predominantly in the sparsely populated north east of the state, were in excess of 10,000 hectares each.  One, attributed to 43 lightning strikes in the pastoral area in November 1989, was estimated to be in excess of 600,000 hectares.</p>
+                            <p>Fires that posed a threat to settled areas during the 1980s were:</p>
+                            <ul>
+                            <li>Ash Wednesday I (3,770 hectares - February 1980)</li>
+                            <li>Horsnell Gully (400 hectares - April 1980)</li>
+                            <li>Ash Wednesday II (February 1983)</li>
+                            <li>Black Hill (1,500 hectares - January 1985)</li>
+                            <li>Pt Lincoln (200 hectares - February 1985)</li>
+                            <li>Kapunda (1,200 hectares - March 1986)</li>
+                            <li>Strathalbyn (6,000 hectares - November 1987)</li>
+                            <li>Kapunda (2,569 hectares - December 1987)</li>
+                            <li>Morialta (300 hectares - January 1988)</li>
+                            <li>Kersbrook (400 hectares - March 1988).</li>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1990">
+                            <h5>1990s</h5>
+                            <p>Fire report summaries included in the SACFS annual reports and from SACFS incident reports from the 1990s refer to 70 major fires during the decade.  Seven fires, predominantly in the sparsely populated north east of the state, were in excess of 10,000 hectares each.  The largest fires recorded were:</p>
+                            <ul>
+                                <li>Ernabella (900,000 hectares - January 1990)</li>
+                                <li>Flinders Chase (25,000 hectares - October 1991)</li>
+                                <li>Ngarkat (50,000 hectares - January 1999)</li>
+                                <li>Ngarkat (110,000 hectares - January 1999).</li>
+                            </ul>
+                            <p>3 significant fires that posed a threat to settled areas during the 1990s were:</p>
+                            <ul>
+                                <li>Clare (400 hectares - April 1994)</li>
+                                <li>Rapid Bay (300 hectares - January 1995)</li>
+                                <li>Heathfield (450 hectares - January 1995).</li>
+                            </ul>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2000">
+                            <h5>2000s</h5>
+                            <p>Fire report summaries included in the SACFS annual reports and from SACFS incident reports from the first 3 years of the decade until the end of 2003 refer to 53 major fires.  Four fires, predominantly in the sparsely populated pastoral areas of the state, were in excess of 6,000 hectares each.</p> 
+                            <p>The largest fires recorded were:</p>
+                            <ul>
+                                <li>Mt Rescue (18,000 hectares - November 2002)</li>
+                                <li>Gawler Ranges (15,000 hectares - December 2002)</li>
+                                <li>De Molle River (6,800 hectares - November 2002)</li>
+                                <li>Ngarkat (6,000 hectares - December 2001).</li>
+                            </ul>
+                            <p>Four significant fires that posed a threat to assets in the Mt Lofty Ranges and the Fleurieu Peninsula during the first 3 years of the new century were:</p>
+                            <ul>
+                            <li>Brownhill Creek (1,000 hectares - June 2000)</li>
+                            <li>Rapid Bay (1,200 hectares - January 2001)</li>
+                            <li>Hillbank (350 hectares - December 2001)</li>
+                            <li>Morphett Vale (300 hectares - December 2003).</li>
+                            <h6>February 2001</h6>
+                            <p>During the 2 weeks of 1-9 February 2001, a fire near Tulka on the Lower Eyre Peninsula burnt through approximately 14,000 hectares of bushland and coastal vegetation. The township of Tulka consisting of 46 homes suffered significant losses with 11 houses destroyed and a further 10 suffering major damage. Many other assets were also damaged including:</p>
+                            <ul>
+                                <li>caravans</li>
+                                <li>trailers</li>
+                                <li>vehicles</li>
+                                <li>boats</li>
+                                <li>rainwater tanks</li>
+                                <li>sheds.</li>
+                            </ul>
+                            <h6>11 January 2005</h6>
+                            <p>On 11 January 2005, South Australia experienced extreme fire weather with Fire Danger Indices in excess of 300 recorded on the Eyre Peninsula.  Two fires of major significance occurred, one at Wangary on the Eyre Peninsula and the other at Mt Osmond in the Adelaide Hills.  The Wangary fire burnt approximately 78,000 hectares with significant losses including 9 fatalities, 93 houses, 237 sheds, approximately 47,000 livestock, and 6,300 kilometres of fencing. The Mt Osmond fire burnt approximately 120 hectares with the loss of 3 buildings, 4 vehicles and 4 kilometres of fencing.</p>
+                            <h6>10 January 2007</h6>
+                            <p>On 10 January 2007, there was a bushfire at Mt Bold 30 km South East of Adelaide. The fire burnt through a mix of scrub, plantation, grass and forested areas. Up to 400 firefighters, more than 80 appliances, water bombers and observation aircraft attended to the fire.</p>
+                            <p>The Mt Bold fire burnt around 2,000 hectares and threatened approximately 60 homes in the Kangarilla and Echunga area. The fire destroyed 1 dwelling and numerous sheds, livestock and equipment sustained various degrees of fire damage.</p> 
+                            <h6>6 - 16 December 2007</h6>
+                            <p>On 6 December 2007 a significant dry lightning storm ignited in excess of 14 fires on Kangaroo Island. Of these, 6 developed into major bushfires and burnt out of control for 10 days. The suppression response mobilised for these fires was the largest in South Australian history, and involved 1,400 people and resources from South Australia, Victoria, New South Wales, Queensland and Western Australia.</p>
+                            <p>22% (90,982 hectares) of the total land mass of Kangaroo Island was burnt. There was 1 fatality and nearly 3,000 hectares of agricultural and forestry land and assets destroyed.</p>
+                            <h6>13 January 2009</h6>
+                            <p>A fire at Proper Bay on 13 January 2009 on the outskirts of the City of Port Lincoln was the only major fire for the 2008-2009 fire danger season. The bushfire burnt around 252 hectares of grass and scrubland. The fire destroyed 4 houses, 2 fish processing factories and 2 vehicles.</p>
+                            <h6>19 November 2009</h6>
+                            <p>A lightning storm that passed across South Australia resulted in CFS responding to more than 100 fires within 24 hours. Fires were concentrated in the Eyre Peninsula, Flinders Ranges, Mid North, Yorke Peninsula and Lower South East regions. More than 2,000 CFS firefighters, 300 fire tankers and aircraft worked across the State responding to the fires. The CFS was supported by Forestry SA, DEH (now DEWNR), SASES, SAMFS and Farm Fire Units.</p>
+                            <p>The major incidents were:</p>
+                            <ul>
+                            <li>Curramulka (1,250 hectares)</li>
+                            <li>Pine Point (300 hectares)</li>
+                            <li>Formby Bay (30 hectares)</li>
+                            <li>Spring Gully (20 hectares)</li>
+                            <li>Wirrabara (20 hectares).</li>
+                            </ul>
+                            <h6>23 December 2009</h6>
+                            <p>The City of Port Lincoln was again directly threatened by bushfire just prior to Christmas in 2009, with 6 houses and around 30 sheds and outbuildings on the city fringe destroyed. The fire burnt an area of 650 hectares.</p>
+                        </div>
+                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2010">
+                            <h5>2010s</h5>
+                            <h6>2011  2012 Fire Danger Season</h6>
+                            <p>The influence of La Nina in the Pacific Ocean caused in excessive rainfall in the North East and North West Pastoral FBDs, which resulted in exponential vegetation growth. This combined with the dry lightning season led to a vast number of bushfires in the areas with approximately 5.58 million hectares of land being burnt.</p>
+                            <h6>14 January - 14 February 2014</h6>
+                            <h6>Bangor Fire</h6>
+                            <p>The Bangor fire, like other significant bushfires in South Australia including Wangary, Ash Wednesday and Kangaroo Island, will become etched in people's minds with stories shared about community spirit and the tireless efforts of CFS firefighters.</p>
+                            <p>What started as a small fire about 25 kilometres north-east of Port Pirie had the next morning expanded to what was described by firefighters as an area "the size of two football ovals" in an area of inaccessible and difficult terrain. Firefighters worked in shifts around the clock for 14 days before the Bangor fire was declared 'Contained' on 30 January and 'Controlled' on 6 February. Two days later with the onset of winds and hot temperatures the fire broke control lines in the south western corner and threatened the townships of Laura, Wirrabara and Stone Hut, and the small community of Beetaloo Valley.</p>
+                            <p>31 days after it started, after burning more than 35,000 hectares, the Bangor fire was again declared as 'Controlled' on 14 February.  While 5 houses were destroyed, dozens were saved. A number of sheds were lost, with extensive damage sustained to fencing, and at least 700 sheep perished in the fire. 24 injuries were recorded but none serious, most involving smoke inhalation and heat exhaustion due to the extreme weather conditions that crews were working in.  Many CFS veterans are hard-pressed to recall a similar incident requiring such a sustained commitment of firefighting resources.</p>
+                            <h6>Eden Valley fire</h6>
+                            <p>The Eden Valley fire ignited just after midday on Friday 17 January, burnt through almost 25,000 hectares and was declared as 'contained' by Monday 20 January much to the relief of those on the front line, the personnel involved in managing the incident, and the fire affected communities.</p>
+                            <p>At the early stages of the fire 371 homes were counted in what would end up being the fire scar. Despite best efforts, unfortunately 4 of those were lost.  Multiple sheds were also lost along with livestock, native fauna and hundreds of kilometres of fences.</p>
+                            <h6>Ngarkat Fire</h6>
+                            <p>Just after 5.30am on 17 January a lightning strike ignited a fire within the Ngarkat Conservation Park in the state's upper south-east.  Throughout the week, this fire burnt through more than 90,000 hectares as two separate fires. The incident is known as the Ngarkat complex of fires.</p>
+                            <p>Over 80 CFS and Department of Environment, Water and Natural Resources firefighters combatted the fire, which burnt intensely in hot conditions through dense scrubland. The fire was declared as 'contained' on 20 January, with crews remaining on scene and patrolling the area for an additional 3 days until it was deemed as safe.</p>
+                            <h6>Rockleigh Fire</h6>
+                            <p>A fire ignited near Rockleigh in the Murraylands just after 3pm on 14 January, the third time communities in the area were threatened by fire within a 12-month period.  More than 80 CFS firefighters responded to the incident, with asset protection being the initial priority as the fire burnt through open country.</p>
+                            <p>While significant fencing and livestock losses including a dwelling were sustained, it was due to the concentrated efforts of firefighters working in challenging conditions that multiple assets were saved.</p>
+                            <p>The Rockleigh fire burnt for 4 days before being declared as controlled.</p>
+                            <h6>Delamere Fire</h6>
+                            <p>A scrub and grass fire sparked near Delamere just before 6.30pm and burnt slowly in a north easterly direction. Over 100 CFS firefighters worked along extremely steep terrain to contain the fire.  There was concern for around 20 properties, as the fire threatened the township of Delamere including properties on Main South Road to the west of Delamere, and those near Salt Cliffs and Nowhere Else Road.</p> 
+                            <p>150 firefighters adopted a direct attack on the fire, receiving support from 3 fixed wing aerial bombers and the air crane. The fire burnt through 100 hectares before being declared contained on 15 January, with firefighters continued to patrol the fire until 28 January.</p>
+                            <h6>Ceduna complex of fires</h6>
+                            <p>A complex of grass fires ignited by lightning strikes north of Ceduna were among the first to spark across the state on 14 January.</p>
+                            <p>On the West Coast, a scrub fire in the Yumbarra Conservation Park was burning with an estimated 20-kilometre front, with further fires burning in surrounding areas including within the Pureba, Yellabinna and Watraba Conservation Parks.</p>
+                            <p>The CFS and Department of Environment, Water and Natural Resources (DEWNR) fire crews worked together with local Farm Fire Units to strengthen control lines and prevent the spread of fire into neighbouring agricultural areas.</p>
+                            <p>Over 46,000 hectares of conservation parks were burnt, with the fires contained on 17 January.</p>
+                            <h6>Billiatt Fire (Riverland Complex)</h6>
+                            <p>Just after 6pm on 14 January, fires ignited in the Margaret Dowling Campsite, Billiatt (Halidon), Katarapko and Kringin (Korah Bore), with additional lightning the following day sparking the Calpurum fire.</p>
+                            <p>The Billiatt fire travelled rapidly through the Billiatt Conservation Park, posing challenges for fire crews. Despite their best efforts, the majority of the Billiatt Conservation Park was burnt out.  Following the valiant efforts of the CFS and DEWNR in managing the Riverland Complex, the fires were declared safe on 23 January.</p>
+                            <h6>January 2015, Sampson Flat</h6>
+                            <p>The 2015 Sampson Flat bushfire began on 2 January 2015 in the Adelaide Hills. It burned uncontrolled for 4 days, destroying homes, businesses, forest, grazing land, vineyards, livestock and properties across approximately 12,600 hectares. From Sampson Flat, it travelled in a south easterly direction, impacting a number of towns including Kersbrook and Gumeracha.</p>
+                            <p>More than 3,500 firefighters responded to the fire, including support from NSW and Victorian fire authorities. The Sampson Flat Fire was declared a Major Emergency on 3 January. The fire destroyed approximately 24 houses, 103 sheds and caused 62 firefighter injuries, with a damage bill estimated at $13 million. There were no human fatalities as a result of this bushfire.</p>
+                            <h6>November 2015, Pinery</h6>
+                            <p>The Pinery fire occurred late in 2015, starting around midday on 25 November in the lower-Mid-North wheat belt, approximately 70km north of Adelaide. Due to high winds and open wheat fields, the fire moved with incredible speed not previously seen in a bushfire. Most of the destruction occurred during the first day.</p>  
+                            
+                            <p>The Pinery fire initially burned in a south easterly direction from Pinery, pushed by strong winds. A south westerly change on the afternoon of the first day meant the entire eastern flank of the fire became a new, fire front burning in an easterly direction towards the Barossa Valley.</p>
+                            <p>In total, the fire burnt an estimated 82,500 hectares, impacting people, livestock and townships including Pinery, Mallala, Wasleys, Roseworthy, Freeling, Hamley Bridge, Daveyston, Grenock and Kapunda. More than 1,700 firefighters responded to the fire, with support provided by the Victoria Fire Authorities. Two lives were lost, along with thousands of livestock and approximately 91 homes destroyed, with many more damaged.</p></p>
+                        </div>
+                        <p v-if="yearsDisplay == 'decade'"><i><a href="https://www.cfs.sa.gov.au/site/about_cfs/history_of_the_cfs/bushfire_history.jsp">Sourced from the CFS</a></i></p>
+                        <!--
                         <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                        -->
                     </div>
                 </div>
             </div>
             <div v-if="showTheWelcomeModal" class="modal" id="the-welcome-modal" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">SA Most Recent Fires</h5>
+                        <div class="modal-header" style="background-image: url('./assets/sampson_flat.jpg'); background-size: cover; background-repeat: no-repeat;">
+                            <h1 class="modal-title text-white" style="padding-top: 2em; padding-bottom: 2em;">SA Most Recent Fires</h1>
                         </div>
                         <div class="modal-body">
-                            <p>This map shows data on the most recent fires for the State of South Australia. <a href="https://data.sa.gov.au/data/dataset/last-fire">Data is provided by the Department for Environment and Water.</a> The provided states "The dataset provides most recent fire scar mapping for many major fires that have burnt in a given area within or adjacent to National Parks and Wildlife South Australia (NPWSA) reserves. This data set is derived from Fire History mapping. The most recent fire mapping can be used for operational management and planning of fire events and ecological resource management."</p>
-                            <p class="text-warning"><b>Warning:</b>Please use Firefox or Chrome (Edge performs badly and IE not at all). This dataset is a download of around 20mb and requires the power of a mid range modern computer to display well.</p>
+                            <p>Fire is a big part of South Australian history and ecosystems! This map shows fire records <a href="https://data.sa.gov.au/data/dataset/fire-history">from the Department for Environment, Water and Natural Resources.</a> At first this data was just collected on fires that burnt near National Parks and NPWSA Reserves, but in more recent decades most large fire events have been included.</p>
+                            <p class="text-warning"><strong>Warning: </strong>This dataset is a download of around 20mb and requires the power of a mid range modern computer to display well. Please use <u>Firefox</u> or <u>Chrome</u> (Edge performs badly and IE not at all).</p>
                         </div>
                         <div class="modal-footer">
                             <template v-if="initiation"> 
@@ -138,7 +300,7 @@
                                 <!--
                                 <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', './data/untracked/FIREMGT_LastFire_WebMercator_lower_precison.geojson')">Load Entire State (200mb)</button>
                                 -->
-                                <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', './data/tracked/fire_history.geojson')">Load Entire State (200mb)</button>
+                                <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', './data/tracked/fire_history.geojson')">Load Entire State (20mb)</button>
                                 <!-- load it from uni -->
                                 <!--
                                 <button type="button" class="btn btn-danger" @click="addFireData('Fire Areas', 'https://cors-anywhere.herokuapp.com/https://mymailunisaedu-my.sharepoint.com/personal/gorja007_mymail_unisa_edu_au/Documents/Web%20Cartgraphy%20File%20Hosting/FIREMGT_LastFire_WebMercator_lower_precison.geojson')">Load Entire State (200mb)</button>

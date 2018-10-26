@@ -11,7 +11,7 @@ mapState = {
     data: {},
     areaLayer: {},
     addBaseLayer: function(layerName, url, options) {
-        options.attribution = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | Icons &copy <a href="https://www.flaticon.com/">Flaticion</a> | Fire Data &copy <a href="http://location.sa.gov.au/LMS/Reports/ReportMetadata.aspx?p_no=1159&pu=y&pa=dewnr">DEWNR</a> | Visible Base Map ' + options.attribution;
+        options.attribution = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | Imagery &copy <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | Icons &copy <a href="https://www.flaticon.com/">Flaticion</a> | Fire Data &copy <a href="http://location.sa.gov.au/LMS/Reports/ReportMetadata.aspx?p_no=1159&pu=y&pa=dewnr">DEWNR</a> | Visible Base Map ' + options.attribution;
         this.baseMaps[layerName] = L.tileLayer(url, options);
     },
 

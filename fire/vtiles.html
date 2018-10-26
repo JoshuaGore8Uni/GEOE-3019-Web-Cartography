@@ -20,6 +20,22 @@
         <!-- Application CSS -->
         <link rel="stylesheet" href="./vector.css" />
 
+        <!-- Render blocking JS here - reduces strange loading behaviour due to vue mounting and hiding elements -->
+        <!-- Boostrap JavaScript with useful dependancies -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script src="./assets/vue-slider-component.js"></script>
+
+        <!-- VueJS - Reactive JavaScript Framework -->
+        <!-- development version, includes helpful console warnings -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        -->
+        <!-- production version, optimized for size and speed -->
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
         <title>SA Most Recent Fires</title>
 
     </head>
@@ -273,6 +289,14 @@
                             <p>The Pinery fire initially burned in a south easterly direction from Pinery, pushed by strong winds. A south westerly change on the afternoon of the first day meant the entire eastern flank of the fire became a new, fire front burning in an easterly direction towards the Barossa Valley.</p>
                             <p>In total, the fire burnt an estimated 82,500 hectares, impacting people, livestock and townships including Pinery, Mallala, Wasleys, Roseworthy, Freeling, Hamley Bridge, Daveyston, Grenock and Kapunda. More than 1,700 firefighters responded to the fire, with support provided by the Victoria Fire Authorities. Two lives were lost, along with thousands of livestock and approximately 91 homes destroyed, with many more damaged.</p></p>
                         </div>
+                        <div v-if="yearsDisplay != 'decade'" class="flex-grow-1 my-3" style="background-image: url('./assets/sky_crane.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; border-radius: 5px; overflow: auto; scrollbar-width: none">
+                            <div class="m-3 p-3" style="background: rgba(169, 169, 169, 0.5); border-radius: 5px;">
+                                <h5>About this Map</h5>
+                                <p>Fire is a big part of South Australian history and ecosystems! This map shows fire records <a href="https://data.sa.gov.au/data/dataset/fire-history">from the Department for Environment, Water and Natural Resources.</a> At first this data was just collected on fires that burnt near National Parks and NPWSA Reserves, but in more recent decades most large fire events have been included.</p>
+                                <p>Explore the data set using the controls above. Clicking on "Decade Summary" will give you a summary of the major fire history over each decade. You can click on points or polygons in the map for specific information and change layers using the layer control in the top right corner.</p> 
+                                <p>This map was created as part of the course<a href="https://study.unisa.edu.au/courses/155790/2018"> Web Cartography </a> run by The University of South Australia and showcases the abilities of the Leaflet web map library to interactively display complex data sets.</p>
+                            </div>
+                        </div>
                         <p v-if="yearsDisplay == 'decade'"><i><a href="https://www.cfs.sa.gov.au/site/about_cfs/history_of_the_cfs/bushfire_history.jsp">Sourced from the CFS</a></i></p>
                     </div>
                 </div>
@@ -312,26 +336,6 @@
         </div>
 
         <!-- JavaScript placed at end of file for performance and web ranking -->
-        <!-- Boostrap JavaScript with useful dependancies -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-        <!-- "polyfill" for HTML5 multi-handle sliders -->
-        <!--
-        <script src="./assets/multirange.js"></script>
-        -->
-        <script src="./assets/vue-slider-component.js"></script>
-
-        <!-- VueJS - Reactive JavaScript Framework -->
-        <!-- development version, includes helpful console warnings -->
-        <!--
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        -->
-        <!-- production version, optimized for size and speed -->
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <!-- loadash - provides debounce function -->
-        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
         <!-- Leaflet JavaScript -->
         <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>

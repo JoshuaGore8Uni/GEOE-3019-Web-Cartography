@@ -4,6 +4,8 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Page Tab Icon -->
+        <link rel="shortcut icon" href="../assets/initials.ico">
 
         <!-- all js placed in head to simplify inline scripting -->
         <!-- Bootstrap CSS -->
@@ -29,14 +31,15 @@
             integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
             crossorigin=""></script>
         <!-- Leaflet Plugins -->
+        <!--
         <script src="./data/leaflet_plugins/leaflet-providers.js"></script>
+        -->
         <link rel="stylesheet" href="./data/leaflet_plugins/Control.MiniMap.css" />
         <script src="./data/leaflet_plugins/Control.MiniMap.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.css" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.0/dist/MarkerCluster.Default.css" />
         <script src="https://unpkg.com/leaflet.markercluster@1.4.0/dist/leaflet.markercluster.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
-        <script src="./data/leaflet_plugins/leaflet.ajax.min.js"></script>
         <link rel="stylesheet" href="./data/leaflet_plugins/L.Control.Range.css" />
         <script src="./data/leaflet_plugins/L.Control.Range.js"></script>
         <title>Leaflet Pracs</title>
@@ -69,9 +72,20 @@
         </nav>
         <div class="main">
             <section>
-                <h1>Map 1: Basemap with Selector</h1>
-                <p>This map demonstrates a leaflet layer selector. Map is initially set to the extent of South Australia.</p>
-                <!-- create element to mount map one, make fullscreen as no size specified -->
+                <div class="p-3">
+                    <h1>Map 1: Basemap with Selector</h1>
+                    <p>This map demonstrates a leaflet layer selector. The map incoperates five baselayers: 
+                    <ul>
+                        <li>A satellite image basemap, from Mapbox)</li>
+                        <li>A road map basemap, also from Mapbox</li>
+                        <li>A terrain map, from OpenTopoMap</li>
+                        <li>A grey map without labels, custom basemap made with Mapbox</li>
+                        <li>A dark map, the Mapbox Dark themed basemap</li>
+                    </ul>
+                    The tilelayer source shows automatically along with attribution to myself in the bottom left corner of the map. The map is initially set to the extent of South Australia using the fitBounds command (which will set zoom depending on screen size).</p>
+                    <p>This map uses no plugins but includes a watermark implemented as a custom control. As no size was specified the map div has been set to 100% width and 100% of the viewport height.</p>
+                    <!-- create element to mount map one, make fullscreen as no size specified -->
+                </div>
                 <div id="map1" style="height: 100vh; width: 100%"></div>
 
                 <script>
@@ -83,36 +97,36 @@
 
                     // initiate five map layers - leaflet providor plugin used for mapbox as simplified
                     // satellite
-                    var mapbox_satellite = L.tileLayer.provider('MapBox', {
+                    var mapbox_satellite = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg?access_token={accessToken}', {
+                        maxZoom: 16,
                         id: 'mapbox.satellite',
-                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
                     });
 
-                    // road - added to map so default layer
-                    var mapbox_streets = L.tileLayer.provider('MapBox', {
+                    // road
+                    var mapbox_streets = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg?access_token={accessToken}', {
+                        maxZoom: 16,
                         id: 'mapbox.streets',
-                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
-                    }).addTo(map1);
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
+                    });
 
                     // terrain
                     var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                         maxZoom: 16,
                         attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
                     });
-                    /*
-                    var mapbox_terrain = L.tileLayer.provider('MapBox', {
-                        id: 'mapbox.outdoors',
-                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
-                    });
-                    */
 
                     // grey without labels
                     var mapbox_grey_nolabels = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: ' Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 
                     // dark map
-                    var mapbox_dark = L.tileLayer.provider('MapBox', {
+                    var mapbox_dark = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg?access_token={accessToken}', {
+                        maxZoom: 16,
                         id: 'mapbox.dark',
-                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                        accessToken: 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A',
                     });
 
                     // variable to hold layer control layers
@@ -124,7 +138,13 @@
                         "No Labels": mapbox_grey_nolabels,
                     };
 
+                    // add my attribution to each layer
+                    Object.keys(baseLayers).forEach(key => {
+                        baseLayers[key].options.attribution = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | ' + baseLayers[key].options.attribution;
+                    })
+
                     // add layers to map
+                    baseLayers.Road.addTo(map1);
                     L.control.layers(baseLayers).addTo(map1);
                     L.control.scale().addTo(map1);
 
@@ -151,8 +171,10 @@
                 </script>
             </section>
             <section>
-                <h2>Map 2: Markers, Popups and Inset Map</h2>
-                <p>This map demonstrates markers with popups and an inset map.</p>
+                <div class="p-3">
+                    <h2>Map 2: My Favorite Worldwide Travel Destinations</h2>
+                    <p>This map indicates my favorite worldwide travel locations, with popups giving more information about each location. Two versions of this map where created, one with custom image icons and another utilising size and colour applied to circle symbols. The latter is shown, the former included in code comments. Popups have been attached to all points providing more information. Zoom levels have been limited to 2, 4, and 6. A inset map has been added using the Control.minimap plugin.</p>
+                </div>
                 <div id="map2" style="height: 100vh; width: 100%"></div>
                 <!-- Map also made using custom markers, however marker used not visiually appealing.
                 <p>This map demonstrates markers with popups and custom markers. An inset map has also been added.</p>
@@ -226,15 +248,17 @@
                 </script>
                 -->
                 <script>
-                    // var map = L.map('map').setView([51.505, -0.09], 13);
-                    var map2 = L.map('map2').fitWorld();
+                    // initiate map and limit to three zoom levels using min, max, and snap
+                    var map2 = L.map('map2', {
+                        minZoom: 2,
+                        maxZoom: 6,
+                        zoomSnap: 2,
+                    }).fitWorld();
                     var baseMapURL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A';
                     var accessToken = 'pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A'; 
-                    var attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>';
+                    var attribution = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery  <a href="https://www.mapbox.com/">Mapbox</a>';
                     var mainBaseMap = L.tileLayer(baseMapURL, {id: 'mapbox.streets', attribution: attribution, accessToken: accessToken, maxZoom: 18}).addTo(map2);
                     L.control.scale().addTo(map2);
-
-                    // L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A').addTo(map);
 
                     // add minimap
                     var miniBaseMap = L.tileLayer(baseMapURL, {id: 'mapbox.streets', attribution: attribution, accessToken: accessToken, maxZoom: 18});
@@ -306,13 +330,30 @@
                 </script>
             </section>
             <section>
-                <h1>Map 3: Image Overlay with Transparency Slider</h1>
+                <div class="p-3">
+                    <h1>Map 3: Image Overlay with Transparency Slider</h1>
+                    <p>This map shows an image overlay registered using corner coordinates. A slider has been created using the L.control.range plugin which changes the transparency of the overlay using layer.setOpacity on slider change events.</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Top Left Corner</td>
+                                <td>-34.857826 138.450236 Decimal Degrees</td>
+                            </tr>
+                            <tr>
+                                <td>Bottom Right Corner</td>
+                                <td>-34.985246 138.749692 Decimal Degrees</td>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div id="map3" style="width: 100%; height: 100vh"></div>
                 <script>
                     var map3 = L.map('map3').setView([-34.92, 138.59], 13);
                     // var map = L.map('map').fitWorld();
                     var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                    osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                    osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
                           L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}).addTo(map3);
                     var imageUrl = './data/geodata_files/historical_TopoMap_Adelaide_1898.png',
                         imageBounds = [[-34.857826, 138.450236], [-34.985246, 138.749692]];
@@ -332,6 +373,11 @@
             </section>
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-12">
+                        <h1>Burnside Tree Location Maps</h1>
+                        <p>The following two maps show the locations of trees in the City of Burnside.  As this is a large dataset with tens of thousands of points some form of scale dependant point display is necessary. The first map demonstrates marker clustering using the Leaflet.markercluster plugin. The second map shows a heatmap using Leaflet.heat. Colours have been chosen to symbolise 'greener' areas where trees are denser. Blur/radius values have been chosen to show meaningful street level information at higher zoom levels.</p>
+                        <p>Both maps have been limited to a size of 600 x 400 px and have in-map titles.</p>
+                    </div>
                     <div class="col-6">
                         <section>
                             <h1>Map 4: Marker Clustering</h1>
@@ -357,7 +403,7 @@
 
                                 // add tilelayer
                                 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                                var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                                var osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
                                 L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map4);
 
                                 // create title in leaflet control
@@ -368,15 +414,17 @@
                                 info.addTo(map4);
                                 L.control.scale().addTo(map4);
 
-                                // load geojson data using ajax
-                                var geojson = new L.GeoJSON.AJAX("./data/geodata_files/burnsidetreeswgs84.geojson");
+                                // create variable to store clusters
                                 var markers = L.markerClusterGroup();
 
-                                // once data loaded add to marker cluster layer
-                                geojson.on('data:loaded', function () {
-                                    markers.addLayer(geojson);
-                                    map4.addLayer(markers);
-                                });
+                                // load geojson data using ajax
+                                fetch('./data/geodata_files/burnsidetreeswgs84.geojson')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        var geojson = new L.GeoJSON(data);
+                                        markers.addLayer(geojson);
+                                        map4.addLayer(markers);
+                                    })
                             </script>
                         </section>
                     </div>
@@ -390,7 +438,7 @@
 
                                 // add tilelayer
                                 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                                var osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                                var osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
                                 L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map5);
 
                                 // create title in leaflet control
@@ -415,6 +463,7 @@
             </div>
             <section>
                 <h1>Map 6: Choropleth Map</h1>
+                <p></p>
                 <div id="map6" style="height: 100vh; width: 100%"></div>
                 <style>
                     .legend i {
@@ -436,7 +485,7 @@
                     var map6 = L.map('map6').fitBounds([[-36.18, 136.39], [-33.44, 139.18]]);
                     // add tilelayer
                     var osmUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
-                    var osmAttrib = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>';
+                    var osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>';
                     L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map6);
                     L.control.scale().addTo(map6);
                     // create natural breaks symbology function
@@ -462,7 +511,12 @@
                     fetch("./data/geodata_files/LGA_Adelaide.geojson")
                         .then(response => response.json())
                         .then(data => {
-                            L.geoJson(data, {style: style}).addTo(map6);
+                            parks = L.geoJson(data, {style: style}).addTo(map6);
+                            // add event listener to parks layer
+                            parks.on({
+                                mouseover: setInfo,
+                                mouseout: resetInfo,
+                            });
                     });
 
                     var legend = L.control({position: 'bottomright'});
@@ -471,15 +525,41 @@
                             grades = [209, 164, 91, 44, 10],
                             labels = [];
                             for (var i = 0; i < grades.length; i++) {
-                                console.log(getColour(grades[i] + 1));
                                 div.innerHTML +=
                                 '<i style="background:' + getColour(grades[i]) + '"></i> ' +
                                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '-');
-                                console.log(div.innerHTML);
                             }
                         return div;
                     }
                     legend.addTo(map6);
+                            
+                    // ---------- Custom Info Control ------------------
+                    // from course examples
+                    var info = L.control();
+
+                    info.onAdd = function (map6) {
+                        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                        this.update();
+                        return this._div 
+                    };
+
+                    // method to update the control based on feature properties passed
+                    info.update = function (properties) {
+                        this._div.innerHTML = '<h4>LGA Number of Parks</h4>' +  (properties ?
+                            '<b>' + properties.LGA + '</b><br />' + properties.Park + ' parks'
+                            : 'Hover over a LGA Area') 
+                    };
+
+                    info.addTo(map6);
+                    
+                    // layer specific functions
+                    function setInfo(e) {
+                        layer = e.propagatedFrom;
+                        info.update(layer.feature.properties);
+                    }
+                    function resetInfo() {
+                        info.update();
+                    }
                 </script>
             </section>
 

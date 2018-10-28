@@ -105,7 +105,7 @@
                     });
 
                     // road
-                    var mapbox_streets = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg?access_token={accessToken}', {
+                    var mapbox_streets = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                         maxZoom: 16,
                         id: 'mapbox.streets',
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -122,7 +122,7 @@
                     var mapbox_grey_nolabels = L.tileLayer('https://api.mapbox.com/styles/v1/joshg/cjk7ybb6a6vh42tqpg1nfwcpb/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9zaGciLCJhIjoiTFBBaE1JOCJ9.-BaGpeSYz4yPrpxh1eqT2A', {attribution: ' Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 
                     // dark map
-                    var mapbox_dark = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg?access_token={accessToken}', {
+                    var mapbox_dark = L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                         maxZoom: 16,
                         id: 'mapbox.dark',
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -374,9 +374,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <h1>Burnside Tree Location Maps</h1>
-                        <p>The following two maps show the locations of trees in the City of Burnside.  As this is a large dataset with tens of thousands of points some form of scale dependant point display is necessary. The first map demonstrates marker clustering using the Leaflet.markercluster plugin. The second map shows a heatmap using Leaflet.heat. Colours have been chosen to symbolise 'greener' areas where trees are denser. Blur/radius values have been chosen to show meaningful street level information at higher zoom levels.</p>
-                        <p>Both maps have been limited to a size of 600 x 400 px and have in-map titles.</p>
+                        <div class="py-3">
+                            <h1>Burnside Tree Location Maps</h1>
+                            <p>The following two maps show the locations of trees in the City of Burnside.  As this is a large dataset with tens of thousands of points some form of scale dependant point display is necessary. The first map demonstrates marker clustering using the Leaflet.markercluster plugin. The second map shows a heatmap using Leaflet.heat. Colours have been chosen to symbolise 'greener' areas where trees are denser. Blur/radius values have been chosen to show meaningful street level information at higher zoom levels.</p>
+                            <p>Both maps have been limited to a size of 600 x 400 px and have in-map titles.</p>
+                        </div>
                     </div>
                     <div class="col-6">
                         <section>
@@ -462,8 +464,10 @@
                 </div>
             </div>
             <section>
-                <h1>Map 6: Choropleth Map</h1>
-                <p></p>
+                <div class="p-3">
+                    <h1>Map 6: Choropleth Map</h1>
+                    <p>This map shows the number of parks in local government areas throughout the Adelaide area and surrounds. demonstrates value dependant choloropleth symbology. Data has been classified using Jenks Natural Breaks in qGIS into the five categories shown in the legend and hover interactivity has been used to show the exact number of parks per LGA. No plugins have been used in the creation of this map but two custom controls where implemented.</p>
+                </div>
                 <div id="map6" style="height: 100vh; width: 100%"></div>
                 <style>
                     .legend i {
@@ -563,25 +567,6 @@
                 </script>
             </section>
 
-            <!--
-            <h4>Leaflet Practical - Final 6 published leaflet web maps from Practical together wtih a short text explanation</h4>
-            <h5>Map 1: Basemap - selector</h5>
-            <p>Your first Leaflet web map should contain different basemaps and a basemap layer control. You
-            have to incorporate altogether five different tiled maps:</p>
-            <ul>
-                <li>satellite image</li>
-                <li>road map</li>
-                <li>terrain map</li>
-                <li>grey map without labels</li>
-                <li>dark map.
-                    The choice for each of them is up to you. The basemap layer control should allow the user to switch
-                    between them. The tile-layer source will usually be displayed automatically. The map should
-                    initially display the extend of South Australia.
-                    You can use this resource for Leaflet tilemaps providers: <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html.">http://leaflet-extras.github.io/leaflet-providers/preview/index.html.</a></li>
-            </ul>
-            <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_01_map/leaflet_01_map.html</a></p>
-            -->
-
             <!-- 
             <h5>Map 2: Place Of Interest map / add markers</h5>
             <p>Your second map shall include at least 3 marker points  indicating your favourite worldwide travel
@@ -640,39 +625,6 @@
     // Everest Base Camp 28.002553, 86.852718
     L.marker([28.002553, 86.852718]).addTo(map);
     // Bougainville</code></pre>
-            <h6 id="adding-marker-points">Adding marker points</h6>
-            <pre><code>L.marker(&lt;latlng&gt;, options?).addTo(map);</code></pre>
-            <h6 id="defining-zoom-levels">Defining Zoom Levels</h6>
-            <h6 id="inset-map">Inset Map</h6>
-            <h5 id="map-3-image-overlay-with-transparency-slider-tool">Map 3: Image overlay with transparency slider tool</h5>
-            <p>Within the provided geodata you find an .png image file named
-            “historical_TopoMap_Adelaide_1898.png”. Please embed this historical raster map in your web
-            map. Apply a slider tool to change image opacity from 100% to 0%. The image extend is:</p>
-            <pre><code>Lat Lng of the image extend (top left and bottom right):
-    -34.857826 138.450236 Decimal Degrees
-    -34.985246 138.749692 Decimal Degrees</code></pre>
-            <p><a href="https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html">https://joshuagore8uni.github.io/GEOE-3019-Web-Cartography/Leaflet_03_map/leaflet_03_map.html</a></p>
-            <h5 id="map-4-marker-clustering">Map 4: Marker Clustering</h5>
-            <p>Use the burnsidetreeswgs84.geojson point file and create a marker clustering map.
-            Add an appropriate map title using an info window on the upper right corner.
-            Limit the map window size to 600 x 400 px.</p>
-            <h5 id="map-5-heat-map">Map 5: Heat map</h5>
-            <p>Use the same data set (burnsidetreeswgs84.geojson) and create an heat map. When designing the
-            heat map carefully choose radius and blur parameters.
-            Apply title approach and map window size as above (Map 4).</p>
-            <h5 id="map-6-choropleth-map-with-geojson-data">Map 6: Choropleth map with geojson data</h5>
-            <p>Use the LGA_Adelaide.geojson polygon file to create a choropleth map. LGAs are Land government
-            areas (council areas). Explore the geojson file. One attribute field contains the number of parks in
-            each council area. That’s the one you need to use for your choropleth map.
-            Explore the data distribution using a histogram:<br>
-            <img src="../data/LGA_Histo.png" alt="image of data in arcgis histogram"><br>
-            Which classification method to use: Natural breaks would be one option.<br>
-            How many classes: Usually between 3 and 7.<br>
-            The colour-scheme should be sequential.<br>
-            You can use class-borders (10-30-70-120-209) of 5 classes as suggested in the figure above.<br>
-            <em>Helpful to use is this online colour-advise-tool for choropleth maps: <a href="http://colorbrewer2.org">http://colorbrewer2.org</a>
-                Additional reading about choropleth maps and their cartography: <a href="http://axismaps.github.io/thematic-cartography/articles/choropleth.html">http://axismaps.github.io/thematic-cartography/articles/choropleth.html</a>
-                Optional: Create and include a legend. Think about an appropriate classification and colour scheme</em></p>
             -->
         </div>
     </body>

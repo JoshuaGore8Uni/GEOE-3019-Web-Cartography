@@ -46,7 +46,7 @@
                     <div class="col col-lg-8 col-xl-9 p-0">
                         <div id="map"></div>
                     </div>
-                    <div class="col col-lg-4 col-xl-3 pt-3 d-flex flex-column" style="height: 100vh">
+                    <div class="col col-lg-4 col-xl-3 pt-3 d-flex flex-column" style="height: 100vh; overflow: auto;">
                         <div>
                         <div class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && (fireYearRange[0] == 1930 | fireYearRange[0] == 1940)">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && (fireYearRange[0] == 1930 | fireYearRange[0] == 1940)">
                             <h5>1917 - 1945</h5>
                             <p>Data on fire occurrence before World War 2 in South Australia is not comprehensive. Summarised newspaper reports from that time indicate that for the period between 1917 and 1945 there were 44 fires recorded.</p>
                             <p>The most widespread fires occurred in 1933-34, 1938-39 and I943-44. In each of these seasons, significant damage was experienced in south-east districts, in or near the Adelaide Hills, and on Eyre Peninsula.</p>
@@ -143,20 +143,20 @@
                                 <li>16 in March.</li>
                             </ul>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1950">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1950">
                             <h5>1950s</h5>
                             <p>During December 1951 fires caused by lightning burnt about 450,000 hectares in the eastern and north-eastern pastoral districts. A contributing factor to the extent of these fires was high fuel loads resulting from above average rainfall earlier in the year. Losses of stock, feed and fencing were heavy.</p>
                             <p>The next widespread fire, known as ‘Black Sunday’, occurred in the Adelaide Hills on 2 January 1955. Adelaide recorded extreme fire weather conditions during the morning and afternoon, followed by a strong south-westerly change. Two fire fighters lost their lives and damage, spread over a total area of at least 40,000 hectares, was estimated at $4,000,000.</p>
                             <p>The relatively mild 1957-58 fire season was followed by a dry autumn during which, in April 1958, eight fire fighters lost their lives in a pine plantation fire in the south-east.</p>
                             <p>Towards the end of the 1950s, rainfall was above average in many districts. Consequently, a number of large fires occurred from 1959 to 1961. In 1959, there were two major fires; one near Kongorong, in the South East, covered 28,000 hectares. It caused damage estimated at about $1,500,000, and cost the life of a grazier. The second fire burnt about 76,000 hectares of grassland and scrub near Wudinna, on the Eyre Peninsula.</p>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1960">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1960">
                             <h5>1960s</h5>
                             <p>During 1960, damage estimated at $388,000 occurred when a fire burnt an estimated 6,000 hectares in northern Yorke Peninsula. Two other major fires occurred that year. One near Wirrabara in the Flinders Ranges, with damage estimated at $20,000 in an area of 8,000 hectare. The other near Tintinara where 100,000 hectares of pasture and scrub were burnt.</p>
                             <p>In 1961, a fire in pastoral country burnt a large area near the Wilpena Pound in the northern Flinders Ranges.</p>
                             <p>The next major fires occurred in 1968-69. A fire in the pastoral area in the Far North West of the State burnt an area of about 900,000 hectares. This was followed by a fire of about 8,000 hectares near Murdinga, on the Eyre Peninsula, where damage amounted to $140,000.</p>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1970">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1970">
                             <h5>1970s</h5>
                             <p>Luke and McArthur (1978) report that from July 1966 to June 1972 the average number of fires attended annually in South Australia was about 900. The total area burnt each year averaged 190,000 hectares, ranging from 15,000 hectares to 900,000 hectares depending on the fire season. The estimates of financial loss ranged from $38,000 to $245,000 with an average of $210,000.</p>
                             <p>Huge areas of arid and semi-arid pastoral country were burnt in 1974-75.  The area burnt has been estimated at 16 million hectares: 3 million hectares of pastoral country and 13 million hectares of unoccupied land. A large proportion of the north-west of the State was burnt during the period from early November until early in February.</p>
@@ -169,7 +169,7 @@
                                 <li>A 480-hectare fire at Meningie was reported in December 1979.</li>
                             <ul>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1980">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1980">
                             <h5>1980s</h5>
                             <p>Fire report summaries included in the SACFS annual reports from the 1980s refer to 40 major fires during the decade. The most significant of which were the Ash Wednesday I and II fires which occurred in February 1980 and February 1983.  The focus on the devastation of these fires however tends to draw attention away from the fact that during the 1980s there were over 830,000 hectares burnt.  10 fires, predominantly in the sparsely populated north east of the state, were in excess of 10,000 hectares each.  One, attributed to 43 lightning strikes in the pastoral area in November 1989, was estimated to be in excess of 600,000 hectares.</p>
                             <p>Fires that posed a threat to settled areas during the 1980s were:</p>
@@ -185,7 +185,7 @@
                             <li>Morialta (300 hectares - January 1988)</li>
                             <li>Kersbrook (400 hectares - March 1988).</li>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1990">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 1990">
                             <h5>1990s</h5>
                             <p>Fire report summaries included in the SACFS annual reports and from SACFS incident reports from the 1990s refer to 70 major fires during the decade.  Seven fires, predominantly in the sparsely populated north east of the state, were in excess of 10,000 hectares each.  The largest fires recorded were:</p>
                             <ul>
@@ -201,7 +201,7 @@
                                 <li>Heathfield (450 hectares - January 1995).</li>
                             </ul>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2000">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2000">
                             <h5>2000s</h5>
                             <p>Fire report summaries included in the SACFS annual reports and from SACFS incident reports from the first 3 years of the decade until the end of 2003 refer to 53 major fires.  Four fires, predominantly in the sparsely populated pastoral areas of the state, were in excess of 6,000 hectares each.</p> 
                             <p>The largest fires recorded were:</p>
@@ -250,7 +250,7 @@
                             <h6>23 December 2009</h6>
                             <p>The City of Port Lincoln was again directly threatened by bushfire just prior to Christmas in 2009, with 6 houses and around 30 sheds and outbuildings on the city fringe destroyed. The fire burnt an area of 650 hectares.</p>
                         </div>
-                        <div class="flex-grow mt-3" style="overflow: auto" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2010">
+                        <div class="flex-grow mt-3" style="overflow: auto; min-height: 25vh;" v-if="yearsDisplay == 'decade' && fireYearRange[0] == 2010">
                             <h5>2010s</h5>
                             <h6>2011  2012 Fire Danger Season</h6>
                             <p>The influence of La Nina in the Pacific Ocean caused in excessive rainfall in the North East and North West Pastoral FBDs, which resulted in exponential vegetation growth. This combined with the dry lightning season led to a vast number of bushfires in the areas with approximately 5.58 million hectares of land being burnt.</p>
@@ -289,7 +289,7 @@
                             <p>The Pinery fire initially burned in a south easterly direction from Pinery, pushed by strong winds. A south westerly change on the afternoon of the first day meant the entire eastern flank of the fire became a new, fire front burning in an easterly direction towards the Barossa Valley.</p>
                             <p>In total, the fire burnt an estimated 82,500 hectares, impacting people, livestock and townships including Pinery, Mallala, Wasleys, Roseworthy, Freeling, Hamley Bridge, Daveyston, Grenock and Kapunda. More than 1,700 firefighters responded to the fire, with support provided by the Victoria Fire Authorities. Two lives were lost, along with thousands of livestock and approximately 91 homes destroyed, with many more damaged.</p></p>
                         </div>
-                        <div v-if="yearsDisplay != 'decade'" class="flex-grow-1 my-3" style="background-image: url('./assets/sky_crane.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; border-radius: 5px; overflow: auto; scrollbar-width: none">
+                        <div v-if="yearsDisplay != 'decade'" class="flex-grow-1 my-3" style="background-image: url('./assets/sky_crane.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; border-radius: 5px; overflow: auto; min-height: 25vh; scrollbar-width: none">
                             <div class="m-3 p-3" style="background: rgba(169, 169, 169, 0.5); border-radius: 5px;">
                                 <h5>About this Map</h5>
                                 <p>Fire is a big part of South Australian history and ecosystems! This map shows fire records <a href="https://data.sa.gov.au/data/dataset/fire-history">from the Department for Environment, Water and Natural Resources.</a> At first this data was just collected on fires that burnt near National Parks and NPWSA Reserves, but in more recent decades most large fire events have been included.</p>

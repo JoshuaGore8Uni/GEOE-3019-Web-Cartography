@@ -6,6 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Page Tab Icon -->
         <link rel="shortcut icon" href="../assets/initials.ico">
+        <!-- Background image  and style -->
+<style>
+body {
+    background-image: url("../assets/map_background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.container {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+</style>
 
         <!-- all js placed in head to simplify inline scripting -->
         <!-- Bootstrap CSS -->
@@ -45,16 +57,13 @@
         <title>Leaflet Pracs</title>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Home</a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="../">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</span></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./outofbox.html">Out of Box Mapping</a>
                     </li>
@@ -71,8 +80,9 @@
             </div>
         </nav>
         <div class="main">
-            <section>
-                <div class="p-3">
+                <div class="container">
+                <div class="row">
+                <div class="col">
                     <h1>Map 1: Basemap with Selector</h1>
                     <p>This map demonstrates a leaflet layer selector. The map incoperates five baselayers: 
                     <ul>
@@ -85,6 +95,8 @@
                     The tilelayer source shows automatically along with attribution to myself in the bottom left corner of the map. The map is initially set to the extent of South Australia using the fitBounds command (which will set zoom depending on screen size).</p>
                     <p>This map uses no plugins but includes a watermark implemented as a custom control. As no size was specified the map div has been set to 100% width and 100% of the viewport height.</p>
                     <!-- create element to mount map one, make fullscreen as no size specified -->
+                </div>
+                </div>
                 </div>
                 <div id="map1" style="height: 100vh; width: 100%"></div>
 
@@ -169,11 +181,13 @@
                     L.control.watermark({ position: 'bottomleft' }).addTo(this.map1);
 
                 </script>
-            </section>
-            <section>
-                <div class="p-3">
+                <div class="container">
+                <div class="row">
+                <div class="col">
                     <h2>Map 2: My Favorite Worldwide Travel Destinations</h2>
                     <p>This map indicates my favorite worldwide travel locations, with popups giving more information about each location. Two versions of this map where created, one with custom image icons and another utilising size and colour applied to circle symbols. The latter is shown, the former included in code comments. Popups have been attached to all points providing more information. Zoom levels have been limited to 2, 4, and 6. A inset map has been added using the Control.minimap plugin.</p>
+                </div>
+                </div>
                 </div>
                 <div id="map2" style="height: 100vh; width: 100%"></div>
                 <!-- Map also made using custom markers, however marker used not visiually appealing.
@@ -328,12 +342,12 @@ L.circleMarker([44.254401, -109.808834], circleLevel5).addTo(map2).bindPopup('<h
                     // Everest Base Camp 28.002553, 86.852718 ranking 5
 L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2).bindPopup('<h5>Everest Base Camp</h5><img width="100%" src="https://d3hne3c382ip58.cloudfront.net/resized/750x420/everest-base-camp-trek-tour-2-351637_0.JPG"><p>Stunning scenery including great views of Everest.</p>');
                 </script>
-            </section>
-            <section>
-                <div class="p-3">
+                <div class="container">
+                <div class="row">
+                <div class="col">
                     <h1>Map 3: Image Overlay with Transparency Slider</h1>
                     <p>This map shows an image overlay registered using corner coordinates. A slider has been created using the L.control.range plugin which changes the transparency of the overlay using layer.setOpacity on slider change events.</p>
-                    <table class="table">
+                    <table class="table table-striped table-dark">
                         <tbody>
                             <tr>
                                 <td>Top Left Corner</td>
@@ -347,6 +361,8 @@ L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2).bindPopup('<h5>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                </div>
                 </div>
                 <div id="map3" style="width: 100%; height: 100vh"></div>
                 <script>
@@ -370,20 +386,20 @@ L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2).bindPopup('<h5>
                     map3.addControl(control);
                     L.control.scale().addTo(map3);
                 </script>
-            </section>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h1>Burnside Tree Location Maps</h1>
+                        <p>The following two maps show the locations of trees in the City of Burnside.  As this is a large dataset with tens of thousands of points some form of scale dependant point display is necessary. The first map demonstrates marker clustering using the Leaflet.markercluster plugin. The second map shows a heatmap using Leaflet.heat. Colours have been chosen to symbolise 'greener' areas where trees are denser. Blur/radius values have been chosen to show meaningful street level information at higher zoom levels.</p>
+                        <p>Both maps have been limited to a size of 600 x 400 px and have in-map titles.</p>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="py-3">
-                            <h1>Burnside Tree Location Maps</h1>
-                            <p>The following two maps show the locations of trees in the City of Burnside.  As this is a large dataset with tens of thousands of points some form of scale dependant point display is necessary. The first map demonstrates marker clustering using the Leaflet.markercluster plugin. The second map shows a heatmap using Leaflet.heat. Colours have been chosen to symbolise 'greener' areas where trees are denser. Blur/radius values have been chosen to show meaningful street level information at higher zoom levels.</p>
-                            <p>Both maps have been limited to a size of 600 x 400 px and have in-map titles.</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <section>
-                            <h1>Map 4: Marker Clustering</h1>
-                            <div id="map4" style="height: 400px; width: 600px"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                            <div id="map4" style="height: 400px; width: 600px; margin-right: 0px; padding-right: 0px; display: block;"></div>
                             <style> 
                                 .info {
                                     padding: 6px 8px;
@@ -428,47 +444,47 @@ L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2).bindPopup('<h5>
                                         map4.addLayer(markers);
                                     })
                             </script>
-                        </section>
                     </div>
-                    <div class="col-6">
-                        <section>
-                            <h1>Map 5: Heatmap</h1>
-                            <div id="map5" style="width: 600px; height: 400px"></div>
-                            <script>
-                                // map container
-                                var map5 = L.map('map5').setView([-34.94, 138.66], 13);
+                    <div class="col">
+                        <div id="map5" style="width: 600px; height: 400px; margin-left: 0; display: block;"></div>
+                        <script>
+                            // map container
+                            var map5 = L.map('map5').setView([-34.94, 138.66], 13);
 
-                                // add tilelayer
-                                var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                                var osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-                                L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map5);
+                            // add tilelayer
+                            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                            var osmAttrib = 'Created By <a href="https://au.linkedin.com/in/joshua-gore-214565124">Joshua Gore</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                            L.tileLayer(osmUrl, {attribution: osmAttrib}).addTo(map5);
 
-                                // create title in leaflet control
-                                var info = L.control({position:'topright'});
-                                info.onAdd = function (map5) {this._div = L.DomUtil.create('div', 'info');
-                                    this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
-                                    return this._div};
-                                info.addTo(map5);
-                                L.control.scale().addTo(map5);
+                            // create title in leaflet control
+                            var info = L.control({position:'topright'});
+                            info.onAdd = function (map5) {this._div = L.DomUtil.create('div', 'info');
+                                this._div.innerHTML = '<h5>Tree Locations in the City of Burnside</h5>';
+                                return this._div};
+                            info.addTo(map5);
+                            L.control.scale().addTo(map5);
 
-                                // load geojson data using fetch api
-                                fetch("./data/geodata_files/burnsidetreeswgs84.geojson")
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        var coords = data.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
-                                        var heat = L.heatLayer(coords, {radius: 13, blur: 30, gradient: {0.1: '#d8b365', 0.65: '#d0e0a6', 1: '#31a354'}}).addTo(map5);
-                                    });
-                            </script>
-                        </section>
+                            // load geojson data using fetch api
+                            fetch("./data/geodata_files/burnsidetreeswgs84.geojson")
+                                .then(response => response.json())
+                                .then(data => {
+                                    var coords = data.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
+                                    var heat = L.heatLayer(coords, {radius: 13, blur: 30, gradient: {0.1: '#d8b365', 0.65: '#d0e0a6', 1: '#31a354'}}).addTo(map5);
+                                });
+                        </script>
                     </div>
+                    <div class="col"></div>
                 </div>
             </div>
-            <section>
-                <div class="p-3">
-                    <h1>Map 6: Choropleth Map</h1>
-                    <p>This map shows the number of parks in local government areas throughout the Adelaide area and surrounds. demonstrates value dependant choloropleth symbology. Data has been classified using Jenks Natural Breaks in qGIS into the five categories shown in the legend and hover interactivity has been used to show the exact number of parks per LGA. No plugins have been used in the creation of this map but two custom controls where implemented.</p>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h1>Map 6: Choropleth Map</h1>
+                            <p>This map shows the number of parks in local government areas throughout the Adelaide area and surrounds. demonstrates value dependant choloropleth symbology. Data has been classified using Jenks Natural Breaks in qGIS into the five categories shown in the legend and hover interactivity has been used to show the exact number of parks per LGA. No plugins have been used in the creation of this map but two custom controls where implemented.</p>
+                        </div>
+                    </div>
                 </div>
-                <div id="map6" style="height: 100vh; width: 100%"></div>
+                <div id="map6" style="height: 100vh; width: 100%;"></div>
                 <style>
                     .legend i {
                         width: 18px;
@@ -565,7 +581,6 @@ L.circleMarker([28.002553, 86.852718], circleLevel5).addTo(map2).bindPopup('<h5>
                         info.update();
                     }
                 </script>
-            </section>
 
             <!-- 
             <h5>Map 2: Place Of Interest map / add markers</h5>

@@ -67,10 +67,12 @@ mapState = {
                     values[i] + '&ndash;' + values[i + 1] + '<br>') : '');
             }
             */
-            for (var i = 0; i < values.length; i++) {
+            // values includes upper limit thus not seperate legend entry
+            // assumed to be integer values thus one removed from all ranges except upper limit
+            for (var i = 0; i < (values.length - 1); i++) {
                 div.innerHTML += 
-                    (values[i + 1] !== undefined ? ('<i style="background:' + getColor(values[i + 1]) + '"></i> ' +
-                    values[i] + '&ndash;' + values[i + 1] + '%<br>') : '');
+                    '<i style="background:' + getColor(values[i]) + '"></i> ' +
+                    values[i] + '&ndash;' + ((i + 2) < values.length ? values[i + 1] - 1 : values[i + 1]) + '%<br>';
             }
             return div 
         };

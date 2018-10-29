@@ -50,16 +50,24 @@ var vm = new Vue({
                 */
                 // percentage_burnt > 50 ? '#41202B' :
                 // percentage_burnt > 50 ? '#6d0d2d' :
-                percentage_burnt > 50 ? '#a50036' :
-                percentage_burnt > 20 ? '#574763' :
-                percentage_burnt > 10 ? '#467994' :
-                percentage_burnt > 5 ? '#25ADA5' :
-                percentage_burnt > 3 ? '#71DC90' :
+                /*
+                percentage_burnt >= 50 ? '#a50036' :
+                percentage_burnt >= 20 ? '#574763' :
+                percentage_burnt >= 10 ? '#467994' :
+                percentage_burnt >= 5 ? '#25ADA5' :
+                percentage_burnt >= 3 ? '#71DC90' :
+                                        '#E7FE6F';
+                */
+                percentage_burnt >= 50 ? '#574763' :
+                percentage_burnt >= 20 ? '#467994' :
+                percentage_burnt >= 10 ? '#25ADA5' :
+                percentage_burnt >= 5 ? '#71DC90' :
                                         '#E7FE6F';
                 return color;
         }
         // var values = [100, 50, 20, 10, 5, 3, 0];
-        var values = [0, 3, 5, 10, 20, 50, 100];
+        // var values = [0, 3, 5, 10, 20, 50, 100];
+        var values = [0, 5, 10, 20, 50, 100];
         mapState.addLegend(getColor, values);
         function style(properties, zoom) {
             var style = {
@@ -142,14 +150,18 @@ var vm = new Vue({
                 if (properties.INCIDENTTYPE == "Bushfire") {
                     // style.color = '#98533A';
                     // style.fillColor = '#98533A';
-                    style.color = '#F73127';
-                    style.fillColor = '#F73127';
+                    // style.color = '#F73127';
+                    // style.fillColor = '#F73127';
+                    style.color = '#FF0E0E';
+                    style.fillColor = '#FF0E0E';
                 }
                 else {
                     // style.color = '#294A28';
                     // style.fillColor = '#294A28';
                     style.color = '#0a6819';
                     style.fillColor = '#05971D';
+                    // style.color = '#FFCD00';
+                    // style.fillColor = '#FFCD00';
                 }
                 // function to prevent display of small polygons at large scales, shows some performance improvement
                 if (!((zoom >= 12) || (properties.SHAPE_Area > 100000 && zoom < 12) || (properties.SHAPE_Area > 1000000 && zoom < 8))) {

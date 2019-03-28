@@ -98,14 +98,14 @@ mapState = {
             var flameIcon = L.icon({
                 //iconUrl: flame,
                 iconUrl: 'assets/flame.png',
-                iconSize:     [31, 39], // size of the icon
+                iconSize:     [39, 39], // size of the icon
                 //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
             var matchIcon = L.icon({
                 //iconUrl: match,
                 iconUrl: 'assets/match.png',
-                iconSize:     [31, 39], // size of the icon
+                iconSize:     [39, 39], // size of the icon
                 //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });

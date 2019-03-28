@@ -62,7 +62,7 @@ mapState = {
             // loop through our density intervals and generate a label with a colored square for each interval
             /* loop for descending
             for (var i = 0; i < values.length; i++) {
-                div.innerHTML += 
+                div.innerHTML += f
                     (values[i + 1] !== undefined ? ('<i style="background:' + getColor(values[i]) + '"></i> ' +
                     values[i] + '&ndash;' + values[i + 1] + '<br>') : '');
             }
@@ -96,13 +96,15 @@ mapState = {
             }
             // icon code could be added to a seperate function if code used with more datasets but left here for readibility
             var flameIcon = L.icon({
-                iconUrl: flame,
+                //iconUrl: flame,
+                iconUrl: 'assets/flame.png',
                 iconSize:     [31, 39], // size of the icon
                 //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
             var matchIcon = L.icon({
-                iconUrl: match,
+                //iconUrl: match,
+                iconUrl: 'assets/match.png',
                 iconSize:     [31, 39], // size of the icon
                 //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
